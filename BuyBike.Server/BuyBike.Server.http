@@ -1,0 +1,6 @@
+@BuyBike.Server_HostAddress = http://localhost:5255
+
+GET {{BuyBike.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
