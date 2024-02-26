@@ -7,6 +7,8 @@
     <SpaRoot>..\buybike.client</SpaRoot>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <SpaProxyServerUrl>https://localhost:4200</SpaProxyServerUrl>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>BuyBikeApi.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +22,7 @@
     <ProjectReference Include="..\buybike.client\buybike.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="..\BuyBike.Core\BuyBike.Core.csproj" />
   </ItemGroup>
 
 </Project>
