@@ -1,5 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { Component, OnInit, inject } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
@@ -17,26 +17,36 @@ interface WeatherForecast {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  imports: [HeaderComponent, FooterComponent, HomeComponent, RouterModule],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    HomeComponent,
+    RouterModule,
+    HttpClientModule,
+  ],
 })
 export class AppComponent implements OnInit {
   public forecasts: WeatherForecast[] = [];
 
-  constructor(private http: HttpClient) {}
+  private http: HttpClient = inject(HttpClient);
 
   ngOnInit() {
-    this.getForecasts();
+    //this.getForecasts();
   }
 
   getForecasts() {
-    this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-      (result) => {
-        this.forecasts = result;
-      },
-      (error) => {
-        console.error(error);
-      }
-    );
+    this.http
+      .get<WeatherForecast[]>('https://localhost:7129/WeatherForecast')
+      .subscribe({
+        next: (result) => {
+          this.forecasts = result;
+          console.log(result);
+        },
+        error: (error) => {
+          console.error(error);
+          console.log('there is an error');
+        },
+      });
   }
 
   title = 'buybike.client';
