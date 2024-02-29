@@ -1,0 +1,26 @@
+.app-header {
+  background-color: #d9d9d9;
+}
+
+.header {
+  width: 100%;
+  padding: 1.5em 0 0.8em 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header nav ul {
+  display: flex;
+}
+
+.header li {
+  padding-right: 2em;
+}
+
+.header-btn {
+  font-size: 0.8em;
+  background-color: white;
+  padding: 0.5em 1.2em;
+  border: 1px solid black;
+}

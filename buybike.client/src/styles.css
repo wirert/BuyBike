@@ -1,19 +1,4 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
-ul,
-ol {
-  list-style: none;
-}
-
-img {
-  display: block;
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
-}
+@import url("styles/reset.css");
+@import url("styles/typography.css");
+@import url("styles/layout.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/fontawesome.min.css");

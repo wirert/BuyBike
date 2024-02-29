@@ -26,28 +26,8 @@ interface WeatherForecast {
   ],
 })
 export class AppComponent implements OnInit {
-  public forecasts: WeatherForecast[] = [];
-
+  title = 'Buy Bike';
   private http: HttpClient = inject(HttpClient);
 
-  ngOnInit() {
-    //this.getForecasts();
-  }
-
-  getForecasts() {
-    this.http
-      .get<WeatherForecast[]>('https://localhost:7129/WeatherForecast')
-      .subscribe({
-        next: (result) => {
-          this.forecasts = result;
-          console.log(result);
-        },
-        error: (error) => {
-          console.error(error);
-          console.log('there is an error');
-        },
-      });
-  }
-
-  title = 'buybike.client';
+  ngOnInit() {}
 }
