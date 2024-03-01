@@ -6,5 +6,19 @@ body {
 .container {
   max-width: 60em;
   margin: 0 auto;
-  padding: 0 2em;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-flow: column wrap;
+  max-width: 100%;
+  min-height: 100vh;
+}
+
+.main {
+  flex-grow: 1;
+}
+
+button:hover {
+  cursor: pointer;
 }

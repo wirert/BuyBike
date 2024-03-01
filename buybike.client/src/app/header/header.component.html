@@ -1,17 +1,46 @@
 <header class="app-header">
-  <div class="container header">
-    <nav class="site-header-nav">
+  <div class="top-bar-wrapper">
+    <div class="container top-bar">
+      <a href="#" class="app-title">Buy Bike</a>
+      <div class="search">
+        <input type="text" class="input-text" />
+        <button type="submit">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+
+      <ul class="upper-menu">
+        <li>
+          <a href="#">
+            <i class="fa-regular fa-circle-user"></i>
+            <span>Вход/Регистрация</span></a
+          >
+        </li>
+        <li *ngIf="isLogged">
+          <a href="#">
+            <i class="fa-solid fa-user-check"></i>
+            <span>Профил</span></a
+          >
+        </li>
+        <li>
+          <a href="#">
+            <i class="fa fa-cart-shopping"></i>
+            <span>Количка</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="nav-wrapper">
+    <nav class="container site-nav">
       <ul role="list">
-        <li><a href="#">About</a></li>
-        <li><a href="#">Features</a></li>
-        <li><a href="#">Pricing</a></li>
-        <li><a href="#">Team</a></li>
-        <li><a href="#">Blog</a></li>
+        <li><a href="#">Велосипеди</a></li>
+        <li><a href="#">Части</a></li>
+        <li><a href="#">Аксесоари</a></li>
+        <li><a href="#">Екипировка</a></li>
+        <li><a href="#">Промоции</a></li>
       </ul>
     </nav>
-
-    <div class="header-button">
-      <a class="header-btn" href="#">Buy now</a>
-    </div>
   </div>
 </header>
