@@ -16,7 +16,7 @@
   display: flex;
   justify-content: flex-start;
   gap: 2em;
-  padding: 2.5em 4em;
+  padding: 2.5em 0em;
   padding-left: 0;
 }
 
@@ -34,7 +34,7 @@
 p,
 form {
   font-size: 0.8em;
-  padding-bottom: 1.5em;
+  padding-bottom: 1em;
 }
 
 label > a {

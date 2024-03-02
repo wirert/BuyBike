@@ -1,0 +1,75 @@
+.bikes-types {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.bike-type {
+  display: block;
+  flex: 1 1 16%;
+  text-align: center;
+}
+
+.bike-type:hover {
+  box-shadow: 1px 1px 4px gray;
+}
+
+.img-wrapper {
+  display: block;
+  position: relative;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  text-align: center;
+}
+
+.img-wrapper img {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.news-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  /* align-content: center; */
+  /* justify-content: space-around; */
+  gap: 1.2em;
+  padding-bottom: 1em;
+}
+
+.home-news-title {
+  background-color: rgb(60, 58, 58);
+  padding: 0.1em 0.4em;
+  color: whitesmoke;
+}
+
+.home-news-post {
+  flex: 0 1 23.5%;
+  box-shadow: 1px 1px 4px gray;
+}
+
+.post-date {
+  position: absolute;
+  background-color: rgb(177, 176, 176);
+  top: 0;
+  left: 0;
+  color: whitesmoke;
+  font-weight: 600;
+
+  font-size: 0.6em;
+  padding: 0.5em 1em;
+  border-radius: 0 0em 50% 50%;
+}
+
+.news-content {
+  padding: 0 1em;
+}
+
+.news-content p {
+  font-size: 0.6em;
+}
+
+.home-news-post:hover {
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}

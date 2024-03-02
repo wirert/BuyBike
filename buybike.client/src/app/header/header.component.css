@@ -40,6 +40,12 @@
   height: 1rem;
 }
 
+.site-nav {
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
 .site-nav ul {
   display: flex;
   margin: 0;
@@ -47,6 +53,10 @@
 
 .site-nav li {
   padding: 1em 2em 1em 0;
+}
+
+.site-nav li:last-child {
+  padding-right: 0;
 }
 
 button {

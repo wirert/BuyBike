@@ -3,7 +3,7 @@ body {
   background-color: #ededed;
 }
 
-.container {
+.comp-container {
   max-width: 60em;
   margin: 0 auto;
 }
@@ -21,4 +21,13 @@ body {
 
 button:hover {
   cursor: pointer;
+}
+
+a:hover {
+  color: orange;
+}
+
+ul,
+ol {
+  padding-left: 0;
 }
