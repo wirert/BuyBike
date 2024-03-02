@@ -35,7 +35,9 @@
   <div class="nav-wrapper">
     <nav class="comp-container site-nav">
       <ul role="list">
-        <li><a href="#">Велосипеди</a></li>
+        <li>
+          <a (mouseover)="onBikesMouseOver()">Велосипеди</a>
+        </li>
         <li><a href="#">Части</a></li>
         <li><a href="#">Аксесоари</a></li>
         <li><a href="#">Екипировка</a></li>
@@ -48,4 +50,13 @@
       </ul>
     </nav>
   </div>
+  <app-bike-types
+    *ngIf="showBikeTypes"
+    (mouseleave)="showBikeTypes = false"
+    [ngStyle]="{
+      position: 'absolute',
+      top: '8em',
+      left: '5em'
+    }"
+  ></app-bike-types>
 </header>

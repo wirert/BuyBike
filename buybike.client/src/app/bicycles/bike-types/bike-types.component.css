@@ -1,7 +1,9 @@
 .bikes-types {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 1em;
+  z-index: 100;
 }
 
 .bike-type {

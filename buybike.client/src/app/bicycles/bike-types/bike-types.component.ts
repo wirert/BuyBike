@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-bike-types',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './bike-types.component.html',
-  styleUrl: './bike-types.component.css'
+  styleUrl: './bike-types.component.css',
 })
-export class BikeTypesComponent {
-
-}
+export class BikeTypesComponent {}

@@ -1,17 +1,5 @@
-.bikes-types {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-}
-
-.bike-type {
-  display: block;
-  flex: 1 1 16%;
-  text-align: center;
-}
-
-.bike-type:hover {
-  box-shadow: 1px 1px 4px gray;
+.bike-types-container {
+  position: relative;
 }
 
 .news-wrapper {
