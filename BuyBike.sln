@@ -3,15 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34601.278
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyBike.Server", "BuyBike.Server\BuyBike.Server.csproj", "{0ECBA010-6EA8-4F23-ADDF-9BF117ED7BD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuyBike.Server", "BuyBike.Server\BuyBike.Server.csproj", "{0ECBA010-6EA8-4F23-ADDF-9BF117ED7BD5}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "buybike.client", "buybike.client\buybike.client.esproj", "{72D87DC3-AFAE-41C8-8F59-A3C24BB78BCF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuyBikeServer", "BuyBikeServer", "{0ABEDF74-9F20-47C4-A4BF-7B3F244AE954}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyBike.Core", "BuyBike.Core\BuyBike.Core.csproj", "{BA27F38F-A521-4876-B891-1D3194663CE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuyBike.Core", "BuyBike.Core\BuyBike.Core.csproj", "{BA27F38F-A521-4876-B891-1D3194663CE6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuyBike.Infrastructure", "BuyBike.Infrastructure\BuyBike.Infrastructure.csproj", "{4FE47F94-FDB0-4475-B995-46188A9F55DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuyBike.Infrastructure", "BuyBike.Infrastructure\BuyBike.Infrastructure.csproj", "{4FE47F94-FDB0-4475-B995-46188A9F55DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FC3FA763-D562-42AC-A6F1-68A6947C2B7E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
