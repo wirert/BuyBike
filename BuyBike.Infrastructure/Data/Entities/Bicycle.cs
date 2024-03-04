@@ -8,6 +8,7 @@ namespace BuyBike.Infrastructure.Data.Entities
     using Microsoft.EntityFrameworkCore;
 
     [Comment("Bicycle")]
+    [Index(nameof(Type), IsUnique = false)]
     public class Bicycle
     {
         public Bicycle()
@@ -31,12 +32,10 @@ namespace BuyBike.Infrastructure.Data.Entities
         [ForeignKey(nameof(MakeId))]
         public virtual Manufacturer Make { get; set; } = null!;
 
-        [Comment("Bicycle Type Id")]
+        [Comment("Bicycle Type (Enumeration)")]
         [Required]
-        public Guid TypeId { get; set; }
+        public BikeType Type { get; set; }
 
-        [ForeignKey(nameof(TypeId))]
-        public virtual BicycleType Type { get; set; } = null!;
 
         [Comment("Bicycle price")]
         [Required]
@@ -46,7 +45,10 @@ namespace BuyBike.Infrastructure.Data.Entities
         [Required]
         public int InStock { get; set; }
 
-        public int MyProperty { get; set; }
+        public virtual ICollection<BikeSize> Sizes { get; set; } = [];
+
+        [Comment("Gender nullable")]
+        public string? Gender { get; set; }
 
 
         [Comment("Soft delete boolean property")]

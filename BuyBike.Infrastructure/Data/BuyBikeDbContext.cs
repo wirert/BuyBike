@@ -10,7 +10,6 @@
     {
         public virtual DbSet<Bicycle> Bicycles { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
-        public virtual DbSet<BicycleType> BicycleTypes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
