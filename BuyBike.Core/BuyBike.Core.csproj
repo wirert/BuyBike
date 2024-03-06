@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>BuyBikeCoreDocumentation.xml</DocumentationFile>
+    <UserSecretsId>ed0adade-f553-4dc0-bcca-83d9c68ef4c8</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,6 +16,10 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Services\Contracts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
   </ItemGroup>
 
 </Project>

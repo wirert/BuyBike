@@ -1,0 +1,283 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BuyBike.Infrastructure</name>
+    </assembly>
+    <members>
+        <member name="T:BuyBike.Infrastructure.Data.BuyBikeDbContext">
+            <summary>
+            Application database context
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.InitialMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository">
+            <summary>
+            Abstraction of repository access methods
+            </summary>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.All``1">
+            <summary>
+            All records in a table
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns>Queryable expression tree</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.All``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            All records in a table
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="search">Expression for filtering result</param>
+            <returns>Queryable expression tree</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.AllReadonly``1">
+            <summary>
+            The result collection won't be tracked by the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns>Expression tree</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.AllReadonly``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            The result collection won't be tracked by the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="search">Expression for filtering result</param>
+            <returns>Expression tree</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.GetByIdAsync``1(System.Object)">
+            <summary>
+            Gets specific record from database by primary key
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">record identificator</param>
+            <returns>Single record</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.GetByIdsAsync``1(System.Object[])">
+            <summary>
+            Gets specific record from database by composed primary key
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">Object array of identificators</param>
+            <returns>Single record (nullable)</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.AddAsync``1(``0)">
+            <summary>
+            Adds entity to the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity to add</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.AddRangeAsync``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Ads collection of entities to the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable list of entities</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.Update``1(``0)">
+            <summary>
+            Updates a record in database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity for record to be updated</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.UpdateRange``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Updates set of records in the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable collection of entities to be updated</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.DeleteAsync``1(System.Object)">
+            <summary>
+            Deletes a record from database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">Identificator of record to be deleted</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.Delete``1(``0)">
+            <summary>
+            Deletes a record from database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity representing record to be deleted</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.Detach``1(``0)">
+            <summary>
+            Detaches given entity from the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity to be detached</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Contracts.IRepository.SaveChangesAsync">
+            <summary>
+            Saves all made changes in trasaction
+            </summary>
+            <returns>Error code</returns>
+        </member>
+        <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">
+            <summary>
+            Implementation of repository access methods
+            for Relational Database Engine with generic methods
+            </summary>
+        </member>
+        <member name="P:PrintingHouse.Infrastructure.Data.Common.Repository.Context">
+            <summary>
+            Entity framework DB context holding connection information and properties
+            and tracking entity states 
+            </summary>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DbSet``1">
+            <summary>
+            Representation of table in database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.AddAsync``1(``0)">
+            <summary>
+            Adds entity to the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity to add</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.AddRangeAsync``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Ads collection of entities to the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable list of entities</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.All``1">
+            <summary>
+            All records in a table
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns>Queryable expression tree</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.AllReadonly``1">
+            <summary>
+            The result collection won't be tracked by the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns>Expression tree</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DeleteAsync``1(System.Object)">
+            <summary>
+            Deletes a record from database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">Identificator of record to be deleted</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Delete``1(``0)">
+            <summary>
+            Deletes a record from database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity representing record to be deleted</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Detach``1(``0)">
+            <summary>
+            Detaches given entity from the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity to be detached</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Dispose">
+            <summary>
+            Disposing the context when it is not neede
+            Don't have to call this method explicitely
+            Leave it to the IoC container
+            </summary>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.GetByIdAsync``1(System.Object)">
+            <summary>
+            Gets specific record from database by primary key
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">record identificator</param>
+            <returns>Single record (nullable)</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.GetByIdsAsync``1(System.Object[])">
+            <summary>
+            Gets specific record from database by composed primary key
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">Object array of identificators</param>
+            <returns>Single record (nullable)</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.SaveChangesAsync">
+            <summary>
+            Saves all made changes in trasaction
+            </summary>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Update``1(``0)">
+            <summary>
+            Updates a record in database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity for record to be updated</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.UpdateRange``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Updates set of records in the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable collection of entities to be updated</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DeleteRange``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Remove set of records from the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable collection of entities to be removed</param>
+        </member>
+        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DeleteRange``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Remove set of records from the database with Where clause
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="deleteWhereClause">Delegate function as lambda expression to filter result</param>
+        </member>
+    </members>
+</doc>

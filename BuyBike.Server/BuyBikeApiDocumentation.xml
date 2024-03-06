@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>BuyBike.Server</name>
+    </assembly>
+    <members>
+        <member name="T:BuyBike.Server.Extentions.ServiceCollectionExtension">
+            <summary>
+            Adds extention methods to the ServiceCollection of application
+            </summary>
+        </member>
+        <member name="M:BuyBike.Server.Extentions.ServiceCollectionExtension.AddApplicationDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Add SQL Server with connection string from configuration file
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

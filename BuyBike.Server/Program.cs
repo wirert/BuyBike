@@ -1,5 +1,8 @@
+using BuyBike.Infrastructure.Data;
 using BuyBike.Server.Extentions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +15,26 @@ builder.Services.AddControllers(options =>
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 
+builder.Services.AddAuthorization();
+
+builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
+{
+    options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedAccount");
+    options.SignIn.RequireConfirmedPhoneNumber = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedPhoneNumber");
+    options.SignIn.RequireConfirmedEmail = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedEmail");
+
+    options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:RequireNonAlphanumeric");
+    options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:RequireLowercase");
+    options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:RequireUppercase");
+
+    options.Lockout.MaxFailedAccessAttempts = builder.Configuration.GetValue<int>("Identity:MaxFailedAccessAttempts");
+})
+    .AddEntityFrameworkStores<BuyBikeDbContext>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(opt => opt.IncludeXmlComments("BuyBikeApi.xml"));
+builder.Services.AddSwaggerGen(opt => opt.IncludeXmlComments("BuyBikeApiDocumentation.xml"));
 
 builder.Services.AddCors(options =>
 {
@@ -26,6 +45,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.MapIdentityApi<IdentityUser>();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
