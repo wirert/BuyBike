@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Infrastructure.Data.Entities
+﻿namespace BuyBike.Infrastructure.Data.Entities.Enumerations
 {
     public enum BikeType
     {
