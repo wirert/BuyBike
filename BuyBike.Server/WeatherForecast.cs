@@ -1,4 +1,4 @@
-namespace BuyBike.Server
+namespace BuyBike.Api
 {
     public class WeatherForecast
     {

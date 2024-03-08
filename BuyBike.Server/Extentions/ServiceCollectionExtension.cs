@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Server.Extentions
+﻿namespace BuyBike.Api.Extentions
 {
     using BuyBike.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
@@ -25,7 +25,7 @@
                     .UseSnakeCaseNamingConvention();
             });
 
-            services.AddScoped<IRepository, Repository> ();
+            services.AddScoped<IRepository, Repository>();
 
             return services;
         }

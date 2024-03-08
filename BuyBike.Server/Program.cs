@@ -1,8 +1,11 @@
+using BuyBike.Api.Extentions;
 using BuyBike.Infrastructure.Data;
-using BuyBike.Server.Extentions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,13 +14,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.OutputFormatters.RemoveType<StringOutputFormatter>();
-});
+    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+}).AddNewtonsoftJson();
 
 builder.Services.AddApplicationDbContext(builder.Configuration);
 
 builder.Services.AddAuthorization();
 
-builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
+builder.Services
+    //.AddIdentity<>
+    .AddIdentityApiEndpoints<IdentityUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedAccount");
     options.SignIn.RequireConfirmedPhoneNumber = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedPhoneNumber");
@@ -28,6 +34,7 @@ builder.Services.AddIdentityApiEndpoints<IdentityUser>(options =>
     options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:RequireUppercase");
 
     options.Lockout.MaxFailedAccessAttempts = builder.Configuration.GetValue<int>("Identity:MaxFailedAccessAttempts");
+    
 })
     .AddEntityFrameworkStores<BuyBikeDbContext>();
 
@@ -44,9 +51,29 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidAudiences = builder.Configuration.GetValue<string[]>("JWT:ValidAudience"),
+        ValidIssuer = builder.Configuration.GetValue<string>("JWT:ValidIssuer"),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT:Secret")!))
+    };
+
+    options.RequireHttpsMetadata = false;
+
+});
+
 var app = builder.Build();
 
-app.MapIdentityApi<IdentityUser>();
+app.MapGroup("/account").MapIdentityApi<IdentityUser>();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
@@ -62,6 +89,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

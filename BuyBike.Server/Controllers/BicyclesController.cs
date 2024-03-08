@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Server.Controllers
+﻿namespace BuyBike.Api.Controllers
 {
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -12,9 +12,9 @@
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult Get(string type)
+        public IActionResult Get()
         {
-            return Ok(type);
+            return Ok();
         }
     }
 }

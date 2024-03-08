@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>BuyBike.Server</name>
+        <name>BuyBike.Api</name>
     </assembly>
     <members>
-        <member name="T:BuyBike.Server.Extentions.ServiceCollectionExtension">
+        <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">
             <summary>
             Adds extention methods to the ServiceCollection of application
             </summary>
         </member>
-        <member name="M:BuyBike.Server.Extentions.ServiceCollectionExtension.AddApplicationDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:BuyBike.Api.Extentions.ServiceCollectionExtension.AddApplicationDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             Add SQL Server with connection string from configuration file
             </summary>
