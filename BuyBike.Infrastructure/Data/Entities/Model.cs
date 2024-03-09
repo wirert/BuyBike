@@ -7,6 +7,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
+    using BuyBike.Infrastructure.Constants;
 
     [Comment("Bicycle model")]
     [Index(nameof(Type), IsUnique = false)]
@@ -18,7 +19,7 @@
 
         [Comment("Bicycle model name")]
         [Required]
-        [MaxLength(60)]
+        [MaxLength(DataConstants.Model.MaxNameLength)]
         public string Name { get; set; } = null!;
 
         [Comment("Model manufacturer id")]
@@ -34,14 +35,15 @@
 
         [Comment("Model Image URL")]
         [Required]
+        [MaxLength(DataConstants.Model.MaxImageUrlLength)]
         public string ImageUrl { get; set; } = null!;
 
-        [Comment("Gender nullable")]
-        public string? Gender { get; set; }
+        [Comment("Gender (Undefined by default)")]
+        public Gender Gender { get; set; } = Gender.Undefined;
 
         [Comment("Tyre size")]
         [Required]
-        public int TyreSize { get; set; }
+        public double TyreSize { get; set; }
 
         public virtual ICollection<Bicycle> Bicycles { get; set; } = new HashSet<Bicycle>();
 

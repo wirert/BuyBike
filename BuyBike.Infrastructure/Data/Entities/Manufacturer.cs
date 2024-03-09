@@ -1,5 +1,6 @@
 ﻿namespace BuyBike.Infrastructure.Data.Entities
 {
+    using BuyBike.Infrastructure.Constants;
     using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
@@ -12,7 +13,7 @@
         public Guid Id { get; set; } = Guid.NewGuid();
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(DataConstants.Manufacturer.MaxNameLength)]
         [Comment("Manufacturer name")]
         public string Name { get; set; } = null!;
 

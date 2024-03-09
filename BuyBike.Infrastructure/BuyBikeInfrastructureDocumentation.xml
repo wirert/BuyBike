@@ -4,9 +4,66 @@
         <name>BuyBike.Infrastructure</name>
     </assembly>
     <members>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants">
+            <summary>
+            Models constants
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.AppUser">
+            <summary>
+            Application user model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxFirstNameLength">
+            <summary>
+            First name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinFirstNameLength">
+            <summary>
+            First name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxLastNameLength">
+            <summary>
+            Last name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinLastNameLength">
+            <summary>
+            Last name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxAddressLength">
+            <summary>
+            Address maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinAddressLength">
+            <summary>
+            Address minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxCountryLength">
+            <summary>
+            Country maximum length
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCountryLength" -->
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxCityLength">
+            <summary>
+            City maximum length
+            </summary>
+        </member>
+        <!-- Badly formed XML comment ignored for member "F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCityLength" -->
         <member name="T:BuyBike.Infrastructure.Data.BuyBikeDbContext">
             <summary>
             Application database context
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Data.Entities.Account.AppUser">
+            <summary>
+            Application user entity model extention
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Migrations.InitialMigration">

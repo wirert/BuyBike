@@ -5,11 +5,12 @@
     using Microsoft.EntityFrameworkCore;
 
     using BuyBike.Infrastructure.Data.Entities;
+    using BuyBike.Infrastructure.Data.Entities.Account;
 
     /// <summary>
     /// Application database context
     /// </summary>
-    public class BuyBikeDbContext : IdentityDbContext<IdentityUser>
+    public class BuyBikeDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
         public BuyBikeDbContext(DbContextOptions<BuyBikeDbContext> options) : base(options)
         {

@@ -30,7 +30,7 @@
         [Required]
         public int InStock { get; set; }
 
-        [Comment("Bicycle frame size")]
+        [Comment("Bicycle frame size (enumeration)")]
         [Required]
         public BikeSize Size { get; set; }
 

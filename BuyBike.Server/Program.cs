@@ -1,5 +1,6 @@
 using BuyBike.Api.Extentions;
 using BuyBike.Infrastructure.Data;
+using BuyBike.Infrastructure.Data.Entities.Account;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,7 +24,7 @@ builder.Services.AddAuthorization();
 
 builder.Services
     //.AddIdentity<>
-    .AddIdentityApiEndpoints<IdentityUser>(options =>
+    .AddIdentityApiEndpoints<AppUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedAccount");
     options.SignIn.RequireConfirmedPhoneNumber = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedPhoneNumber");
@@ -73,7 +74,7 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-app.MapGroup("/account").MapIdentityApi<IdentityUser>();
+app.MapGroup("/account").MapIdentityApi<AppUser>();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();
