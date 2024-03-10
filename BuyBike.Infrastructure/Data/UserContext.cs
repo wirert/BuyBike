@@ -8,17 +8,19 @@
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Constants;
 
+    /// <summary>
+    /// Extracts Claims information from ClaimsPrincipal via HttpContextAccessor 
+    /// </summary>
     public class UserContext : IUserContext
     {
         private ClaimsPrincipal User;
-        private HttpContext httpContext;
+        //private HttpContext httpContext;
 
         public UserContext(IHttpContextAccessor _ca)
         {
-            httpContext = _ca.HttpContext;
+            //httpContext = _ca.HttpContext;
             User = _ca.HttpContext.User;
         }
-
 
         public string UserId
         {
@@ -52,10 +54,7 @@
                     var fullNameClaim = User.Claims
                         .FirstOrDefault(c => c.Type == CustomClaimType.FullName);
 
-                    if (fullNameClaim != null)
-                    {
-                        fullName = fullNameClaim.Value;
-                    }
+                    fullName = fullNameClaim?.Value ?? String.Empty;
                 }
 
                 return fullName;
@@ -70,13 +69,10 @@
 
                 if (User != null && User.Claims != null && User.Claims.Count() > 0)
                 {
-                    var subClaim = User.Claims
+                    var emailClaim = User.Claims
                         .FirstOrDefault(c => c.Type == ClaimTypes.Email);
 
-                    if (subClaim != null)
-                    {
-                        email = subClaim.Value;
-                    }
+                    email = emailClaim?.Value ?? string.Empty;
                 }
 
                 return email;

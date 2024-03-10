@@ -27,7 +27,6 @@
                     .UseSnakeCaseNamingConvention();
             });
 
-
             return services;
         }
 
@@ -41,9 +40,7 @@
             services.AddHttpContextAccessor();
 
             services.AddScoped<IRepository, Repository>();
-
             services.AddScoped<IUserService, UserService>();
-
 
             return services;
         }
