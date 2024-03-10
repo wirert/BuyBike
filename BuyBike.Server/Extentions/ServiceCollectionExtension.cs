@@ -1,5 +1,7 @@
 ﻿namespace BuyBike.Api.Extentions
 {
+    using BuyBike.Core.Services;
+    using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
     using PrintingHouse.Infrastructure.Data.Common;
@@ -11,7 +13,7 @@
     public static class ServiceCollectionExtension
     {
         /// <summary>
-        /// Add SQL Server with connection string from configuration file
+        /// Add DataBase Server with connection string from configuration file
         /// </summary>
         /// <param name="services"></param>
         /// <param name="configuration"></param>
@@ -25,7 +27,22 @@
                     .UseSnakeCaseNamingConvention();
             });
 
+
+            return services;
+        }
+
+        /// <summary>
+        /// Register required services in the IoC container
+        /// </summary>
+        /// <param name="services"></param>
+        /// <returns></returns>
+        public static IServiceCollection AddApplicatonServices(this IServiceCollection services)
+        {
+
             services.AddScoped<IRepository, Repository>();
+
+            services.AddScoped<IUserService, UserService>();
+
 
             return services;
         }

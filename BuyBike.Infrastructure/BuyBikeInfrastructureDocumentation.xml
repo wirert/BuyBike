@@ -14,6 +14,16 @@
             Application user model constants
             </summary>
         </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxUserNameLength">
+            <summary>
+            Username maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinUserNameLength">
+            <summary>
+            Username minimum length
+            </summary>
+        </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxFirstNameLength">
             <summary>
             First name maximum length
@@ -49,13 +59,56 @@
             Country maximum length
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCountryLength" -->
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCountryLength">
+            <summary>
+            Country minimum length
+            </summary>
+        </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxCityLength">
             <summary>
             City maximum length
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCityLength" -->
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCityLength">
+            <summary>
+            City minimum length
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Model">
+            <summary>
+            Bicycle Model model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxNameLength">
+            <summary>
+            Model name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MinNameLength">
+            <summary>
+            Model name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxImageUrlLength">
+            <summary>
+            Image URL maximum length
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer">
+            <summary>
+            Manufacturer model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer.MaxNameLength">
+            <summary>
+            Manufacturer name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer.MinNameLength">
+            <summary>
+            Manufacturer name minimum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Data.BuyBikeDbContext">
             <summary>
             Application database context

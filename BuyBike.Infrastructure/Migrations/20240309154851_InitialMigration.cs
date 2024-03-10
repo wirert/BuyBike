@@ -16,7 +16,7 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     concurrency_stamp = table.Column<string>(type: "text", nullable: true)
@@ -30,7 +30,13 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    id = table.Column<string>(type: "text", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    first_name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true, comment: "User First name"),
+                    last_name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true, comment: "User Last name"),
+                    address = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true, comment: "User Address"),
+                    zip_code = table.Column<int>(type: "integer", nullable: true, comment: "User Zip Code"),
+                    city = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    country = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -70,7 +76,7 @@ namespace BuyBike.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    role_id = table.Column<string>(type: "text", nullable: false),
+                    role_id = table.Column<Guid>(type: "uuid", nullable: false),
                     claim_type = table.Column<string>(type: "text", nullable: true),
                     claim_value = table.Column<string>(type: "text", nullable: true)
                 },
@@ -91,7 +97,7 @@ namespace BuyBike.Infrastructure.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<string>(type: "text", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     claim_type = table.Column<string>(type: "text", nullable: true),
                     claim_value = table.Column<string>(type: "text", nullable: true)
                 },
@@ -113,7 +119,7 @@ namespace BuyBike.Infrastructure.Migrations
                     login_provider = table.Column<string>(type: "text", nullable: false),
                     provider_key = table.Column<string>(type: "text", nullable: false),
                     provider_display_name = table.Column<string>(type: "text", nullable: true),
-                    user_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,8 +136,8 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    user_id = table.Column<string>(type: "text", nullable: false),
-                    role_id = table.Column<string>(type: "text", nullable: false)
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    role_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,7 +160,7 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    user_id = table.Column<string>(type: "text", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     login_provider = table.Column<string>(type: "text", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     value = table.Column<string>(type: "text", nullable: true)
@@ -178,9 +184,9 @@ namespace BuyBike.Infrastructure.Migrations
                     name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false, comment: "Bicycle model name"),
                     make_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Model manufacturer id"),
                     type = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle model Type (Enumeration)"),
-                    image_url = table.Column<string>(type: "text", nullable: false, comment: "Model Image URL"),
-                    gender = table.Column<string>(type: "text", nullable: true, comment: "Gender nullable"),
-                    tyre_size = table.Column<int>(type: "integer", nullable: false, comment: "Tyre size"),
+                    image_url = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: false, comment: "Model Image URL"),
+                    gender = table.Column<int>(type: "integer", nullable: false, comment: "Gender (Undefined by default)"),
+                    tyre_size = table.Column<double>(type: "double precision", nullable: false, comment: "Tyre size"),
                     is_active = table.Column<bool>(type: "boolean", nullable: false, comment: "Soft delete boolean property")
                 },
                 constraints: table =>
@@ -203,7 +209,7 @@ namespace BuyBike.Infrastructure.Migrations
                     model_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Bicycle model Id"),
                     price = table.Column<decimal>(type: "numeric", nullable: false, comment: "Bicycle price"),
                     in_stock = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle count in stock"),
-                    size = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle frame size"),
+                    size = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle frame size (enumeration)"),
                     color = table.Column<string>(type: "text", nullable: true, comment: "Bicycle color (optional)"),
                     is_active = table.Column<bool>(type: "boolean", nullable: false, comment: "Soft delete boolean property")
                 },

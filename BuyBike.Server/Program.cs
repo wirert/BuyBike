@@ -1,12 +1,13 @@
+using System.Text;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+
 using BuyBike.Api.Extentions;
 using BuyBike.Infrastructure.Data;
 using BuyBike.Infrastructure.Data.Entities.Account;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,15 +16,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options =>
 {
     options.OutputFormatters.RemoveType<StringOutputFormatter>();
-    options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+    //options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 }).AddNewtonsoftJson();
 
-builder.Services.AddApplicationDbContext(builder.Configuration);
+builder.Services
+    .AddApplicationDbContext(builder.Configuration)
+    .AddApplicatonServices();
+
 
 builder.Services.AddAuthorization();
 
 builder.Services
-    //.AddIdentity<>
     .AddIdentityApiEndpoints<AppUser>(options =>
 {
     options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedAccount");
@@ -35,14 +38,42 @@ builder.Services
     options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:RequireUppercase");
 
     options.Lockout.MaxFailedAccessAttempts = builder.Configuration.GetValue<int>("Identity:MaxFailedAccessAttempts");
-    
 })
     .AddEntityFrameworkStores<BuyBikeDbContext>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen(opt => opt.IncludeXmlComments("BuyBikeApiDocumentation.xml"));
+
+
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.IncludeXmlComments("BuyBikeApiDocumentation.xml");
+    opt.SwaggerDoc("v1", new OpenApiInfo { Title = "BuyBike API", Version = "v1" });
+    opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Please enter a valid token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 builder.Services.AddCors(options =>
 {
@@ -54,6 +85,11 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddAuthentication(options =>
 {
+    options.DefaultChallengeScheme =
+    options.DefaultForbidScheme =
+    options.DefaultScheme =
+    options.DefaultSignInScheme =
+    options.DefaultSignOutScheme =
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
@@ -61,20 +97,18 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateIssuer = true,
         ValidateAudience = true,
-        ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ValidAudiences = builder.Configuration.GetValue<string[]>("JWT:ValidAudience"),
         ValidIssuer = builder.Configuration.GetValue<string>("JWT:ValidIssuer"),
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT:Secret")!))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("JWT:Secret")!)),
     };
 
     options.RequireHttpsMetadata = false;
-
 });
 
 var app = builder.Build();
 
-app.MapGroup("/account").MapIdentityApi<AppUser>();
+//app.MapGroup("/account").MapIdentityApi<AppUser>();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

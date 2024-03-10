@@ -11,6 +11,15 @@
         public static class AppUser
         {
             /// <summary>
+            /// Username maximum length
+            /// </summary>
+            public const int MaxUserNameLength = 15;
+            /// <summary>
+            /// Username minimum length
+            /// </summary>
+            public const int MinUserNameLength = 5;
+
+            /// <summary>
             /// First name maximum length
             /// </summary>
             public const int MaxFirstNameLength = 20;

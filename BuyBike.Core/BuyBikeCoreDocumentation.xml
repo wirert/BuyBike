@@ -4,5 +4,20 @@
         <name>BuyBike.Core</name>
     </assembly>
     <members>
+        <member name="T:BuyBike.Core.Models.Account.LoginDto">
+            <summary>
+            Login data transfer object
+            </summary>
+        </member>
+        <member name="P:BuyBike.Core.Models.Account.LoginDto.Email">
+            <summary>
+            User email
+            </summary>
+        </member>
+        <member name="P:BuyBike.Core.Models.Account.LoginDto.Password">
+            <summary>
+            User login password
+            </summary>
+        </member>
     </members>
 </doc>
