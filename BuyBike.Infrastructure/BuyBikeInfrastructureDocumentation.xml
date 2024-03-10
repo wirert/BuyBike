@@ -114,7 +114,7 @@
             Application database context
             </summary>
         </member>
-        <member name="T:BuyBike.Infrastructure.Data.Entities.Account.AppUser">
+        <member name="T:BuyBike.Infrastructure.Data.Entities.AppUser">
             <summary>
             Application user entity model extention
             </summary>

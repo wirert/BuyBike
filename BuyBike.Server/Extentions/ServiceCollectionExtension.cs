@@ -2,10 +2,10 @@
 {
     using BuyBike.Core.Services;
     using BuyBike.Core.Services.Contracts;
+    using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
     using PrintingHouse.Infrastructure.Data.Common;
-    using PrintingHouse.Infrastructure.Data.Common.Contracts;
 
     /// <summary>
     /// Adds extention methods to the ServiceCollection of application
@@ -38,6 +38,7 @@
         /// <returns></returns>
         public static IServiceCollection AddApplicatonServices(this IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
 
             services.AddScoped<IRepository, Repository>();
 

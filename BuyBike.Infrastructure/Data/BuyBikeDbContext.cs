@@ -5,7 +5,6 @@
     using Microsoft.EntityFrameworkCore;
 
     using BuyBike.Infrastructure.Data.Entities;
-    using BuyBike.Infrastructure.Data.Entities.Account;
 
     /// <summary>
     /// Application database context

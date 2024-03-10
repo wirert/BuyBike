@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Infrastructure.Data.Entities.Account
+﻿namespace BuyBike.Infrastructure.Data.Entities
 {
     using BuyBike.Infrastructure.Constants;
     using Microsoft.AspNetCore.Identity;
@@ -9,7 +9,7 @@
     /// <summary>
     /// Application user entity model extention
     /// </summary>
-    public class AppUser: IdentityUser<Guid>
+    public class AppUser : IdentityUser<Guid>
     {
         [Comment("User First name")]
         [MaxLength(DataConstants.AppUser.MaxFirstNameLength)]

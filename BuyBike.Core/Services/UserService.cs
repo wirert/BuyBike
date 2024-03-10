@@ -12,8 +12,8 @@
     using Microsoft.IdentityModel.Tokens;
 
     using BuyBike.Core.Services.Contracts;
-    using BuyBike.Infrastructure.Data.Entities.Account;
     using BuyBike.Infrastructure.Constants;
+    using BuyBike.Infrastructure.Data.Entities;
 
     public class UserService : IUserService
     {

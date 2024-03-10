@@ -7,7 +7,7 @@ using Microsoft.OpenApi.Models;
 
 using BuyBike.Api.Extentions;
 using BuyBike.Infrastructure.Data;
-using BuyBike.Infrastructure.Data.Entities.Account;
+using BuyBike.Infrastructure.Data.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

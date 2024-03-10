@@ -1,4 +1,4 @@
-﻿namespace PrintingHouse.Infrastructure.Data.Common.Contracts
+﻿namespace BuyBike.Infrastructure.Contracts
 {
     using System.Linq.Expressions;
 

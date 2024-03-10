@@ -7,6 +7,7 @@
 
     using Contracts;
     using BuyBike.Infrastructure.Data;
+    using BuyBike.Infrastructure.Contracts;
 
     /// <summary>
     /// Implementation of repository access methods

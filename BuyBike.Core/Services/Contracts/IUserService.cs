@@ -1,8 +1,7 @@
 ﻿namespace BuyBike.Core.Services.Contracts
 {
     using System.Threading.Tasks;
-
-    using BuyBike.Infrastructure.Data.Entities.Account;
+    using BuyBike.Infrastructure.Data.Entities;
 
     public interface IUserService
     {

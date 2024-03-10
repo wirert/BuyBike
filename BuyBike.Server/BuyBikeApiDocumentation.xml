@@ -11,10 +11,17 @@
         </member>
         <member name="M:BuyBike.Api.Extentions.ServiceCollectionExtension.AddApplicationDbContext(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
-            Add SQL Server with connection string from configuration file
+            Add DataBase Server with connection string from configuration file
             </summary>
             <param name="services"></param>
             <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Api.Extentions.ServiceCollectionExtension.AddApplicatonServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Register required services in the IoC container
+            </summary>
+            <param name="services"></param>
             <returns></returns>
         </member>
     </members>
