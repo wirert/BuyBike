@@ -75,11 +75,7 @@
                 Email = WebUtility.HtmlEncode(model.Email),
                 FirstName = WebUtility.HtmlEncode(model.FirstName),
                 LastName = WebUtility.HtmlEncode(model.LastName),
-                PhoneNumber = model.PhoneNumber,
-                Address = WebUtility.HtmlEncode(model.Address),
-                City = WebUtility.HtmlEncode(model.City),
-                Country = WebUtility.HtmlEncode(model.Country),
-                ZipCode = model.ZipCode,
+                PhoneNumber = model.PhoneNumber,                
                 UserName = WebUtility.HtmlEncode(model.Email)
             };
 

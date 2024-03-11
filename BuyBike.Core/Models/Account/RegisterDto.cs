@@ -48,32 +48,6 @@
 
         [Required]
         [DataType(DataType.PhoneNumber)] 
-        public string PhoneNumber { get; set;} = null!;
-
-        /// <summary>
-        /// User address
-        /// </summary>
-        [Required]
-        [StringLength(MaxAddressLength, MinimumLength = MinAddressLength)]
-        public string Address { get; set; } = null!;
-
-        /// <summary>
-        /// User Zip code
-        /// </summary>
-        public int? ZipCode { get; set; }
-
-        /// <summary>
-        /// User city
-        /// </summary>
-        [Required]
-        [StringLength(MaxCityLength, MinimumLength = MinCityLength)]
-        public string City { get; set; } = null!;
-
-        /// <summary>
-        /// User country
-        /// </summary>
-        [Required]
-        [StringLength(MaxCountryLength, MinimumLength = MinCountryLength)]
-        public string Country { get; set; } = null!;
+        public string PhoneNumber { get; set;} = null!;        
     }
 }

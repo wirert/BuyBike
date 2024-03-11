@@ -49,25 +49,5 @@
             User last name
             </summary>
         </member>
-        <member name="P:BuyBike.Core.Models.Account.RegisterDto.Address">
-            <summary>
-            User address
-            </summary>
-        </member>
-        <member name="P:BuyBike.Core.Models.Account.RegisterDto.ZipCode">
-            <summary>
-            User Zip code
-            </summary>
-        </member>
-        <member name="P:BuyBike.Core.Models.Account.RegisterDto.City">
-            <summary>
-            User city
-            </summary>
-        </member>
-        <member name="P:BuyBike.Core.Models.Account.RegisterDto.Country">
-            <summary>
-            User country
-            </summary>
-        </member>
     </members>
 </doc>
