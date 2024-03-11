@@ -4,6 +4,21 @@
         <name>BuyBike.Api</name>
     </assembly>
     <members>
+        <member name="M:BuyBike.Api.Controllers.AccountController.Login(BuyBike.Core.Models.Account.LoginDto)">
+            <summary>
+            Login to application
+            </summary>
+            <param name="model">Login credentials</param>
+            <param name="returnUrl">Return URL</param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Api.Controllers.AccountController.Register(BuyBike.Core.Models.Account.RegisterDto)">
+            <summary>
+            Register new user
+            </summary>
+            <param name="model">User register form data</param>
+            <returns></returns>
+        </member>
         <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">
             <summary>
             Adds extention methods to the ServiceCollection of application

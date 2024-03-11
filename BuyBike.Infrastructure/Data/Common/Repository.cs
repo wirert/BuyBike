@@ -5,7 +5,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-    using Contracts;
     using BuyBike.Infrastructure.Data;
     using BuyBike.Infrastructure.Contracts;
 

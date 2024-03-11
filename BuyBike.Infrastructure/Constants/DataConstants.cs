@@ -1,5 +1,7 @@
 ﻿namespace BuyBike.Infrastructure.Constants
 {
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Models constants
     /// </summary>
@@ -63,6 +65,8 @@
             /// City minimum length
             /// </summary>
             public const int MinCityLength = 1;
+
+            public const string EmailRegExPattern = @"^("".*""|(?>[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]|\\.)+(?>\.(?>[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]|\\.)+)*)@([a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]+(?>\.[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]+)*)$";
         }
 
         /// <summary>

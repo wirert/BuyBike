@@ -14,6 +14,7 @@
         /// </summary>
         [Required]
         [EmailAddress]
+        [RegularExpression(EmailRegExPattern)]
         public string Email { get; set; } = null!;
 
         /// <summary>
@@ -44,6 +45,10 @@
         [Required]
         [StringLength(MaxLastNameLength, MinimumLength = MinLastNameLength)]
         public string LastName { get; set; } = null!;
+
+        [Required]
+        [DataType(DataType.PhoneNumber)] 
+        public string PhoneNumber { get; set;} = null!;
 
         /// <summary>
         /// User address
