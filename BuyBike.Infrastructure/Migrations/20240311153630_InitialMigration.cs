@@ -33,10 +33,6 @@ namespace BuyBike.Infrastructure.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     first_name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true, comment: "User First name"),
                     last_name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true, comment: "User Last name"),
-                    address = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: true, comment: "User Address"),
-                    zip_code = table.Column<int>(type: "integer", nullable: true, comment: "User Zip Code"),
-                    city = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
-                    country = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -69,6 +65,22 @@ namespace BuyBike.Infrastructure.Migrations
                 {
                     table.PrimaryKey("pk_manufacturers", x => x.id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Parts",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product primary key"),
+                    price = table.Column<decimal>(type: "numeric", nullable: false, comment: "Product price"),
+                    in_stock = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle count in stock"),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, comment: "Soft delete boolean property"),
+                    name = table.Column<string>(type: "text", nullable: false, comment: "Part name")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Parts", x => x.id);
+                },
+                comment: "Bicycle parts");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
@@ -177,6 +189,30 @@ namespace BuyBike.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "orders",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Order identifier"),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Order user identifier"),
+                    order_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, comment: "Order time"),
+                    address = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false, comment: "Order shipping street address"),
+                    zip_code = table.Column<int>(type: "integer", nullable: true, comment: "Order shipping zip code"),
+                    city = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false, comment: "Order delivery city"),
+                    country = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false, comment: "Order delivery country")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_orders", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_orders_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "User products order");
+
+            migrationBuilder.CreateTable(
                 name: "models",
                 columns: table => new
                 {
@@ -202,20 +238,40 @@ namespace BuyBike.Infrastructure.Migrations
                 comment: "Bicycle model");
 
             migrationBuilder.CreateTable(
-                name: "bicycles",
+                name: "order_products",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Bicycle primary key"),
-                    model_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Bicycle model Id"),
-                    price = table.Column<decimal>(type: "numeric", nullable: false, comment: "Bicycle price"),
-                    in_stock = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle count in stock"),
-                    size = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle frame size (enumeration)"),
-                    color = table.Column<string>(type: "text", nullable: true, comment: "Bicycle color (optional)"),
-                    is_active = table.Column<bool>(type: "boolean", nullable: false, comment: "Soft delete boolean property")
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product id"),
+                    order_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Order id"),
+                    quantity = table.Column<int>(type: "integer", nullable: false, comment: "Product quantity")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_bicycles", x => x.id);
+                    table.PrimaryKey("pk_order_products", x => new { x.order_id, x.product_id });
+                    table.ForeignKey(
+                        name: "fk_order_products_orders_order_id",
+                        column: x => x.order_id,
+                        principalTable: "orders",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Connecting table between orders and products");
+
+            migrationBuilder.CreateTable(
+                name: "Bicycles",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product primary key"),
+                    price = table.Column<decimal>(type: "numeric", nullable: false, comment: "Product price"),
+                    in_stock = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle count in stock"),
+                    is_active = table.Column<bool>(type: "boolean", nullable: false, comment: "Soft delete boolean property"),
+                    model_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Bicycle model Id"),
+                    size = table.Column<int>(type: "integer", nullable: false, comment: "Bicycle frame size (enumeration)"),
+                    color = table.Column<string>(type: "text", nullable: true, comment: "Bicycle color (optional)")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bicycles", x => x.id);
                     table.ForeignKey(
                         name: "fk_bicycles_models_model_id",
                         column: x => x.model_id,
@@ -264,7 +320,7 @@ namespace BuyBike.Infrastructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "ix_bicycles_model_id",
-                table: "bicycles",
+                table: "Bicycles",
                 column: "model_id");
 
             migrationBuilder.CreateIndex(
@@ -276,6 +332,16 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "ix_models_type",
                 table: "models",
                 column: "type");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_order_products_product_id",
+                table: "order_products",
+                column: "product_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_orders_user_id",
+                table: "orders",
+                column: "user_id");
         }
 
         /// <inheritdoc />
@@ -297,19 +363,28 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "bicycles");
+                name: "Bicycles");
+
+            migrationBuilder.DropTable(
+                name: "order_products");
+
+            migrationBuilder.DropTable(
+                name: "Parts");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
                 name: "models");
 
             migrationBuilder.DropTable(
+                name: "orders");
+
+            migrationBuilder.DropTable(
                 name: "manufacturers");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

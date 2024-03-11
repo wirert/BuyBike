@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     [DbContext(typeof(BuyBikeDbContext))]
-    [Migration("20240309154851_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240311174652_TptMappingStrategyForProducts")]
+    partial class TptMappingStrategyForProducts
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace BuyBike.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Account.AppUser", b =>
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.AppUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,28 +36,10 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("access_failed_count");
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)")
-                        .HasColumnName("address")
-                        .HasComment("User Address");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(80)
-                        .HasColumnType("character varying(80)")
-                        .HasColumnName("city");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text")
                         .HasColumnName("concurrency_stamp");
-
-                    b.Property<string>("Country")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("character varying(60)")
-                        .HasColumnName("country");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -123,11 +105,6 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnType("character varying(256)")
                         .HasColumnName("user_name");
 
-                    b.Property<int?>("ZipCode")
-                        .HasColumnType("integer")
-                        .HasColumnName("zip_code")
-                        .HasComment("User Zip Code");
-
                     b.HasKey("Id")
                         .HasName("pk_asp_net_users");
 
@@ -139,56 +116,6 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Bicycle", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id")
-                        .HasComment("Bicycle primary key");
-
-                    b.Property<string>("Color")
-                        .HasColumnType("text")
-                        .HasColumnName("color")
-                        .HasComment("Bicycle color (optional)");
-
-                    b.Property<int>("InStock")
-                        .HasColumnType("integer")
-                        .HasColumnName("in_stock")
-                        .HasComment("Bicycle count in stock");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_active")
-                        .HasComment("Soft delete boolean property");
-
-                    b.Property<Guid>("ModelId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("model_id")
-                        .HasComment("Bicycle model Id");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("numeric")
-                        .HasColumnName("price")
-                        .HasComment("Bicycle price");
-
-                    b.Property<int>("Size")
-                        .HasColumnType("integer")
-                        .HasColumnName("size")
-                        .HasComment("Bicycle frame size (enumeration)");
-
-                    b.HasKey("Id")
-                        .HasName("pk_bicycles");
-
-                    b.HasIndex("ModelId")
-                        .HasDatabaseName("ix_bicycles_model_id");
-
-                    b.ToTable("bicycles", null, t =>
-                        {
-                            t.HasComment("Bicycle");
-                        });
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Manufacturer", b =>
@@ -277,6 +204,124 @@ namespace BuyBike.Infrastructure.Migrations
                         {
                             t.HasComment("Bicycle model");
                         });
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasComment("Order identifier");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("address")
+                        .HasComment("Order shipping street address");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(80)
+                        .HasColumnType("character varying(80)")
+                        .HasColumnName("city")
+                        .HasComment("Order delivery city");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)")
+                        .HasColumnName("country")
+                        .HasComment("Order delivery country");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("order_date")
+                        .HasComment("Order time");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id")
+                        .HasComment("Order user identifier");
+
+                    b.Property<int?>("ZipCode")
+                        .HasColumnType("integer")
+                        .HasColumnName("zip_code")
+                        .HasComment("Order shipping zip code");
+
+                    b.HasKey("Id")
+                        .HasName("pk_orders");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_orders_user_id");
+
+                    b.ToTable("orders", null, t =>
+                        {
+                            t.HasComment("User products order");
+                        });
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.OrderProduct", b =>
+                {
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("order_id")
+                        .HasComment("Order id");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id")
+                        .HasComment("Product id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity")
+                        .HasComment("Product quantity");
+
+                    b.HasKey("OrderId", "ProductId")
+                        .HasName("pk_order_products");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_order_products_product_id");
+
+                    b.ToTable("order_products", null, t =>
+                        {
+                            t.HasComment("Connecting table between orders and products");
+                        });
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id")
+                        .HasComment("Product primary key");
+
+                    b.Property<int>("InStock")
+                        .HasColumnType("integer")
+                        .HasColumnName("in_stock")
+                        .HasComment("Bicycle count in stock");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active")
+                        .HasComment("Soft delete boolean property");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price")
+                        .HasComment("Product price");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("products", null, t =>
+                        {
+                            t.HasComment("Shop product model");
+                        });
+
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -443,14 +488,46 @@ namespace BuyBike.Infrastructure.Migrations
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Bicycle", b =>
                 {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Model", "Model")
-                        .WithMany("Bicycles")
-                        .HasForeignKey("ModelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_bicycles_models_model_id");
+                    b.HasBaseType("BuyBike.Infrastructure.Data.Entities.Product");
 
-                    b.Navigation("Model");
+                    b.Property<string>("Color")
+                        .HasColumnType("text")
+                        .HasColumnName("color")
+                        .HasComment("Bicycle color (optional)");
+
+                    b.Property<Guid>("ModelId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("model_id")
+                        .HasComment("Bicycle model Id");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("integer")
+                        .HasColumnName("size")
+                        .HasComment("Bicycle frame size (enumeration)");
+
+                    b.HasIndex("ModelId")
+                        .HasDatabaseName("ix_bicycles_model_id");
+
+                    b.ToTable("bicycles", null, t =>
+                        {
+                            t.HasComment("Bicycle");
+                        });
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Part", b =>
+                {
+                    b.HasBaseType("BuyBike.Infrastructure.Data.Entities.Product");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name")
+                        .HasComment("Part name");
+
+                    b.ToTable("parts", null, t =>
+                        {
+                            t.HasComment("Bicycle parts");
+                        });
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Model", b =>
@@ -465,6 +542,39 @@ namespace BuyBike.Infrastructure.Migrations
                     b.Navigation("Make");
                 });
 
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Order", b =>
+                {
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.AppUser", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_orders_users_user_id");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.OrderProduct", b =>
+                {
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_products_orders_order_id");
+
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_order_products_products_product_id");
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -477,7 +587,7 @@ namespace BuyBike.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Account.AppUser", null)
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -487,7 +597,7 @@ namespace BuyBike.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Account.AppUser", null)
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -504,7 +614,7 @@ namespace BuyBike.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_roles_asp_net_roles_role_id");
 
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Account.AppUser", null)
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -514,12 +624,46 @@ namespace BuyBike.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Account.AppUser", null)
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.AppUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Bicycle", b =>
+                {
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", null)
+                        .WithOne()
+                        .HasForeignKey("BuyBike.Infrastructure.Data.Entities.Bicycle", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_bicycles_products_id");
+
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Model", "Model")
+                        .WithMany("Bicycles")
+                        .HasForeignKey("ModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_bicycles_models_model_id");
+
+                    b.Navigation("Model");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Part", b =>
+                {
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", null)
+                        .WithOne()
+                        .HasForeignKey("BuyBike.Infrastructure.Data.Entities.Part", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_parts_products_id");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.AppUser", b =>
+                {
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Manufacturer", b =>
@@ -530,6 +674,16 @@ namespace BuyBike.Infrastructure.Migrations
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Model", b =>
                 {
                     b.Navigation("Bicycles");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Order", b =>
+                {
+                    b.Navigation("OrderProducts");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Product", b =>
+                {
+                    b.Navigation("OrderProducts");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,16 +14,6 @@
             Application user model constants
             </summary>
         </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxUserNameLength">
-            <summary>
-            Username maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinUserNameLength">
-            <summary>
-            Username minimum length
-            </summary>
-        </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxFirstNameLength">
             <summary>
             First name maximum length
@@ -42,36 +32,6 @@
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinLastNameLength">
             <summary>
             Last name minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxAddressLength">
-            <summary>
-            Address maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinAddressLength">
-            <summary>
-            Address minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxCountryLength">
-            <summary>
-            Country maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCountryLength">
-            <summary>
-            Country minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MaxCityLength">
-            <summary>
-            City maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinCityLength">
-            <summary>
-            City minimum length
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Model">
@@ -107,6 +67,41 @@
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer.MinNameLength">
             <summary>
             Manufacturer name minimum length
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Order">
+            <summary>
+            Order model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Order.MaxAddressLength">
+            <summary>
+            Address maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Order.MinAddressLength">
+            <summary>
+            Address minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Order.MaxCountryLength">
+            <summary>
+            Country maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Order.MinCountryLength">
+            <summary>
+            Country minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Order.MaxCityLength">
+            <summary>
+            City maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Order.MinCityLength">
+            <summary>
+            City minimum length
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Contracts.IRepository">
@@ -255,16 +250,16 @@
         <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.RemoveAddressFromAppUser">
+        <member name="T:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.RemoveAddressFromAppUser.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.RemoveAddressFromAppUser.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.RemoveAddressFromAppUser.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">

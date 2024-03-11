@@ -18,5 +18,7 @@
         [Comment("User Last name")]
         [MaxLength(DataConstants.AppUser.MaxLastNameLength)]
         public string? LastName { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
