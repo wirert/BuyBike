@@ -54,6 +54,16 @@
             Image URL maximum length
             </summary>
         </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxColorLength">
+            <summary>
+            Model color maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxDescriptionLenght">
+            <summary>
+            Model description maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer">
             <summary>
             Manufacturer model constants
@@ -260,6 +270,18 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.seedBicycles">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">

@@ -49,5 +49,22 @@
             User last name
             </summary>
         </member>
+        <member name="T:BuyBike.Core.Services.BicyclesService">
+            <summary>
+            Bicycles Service
+            </summary>
+        </member>
+        <member name="T:BuyBike.Core.Services.Contracts.IBicyclesService">
+            <summary>
+            Bicycles service
+            </summary>
+        </member>
+        <member name="M:BuyBike.Core.Services.Contracts.IBicyclesService.GetAllModelsAsync(System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
+            <summary>
+            Gets all bicycles models by bicycle type or all models
+            </summary>
+            <param name="bikeType">Bicycle type(or null)</param>
+            <returns>Collection of Bicycle DTO</returns>
+        </member>
     </members>
 </doc>

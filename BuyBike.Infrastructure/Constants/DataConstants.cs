@@ -50,7 +50,17 @@
             /// <summary>
             /// Image URL maximum length
             /// </summary>
-            public const int MaxImageUrlLength = 2048;            
+            public const int MaxImageUrlLength = 2048;
+
+            /// <summary>
+            /// Model color maximum length
+            /// </summary>
+            public const int MaxColorLength = 20;
+
+            /// <summary>
+            /// Model description maximum length
+            /// </summary>
+            public const int MaxDescriptionLenght = 2048;
         }
 
         /// <summary>

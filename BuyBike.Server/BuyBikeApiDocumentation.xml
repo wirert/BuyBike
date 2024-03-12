@@ -19,6 +19,11 @@
             <param name="model">User register form data</param>
             <returns></returns>
         </member>
+        <member name="T:BuyBike.Api.Controllers.BicyclesController">
+            <summary>
+            Bicycles controller
+            </summary>
+        </member>
         <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">
             <summary>
             Adds extention methods to the ServiceCollection of application

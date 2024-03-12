@@ -6,6 +6,7 @@
         S,
         M,
         L,
-        XL
+        XL,
+        Kids
     }
 }

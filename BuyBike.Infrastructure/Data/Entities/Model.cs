@@ -45,6 +45,14 @@
         [Required]
         public double TyreSize { get; set; }
 
+        [Comment("Bicycle model color (optional)")]
+        [MaxLength(DataConstants.Model.MaxColorLength)]
+        public string? Color { get; set; }
+
+        [Comment("Bicycle model description (optional")]
+        [MaxLength(DataConstants.Model.MaxDescriptionLenght)]
+        public string? Description { get; set; }
+
         public virtual ICollection<Bicycle> Bicycles { get; set; } = new HashSet<Bicycle>();
 
         [Comment("Soft delete boolean property")]

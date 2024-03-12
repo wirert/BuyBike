@@ -20,9 +20,6 @@
 
         [Comment("Bicycle frame size (enumeration)")]
         [Required]
-        public BikeSize Size { get; set; }
-
-        [Comment("Bicycle color (optional)")]
-        public string? Color { get; set; }        
+        public BikeSize Size { get; set; }       
     }
 }

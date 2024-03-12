@@ -6,14 +6,18 @@
 
     using BuyBike.Infrastructure.Data.Entities;
     using System.ComponentModel.DataAnnotations.Schema;
+    using BuyBike.Infrastructure.Data.Configuraton;
 
     /// <summary>
     /// Application database context
     /// </summary>
     public class BuyBikeDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
-        public BuyBikeDbContext(DbContextOptions<BuyBikeDbContext> options) : base(options)
+        private bool seedDb;
+
+        public BuyBikeDbContext(DbContextOptions<BuyBikeDbContext> options, bool seedDb = true) : base(options)
         {
+            this.seedDb = seedDb;
         }
 
         public virtual DbSet<Model> Models { get; set; } = null!;
@@ -33,6 +37,14 @@
             modelBuilder.Entity<OrderProduct>().HasKey(op => new { op.OrderId, op.ProductId });
 
             base.OnModelCreating(modelBuilder);
+
+
+            if (seedDb)
+            {
+                modelBuilder.ApplyConfiguration(new SeedManufacturersEntityConfiguration());
+                modelBuilder.ApplyConfiguration(new SeedModelsAndBicyclesConfiguraton());
+                modelBuilder.ApplyConfiguration(new SeedBicyclesEntityConfiguration());
+            }
         }
     }
 }
