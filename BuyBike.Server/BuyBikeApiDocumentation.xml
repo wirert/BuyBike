@@ -24,6 +24,13 @@
             Bicycles controller
             </summary>
         </member>
+        <member name="M:BuyBike.Api.Controllers.BicyclesController.Get(System.String)">
+            <summary>
+            Get Bicycles from Db
+            </summary>
+            <param name="type">Bicycles type (optional)</param>
+            <returns>Collection of Bicycle DTO</returns>
+        </member>
         <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">
             <summary>
             Adds extention methods to the ServiceCollection of application

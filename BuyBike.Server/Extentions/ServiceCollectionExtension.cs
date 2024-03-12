@@ -41,6 +41,7 @@
 
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IBicyclesService, BicyclesService>();
 
             return services;
         }
