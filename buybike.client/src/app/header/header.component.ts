@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { BikeTypesComponent } from '../bicycles/bike-types/bike-types.component';
+import { BikeTypesComponent } from '../categories/bicycles/bike-types/bike-types.component';
 
 @Component({
   selector: 'app-header',

@@ -8,9 +8,13 @@ export class BicycleService {
   private url: string = 'https://localhost:7129/api/Bicycles/';
   private http: HttpClient = inject(HttpClient);
 
-  getBicycles(type: string): Observable<Bicycle[]> {
+  getBicycles(type: string | null): Observable<Bicycle[]> {
     let params = new HttpParams();
-    params = params.append('type', type);
+
+    if (type !== null) {
+      params = params.append('type', type);
+    }
+
     return this.http.get<Bicycle[]>(this.url + 'Get', {
       params: params,
       responseType: 'json',

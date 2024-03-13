@@ -1,0 +1,94 @@
+$arrow-height: 9px;
+$arrow-width: 2px;
+$interactive-color: #4338ca;
+$black-color: #111827;
+
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  padding: 24px;
+  border-radius: 6px;
+  box-shadow: 0px 4px 8px 0px rgba(31, 41, 55, 0.14);
+  background-color: #fff;
+  position: relative;
+
+  &__number-indicator {
+    position: absolute;
+    height: 2px;
+    background-color: $interactive-color;
+    opacity: 0;
+    bottom: 38px;
+    transition: all 0.2s ease;
+  }
+
+  &__number {
+    font-weight: 600;
+    font-size: 16px;
+    color: #d1d5db;
+  }
+
+  &__number--active {
+    color: $black-color;
+    position: relative;
+  }
+
+  &__number,
+  &__arrow {
+    padding: 16px;
+  }
+
+  &__arrow--right {
+    transform: scaleX(-1);
+  }
+
+  &__arrow:hover &__arrow-half:first-child {
+    transform: translateY(#{$arrow-width / 4}) rotate(-30deg);
+  }
+  &__arrow:hover &__arrow-half:last-child {
+    transform: translateY(#{-$arrow-width / 4}) rotate(30deg);
+  }
+
+  &__arrow:active &__arrow-half:first-child,
+  &__arrow--disabled &__arrow-half:first-child {
+    transform: translateY(0) rotate(0);
+  }
+  &__arrow:active &__arrow-half:last-child,
+  &__arrow--disabled &__arrow-half:last-child {
+    transform: translateY(0) rotate(0);
+  }
+
+  &__arrow--disabled &__arrow-half:last-child,
+  &__arrow--disabled &__arrow-half:first-child {
+    opacity: 0.2;
+  }
+
+  &__arrow--disabled {
+    pointer-events: none;
+  }
+
+  &__arrow-half {
+    width: $arrow-height;
+    height: $arrow-width;
+    border-radius: $arrow-width / 2;
+    background-color: $interactive-color;
+    display: inline-block;
+    position: absolute;
+    transform-origin: 0px;
+    opacity: 1;
+    transition: transform 0.1s ease-in-out, opacity 0.2s ease-in-out;
+  }
+
+  &__arrow-half:first-child {
+    transform: translateY(#{$arrow-width / 4}) rotate(-45deg);
+  }
+
+  &__arrow-half:last-child {
+    transform: translateY(#{-$arrow-width / 4}) rotate(45deg);
+  }
+}
