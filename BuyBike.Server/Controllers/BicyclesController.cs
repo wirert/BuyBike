@@ -36,7 +36,7 @@
 
             if (type != null)
             {
-                bool isBikeType = Enum.TryParse<BikeType>(type, out var result);
+                bool isBikeType = Enum.TryParse(type, ignoreCase: true, out BikeType result);
 
                 if (!isBikeType)
                 {

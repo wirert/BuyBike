@@ -39,7 +39,8 @@
                 .Select(m => new BicycleModelDto
                 {
                     Id = m.Id,
-                    Name = m.Name,
+                    Model = m.Name,
+                    Make = m.Make.Name,
                     ImageUrl = m.ImageUrl,
                     TyreSize = m.TyreSize,
                     Price = m.Bicycles.First().Price,

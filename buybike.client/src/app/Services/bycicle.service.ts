@@ -1,16 +1,19 @@
 import { Injectable, inject } from '@angular/core';
-import { Bicycle } from '../Models/bicycle';
-import { HttpClient } from '@angular/common/http';
+import { Bicycle } from '../Models/bicycle-model';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class BicycleService {
-  private url: string = '';
+  private url: string = 'https://localhost:7129/api/Bicycles/';
   private http: HttpClient = inject(HttpClient);
 
-  getBicycles(type: string): Bicycle[] {
-    let bicycles: Bicycle[] = [];
-    this.http.get(this.url + type);
-
-    return bicycles;
+  getBicycles(type: string): Observable<Bicycle[]> {
+    let params = new HttpParams();
+    params = params.append('type', type);
+    return this.http.get<Bicycle[]>(this.url + 'Get', {
+      params: params,
+      responseType: 'json',
+    });
   }
 }

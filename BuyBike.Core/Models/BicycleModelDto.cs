@@ -6,7 +6,9 @@
     {
         public Guid Id { get; set; }
 
-        public string Name { get; set; } = null!;
+        public string Model { get; set; } = null!;
+
+        public string Make { get; set; } = null!;
 
         public string ImageUrl { get; set; } = null!;
 
