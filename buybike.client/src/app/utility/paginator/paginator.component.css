@@ -1,0 +1,43 @@
+.pagination-wrapper {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5em;
+  background-color: rgb(35, 35, 35);
+  color: whitesmoke;
+}
+
+button,
+select {
+  background-color: transparent;
+  border: none;
+  color: whitesmoke;
+  padding-right: 0.4em;
+}
+
+option {
+  background-color: rgb(35, 35, 35);
+}
+
+button,
+.sort,
+.select-count {
+  padding: 0.5em 1em;
+}
+
+span {
+  padding: 0.6em 0;
+}
+
+label {
+  padding-right: 0.6em;
+}
+
+.sort-arrow {
+  padding-left: 0.5em;
+  font-size: 1.1em;
+  color: orange;
+}
+
+.reversed {
+  transform: rotate(180deg);
+}

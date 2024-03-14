@@ -1,135 +1,72 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-paginator',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './paginator.component.html',
-  styleUrl: './paginator.component.scss',
+  styleUrl: './paginator.component.css',
 })
-export class PaginatorComponent implements OnInit {
-  ngOnInit(): void {
-    this.decoratePagination();
+export class PaginatorComponent implements AfterViewInit, OnInit {
+  @Input() totalItems: number = 0;
+  @Input() itemsPerPage: number = 12;
+  @Input() currentPage: number = 1;
+  @Output() pageChanged: EventEmitter<number> = new EventEmitter();
+  @Output() itemPerPageChanged: EventEmitter<number> = new EventEmitter();
+  @Output() sortingChanged: EventEmitter<{ orderBy: string; desc: boolean }> =
+    new EventEmitter();
+
+  orderBy: string = 'price';
+  isDescending: boolean = false;
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {}
+
+  get totalPages(): number {
+    return Math.ceil(this.totalItems / this.itemsPerPage);
   }
 
-  private decoratePagination() {
-    const pagination: HTMLElement | null =
-      document.querySelector('.pagination');
-
-    if (pagination) {
-      const paginationNumbers: NodeListOf<HTMLElement> =
-        document.querySelectorAll('.pagination__number');
-      let paginationActiveNumber: HTMLElement = document.querySelector(
-        '.pagination__number--active'
-      )!;
-      const paginationNumberIndicator: HTMLElement = document.querySelector(
-        '.pagination__number-indicator'
-      )!;
-      const paginationLeftArrow: HTMLElement = document.querySelector(
-        '.pagination__arrow:not(.pagination__arrow--right)'
-      )!;
-      const paginationRightArrow: HTMLElement = document.querySelector(
-        '.pagination__arrow--right'
-      )!;
-
-      const postionIndicator = (element: HTMLElement) => {
-        const paginationRect = pagination.getBoundingClientRect();
-        const paddingElement = parseInt(
-          window
-            .getComputedStyle(element, null)
-            .getPropertyValue('padding-left'),
-          10
-        );
-        const elementRect = element.getBoundingClientRect();
-        paginationNumberIndicator!.style.left = `${
-          elementRect.left + paddingElement - paginationRect.left
-        }px`;
-        paginationNumberIndicator.style.width = `${
-          elementRect.width - paddingElement * 2
-        }px`;
-        if (element.classList.contains('pagination__number--active')) {
-          paginationNumberIndicator.style.opacity = '1';
-        } else {
-          paginationNumberIndicator.style.opacity = '0.2';
-        }
-      };
-
-      const setActiveNumber = (element: HTMLElement | null) => {
-        if (element === null) {
-          return;
-        }
-
-        if (element.classList.contains('pagination__number--active')) return;
-        element.classList.add('pagination__number--active');
-        paginationActiveNumber!.classList.remove('pagination__number--active');
-        paginationActiveNumber = element;
-        setArrowState();
-      };
-
-      const disableArrow = (arrow: HTMLElement, disable: any) => {
-        if (
-          (!disable &&
-            !arrow.classList.contains('pagination__arrow--disabled')) ||
-          (disable && arrow.classList.contains('pagination__arrow--disabled'))
-        )
-          return;
-        if (disable) {
-          arrow.classList.add('pagination__arrow--disabled');
-        } else {
-          arrow.classList.remove('pagination__arrow--disabled');
-        }
-      };
-
-      const setArrowState = () => {
-        const previousElement = paginationActiveNumber!.previousElementSibling;
-        const nextElement = paginationActiveNumber!.nextElementSibling;
-        if (previousElement!.classList.contains('pagination__number')) {
-          disableArrow(paginationLeftArrow, false);
-        } else {
-          disableArrow(paginationLeftArrow, true);
-        }
-
-        if (nextElement!.classList.contains('pagination__number')) {
-          disableArrow(paginationRightArrow, false);
-        } else {
-          disableArrow(paginationRightArrow, true);
-        }
-      };
-
-      paginationLeftArrow.addEventListener('click', () => {
-        setActiveNumber(
-          paginationActiveNumber.previousElementSibling === null
-            ? null
-            : (paginationActiveNumber.previousElementSibling as HTMLElement)
-        );
-        postionIndicator(paginationActiveNumber);
-      });
-
-      paginationRightArrow.addEventListener('click', () => {
-        setActiveNumber(
-          paginationActiveNumber.previousElementSibling === null
-            ? null
-            : (paginationActiveNumber.nextElementSibling as HTMLElement)
-        );
-        postionIndicator(paginationActiveNumber);
-      });
-
-      Array.from(paginationNumbers).forEach((element) => {
-        element.addEventListener('click', () => {
-          setActiveNumber(element);
-          postionIndicator(paginationActiveNumber);
-        });
-
-        element.addEventListener('mouseover', () => {
-          postionIndicator(element);
-        });
-
-        element.addEventListener('mouseout', () => {
-          postionIndicator(paginationActiveNumber);
-        });
-      });
-
-      postionIndicator(paginationActiveNumber);
+  changePage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.pageChanged.emit(page);
     }
+  }
+
+  changeItemPerPage(event: any) {
+    const itemsCountPerPage: number = event.target.value;
+
+    if (this.itemsPerPage !== itemsCountPerPage) {
+      this.itemsPerPage = itemsCountPerPage;
+      this.itemPerPageChanged.emit(itemsCountPerPage);
+    }
+  }
+
+  changeSorting(event: any) {
+    const orderBy: string = event.target.value;
+
+    if (this.orderBy !== orderBy) {
+      this.orderBy = orderBy;
+      this.sortingChanged.emit({ orderBy, desc: this.isDescending });
+    }
+  }
+
+  reverseSorting() {
+    this.isDescending = !this.isDescending;
+
+    this.sortingChanged.emit({
+      orderBy: this.orderBy,
+      desc: this.isDescending,
+    });
   }
 }

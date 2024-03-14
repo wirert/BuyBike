@@ -66,5 +66,16 @@
             <param name="bikeType">Bicycle type(or null)</param>
             <returns>Collection of Bicycle DTO</returns>
         </member>
+        <member name="M:BuyBike.Core.Services.Contracts.IBicyclesService.GetPagedModelsAsync(System.Int32,System.Int32,System.String,System.Boolean,System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
+            <summary>
+            Get a set of bicyle models by type 
+            </summary>
+            <param name="page">page number</param>
+            <param name="pageSize">page size</param>
+            <param name="orderBy">Order by text</param>
+            <param name="isDesc">Is in descending order</param>
+            <param name="bikeType">bicycle type or null (for all types)</param>
+            <returns>Paged bicycle object with total models count and Collection of Bicycle model DTO</returns>
+        </member>
     </members>
 </doc>

@@ -1,14 +1,4 @@
-import {
-  AfterContentChecked,
-  Component,
-  DoCheck,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'category-banner',
@@ -18,31 +8,36 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './category-banner.component.css',
 })
 export class CategoryBannerComponent implements OnChanges {
+  private previousType: string | null = null;
+
   @Input() categoryType: string | null = null;
-  activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   imageSrc: string = '';
-  previousType: string | null = null;
 
   ngOnChanges(): void {
-    switch (this.categoryType) {
-      case 'mountain':
-        this.imageSrc = '../../../assets/category-banner/mountain-unsplash.jpg';
-        break;
-      case 'city':
-        this.imageSrc = '../../../assets/category-banner/city-unsplash.jpg';
-        break;
-      case 'road':
-        this.imageSrc = '../../../assets/category-banner/road-unsplash.jpg';
-        break;
-      case 'electric':
-        this.imageSrc = '../../../assets/category-banner/ebikes-unsplash.jpg';
-        break;
-      case 'kids':
-        this.imageSrc = '../../../assets/category-banner/kids-unsplash.jpg';
-        break;
-      default:
-        this.imageSrc = '../../../assets/news/field.jpg';
-        break;
+    if (this.previousType !== this.categoryType) {
+      this.previousType = this.categoryType;
+
+      switch (this.categoryType) {
+        case 'mountain':
+          this.imageSrc =
+            '../../../assets/category-banner/mountain-unsplash.jpg';
+          break;
+        case 'city':
+          this.imageSrc = '../../../assets/category-banner/city-unsplash.jpg';
+          break;
+        case 'road':
+          this.imageSrc = '../../../assets/category-banner/road-unsplash.jpg';
+          break;
+        case 'electric':
+          this.imageSrc = '../../../assets/category-banner/ebikes-unsplash.jpg';
+          break;
+        case 'kids':
+          this.imageSrc = '../../../assets/category-banner/kids-unsplash.jpg';
+          break;
+        default:
+          this.imageSrc = '../../../assets/news/field.jpg';
+          break;
+      }
     }
   }
 }

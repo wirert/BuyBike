@@ -1,6 +1,13 @@
 <category-banner [categoryType]="type"></category-banner>
 <div class="toolbar">
-  <app-paginator></app-paginator>
+  <app-paginator
+    [currentPage]="currentPage"
+    [itemsPerPage]="itemsPerPage"
+    [totalItems]="totalItems"
+    (pageChanged)="onPageChange($event)"
+    (itemPerPageChanged)="onItemsPerPageChange($event)"
+    (sortingChanged)="onSortingChange($event)"
+  ></app-paginator>
   <!-- <div class="paginator">
     <label for="itemsPerPage">Покажи: </label>
     <select name="items" id="itemsPerPage">

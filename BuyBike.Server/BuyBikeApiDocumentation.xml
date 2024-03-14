@@ -31,6 +31,17 @@
             <param name="type">Bicycles type (optional)</param>
             <returns>Collection of Bicycle DTO</returns>
         </member>
+        <member name="M:BuyBike.Api.Controllers.BicyclesController.GetPaged(System.Int32,System.Int32,System.String,System.Boolean,System.String)">
+            <summary>
+            Fetch sorted and paged bicycles
+            </summary>
+            <param name="page">page number</param>
+            <param name="itemsPerPage">Bicycles per page</param>
+            <param name="orderBy">Order by string</param>
+            <param name="desc">Is descending order</param>
+            <param name="type">Bicycles type</param>
+            <returns></returns>
+        </member>
         <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">
             <summary>
             Adds extention methods to the ServiceCollection of application

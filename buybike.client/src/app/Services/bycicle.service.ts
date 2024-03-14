@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Bicycle } from '../Models/bicycle-model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
+import { BicyclePage } from '../Models/paged-bicycles';
 
 @Injectable({ providedIn: 'root' })
 export class BicycleService {
@@ -16,6 +17,30 @@ export class BicycleService {
     }
 
     return this.http.get<Bicycle[]>(this.url + 'Get', {
+      params: params,
+      responseType: 'json',
+    });
+  }
+
+  getPagedBicycles(
+    page: number,
+    itemsPerPage: number,
+    orderBy: string,
+    desc: boolean,
+    type: string | null
+  ): Observable<BicyclePage> {
+    let params = new HttpParams();
+
+    params = params.append('page', page);
+    params = params.append('itemsPerPage', itemsPerPage);
+    params = params.append('orderBy', orderBy);
+    params = params.append('desc', desc);
+
+    if (type !== null) {
+      params = params.append('type', type);
+    }
+
+    return this.http.get<any>(this.url + 'GetPaged', {
       params: params,
       responseType: 'json',
     });

@@ -1,18 +1,44 @@
-<div class="pagination">
-  <span class="pagination__number-indicator"></span>
-  <button class="pagination__arrow">
-    <span class="pagination__arrow-half"></span>
-    <span class="pagination__arrow-half"></span>
-  </button>
-  <button class="pagination__number">1</button>
-  <button class="pagination__number">2</button>
-  <button class="pagination__number">3</button>
-  <button class="pagination__number pagination__number--active">4</button>
-  <button class="pagination__number">5</button>
-  <button class="pagination__number">6</button>
-  <button class="pagination__number">7</button>
-  <button class="pagination__arrow pagination__arrow--right">
-    <span class="pagination__arrow-half"></span>
-    <span class="pagination__arrow-half"></span>
-  </button>
+<div class="pagination-wrapper">
+  <div class="sort">
+    <label for="selectSort">Сортирай по: </label>
+    <select name="selectSort" (change)="changeSorting($event)">
+      <option value="price">Цена</option>
+      <option value="name">Име</option>
+      <option value="manufacturer">Производител</option>
+      <option value="position">Позиция</option>
+    </select>
+    <a (click)="reverseSorting()" class="sort-arrow"
+      ><i
+        class="fa-solid fa-arrow-down-long"
+        [ngClass]="{ reversed: isDescending }"
+      ></i
+    ></a>
+  </div>
+  <div class="select-count">
+    <label for="selectCount">Покажи:</label>
+    <select name="selectCount" (change)="changeItemPerPage($event)">
+      <option value="12">12</option>
+      <option value="24">24</option>
+      <option value="50">50</option>
+      <option value="80">80</option>
+    </select>
+  </div>
+
+  <div class="pagination">
+    <button
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      <i class="fa-solid fa-angle-left"></i>
+    </button>
+
+    <span>Стр. {{ currentPage }} от {{ totalPages }}</span>
+
+    <button
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      <i class="fa-solid fa-angle-right"></i>
+    </button>
+  </div>
 </div>

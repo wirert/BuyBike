@@ -15,8 +15,17 @@
         /// </summary>
         /// <param name="bikeType">Bicycle type(or null)</param>
         /// <returns>Collection of Bicycle DTO</returns>
-        Task<ICollection<BicycleModelDto>> GetAllModelsAsync(BikeType? bikeType); 
-
-
+        Task<ICollection<BicycleModelDto>> GetAllModelsAsync(BikeType? bikeType);
+                
+        /// <summary>
+        /// Get a set of bicyle models by type 
+        /// </summary>
+        /// <param name="page">page number</param>
+        /// <param name="pageSize">page size</param>
+        /// <param name="orderBy">Order by text</param>
+        /// <param name="isDesc">Is in descending order</param>
+        /// <param name="bikeType">bicycle type or null (for all types)</param>
+        /// <returns>Paged bicycle object with total models count and Collection of Bicycle model DTO</returns>
+        Task<PagedBicyclesDto> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType);
     }
 }
