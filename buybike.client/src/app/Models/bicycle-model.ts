@@ -6,6 +6,7 @@ export class Bicycle {
     public price: number,
     public imageUrl: string,
     public tyreSize: number,
-    public color: string | null
+    public color: string | null,
+    public type: string
   ) {}
 }

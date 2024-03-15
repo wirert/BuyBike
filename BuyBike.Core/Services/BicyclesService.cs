@@ -44,7 +44,8 @@
                     ImageUrl = m.ImageUrl,
                     TyreSize = m.TyreSize,
                     Price = m.Bicycles.First().Price,
-                    Color = m.Color
+                    Color = m.Color,
+                    Type = m.Type.ToString(),
 
                 }).ToListAsync();
         }
@@ -86,7 +87,8 @@
                     ImageUrl = m.ImageUrl,
                     TyreSize = m.TyreSize,
                     Price = m.Bicycles.First().Price,
-                    Color = m.Color
+                    Color = m.Color,
+                    Type = m.Type.ToString(),
 
                 }).AsQueryable();
 

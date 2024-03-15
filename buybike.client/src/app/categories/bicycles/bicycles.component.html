@@ -1,20 +1,28 @@
 <category-banner [categoryType]="type"></category-banner>
-<div class="toolbar">
-  <app-paginator
-    [currentPage]="currentPage"
-    [itemsPerPage]="itemsPerPage"
-    [totalItems]="totalItems"
-    (pageChanged)="onPageChange($event)"
-    (itemPerPageChanged)="onItemsPerPageChange($event)"
-    (sortingChanged)="onSortingChange($event)"
-  ></app-paginator>
-  <!-- <div class="paginator">
-    <label for="itemsPerPage">Покажи: </label>
-    <select name="items" id="itemsPerPage">
-      <option value="12">12</option>
-      <option value="24">24</option>
-      <option value="50">50</option>
-      <option value="100">100</option>
-    </select>
-  </div> -->
+
+<app-paginator
+  [currentPage]="currentPage"
+  [itemsPerPage]="itemsPerPage"
+  [totalItems]="totalItems"
+  (pageChanged)="onPageChange($event)"
+  (itemPerPageChanged)="onItemsPerPageChange($event)"
+  (sortingChanged)="onSortingChange($event)"
+></app-paginator>
+
+<div class="bicycles-wrapper">
+  <ng-container *ngFor="let bike of bicycles">
+    <product-card
+      [make]="bike.make"
+      [price]="bike.price"
+      [name]="
+        bikeTypes[bike.type] +
+        ' велосипед ' +
+        bike.model +
+        ' ' +
+        bike.tyreSize +
+        ' ' +
+        bike.color
+      "
+    ></product-card>
+  </ng-container>
 </div>

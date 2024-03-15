@@ -1,0 +1,47 @@
+.product-card {
+  border: solid 1px rgb(195, 194, 194);
+  padding: 1em;
+  position: relative;
+}
+
+.product-card:hover {
+  box-shadow: 0 0 5px 1px rgb(173, 172, 172);
+  cursor: pointer;
+}
+
+.product-card:hover:before {
+  display: inline-block;
+  position: absolute;
+  z-index: 100;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: "Виж детайли";
+  background-color: rgb(111, 2, 2);
+  color: whitesmoke;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+}
+
+.product-card:hover:after {
+  display: inline-block;
+  position: absolute;
+  z-index: 99;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background-color: rgb(255, 255, 255);
+  opacity: 0.4;
+}
+
+.product-card a {
+  display: flex;
+  flex-direction: column;
+}
+
+h4 {
+  color: red;
+  text-transform: uppercase;
+}

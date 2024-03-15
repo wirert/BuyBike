@@ -5,11 +5,18 @@ import { BicycleService } from '../../Services/bycicle.service';
 import { CommonModule } from '@angular/common';
 import { CategoryBannerComponent } from '../category-banner/category-banner.component';
 import { PaginatorComponent } from '../../utility/paginator/paginator.component';
+import { ProductCardComponent } from '../card/product-card.component';
+import { StringIndex } from '../../Contracts/map-string-index';
 
 @Component({
   selector: 'app-bicycles',
   standalone: true,
-  imports: [CommonModule, CategoryBannerComponent, PaginatorComponent],
+  imports: [
+    CommonModule,
+    CategoryBannerComponent,
+    PaginatorComponent,
+    ProductCardComponent,
+  ],
   templateUrl: './bicycles.component.html',
   styleUrl: './bicycles.component.css',
 })
@@ -26,6 +33,14 @@ export class BicyclesComponent implements DoCheck {
   orderBy: string = 'price';
   isDescending: boolean = false;
 
+  bikeTypes: StringIndex = {
+    Mountain: 'Планински',
+    Kids: 'Детски',
+    Road: 'Шосеен',
+    City: 'Градски',
+    Electric: 'Електрически',
+  };
+
   ngDoCheck(): void {
     if (this.typeChanged()) {
       this.currentPage = 1;
@@ -40,6 +55,7 @@ export class BicyclesComponent implements DoCheck {
 
   onItemsPerPageChange(items: number) {
     this.itemsPerPage = items;
+    this.currentPage = 1;
     this.fetchData();
   }
 
