@@ -28,7 +28,7 @@ export class BicyclesComponent implements DoCheck {
   type: string | null = '';
   bicycles: Bicycle[] = [];
   currentPage: number = 1;
-  itemsPerPage: number = 2;
+  itemsPerPage: number = 12;
   totalItems: number = 0;
   orderBy: string = 'price';
   isDescending: boolean = false;

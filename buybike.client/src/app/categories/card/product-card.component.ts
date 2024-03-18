@@ -11,4 +11,5 @@ export class ProductCardComponent {
   @Input() make: string = '';
   @Input() name: string = '';
   @Input() price: number = 0;
+  @Input() imgUrl: string = '';
 }
