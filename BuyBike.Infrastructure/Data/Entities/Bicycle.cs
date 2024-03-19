@@ -2,24 +2,27 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
 
     using Microsoft.EntityFrameworkCore;
 
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
+    using BuyBike.Infrastructure.Constants;
 
-    [Comment("Bicycle")]    
+    [Comment("Bicycle")]
+    [Index(nameof(Model), IsUnique = false)]
     public class Bicycle: Product
     {
-        [Comment("Bicycle model Id")]
-        [Required]        
-        public Guid ModelId { get; set; }
-
-        [ForeignKey(nameof(ModelId))]
-        public virtual Model Model { get; set; } = null!;       
+        [Comment("Bicycle model name")]
+        [Required]
+        [MaxLength(DataConstants.Bicycle.MaxNameLength)]
+        public string Model { get; set; } = null!;
 
         [Comment("Bicycle frame size (enumeration)")]
         [Required]
-        public BikeSize Size { get; set; }       
+        public BikeSize Size { get; set; }
+
+        [Comment("Tyre size")]
+        [Required]
+        public double TyreSize { get; set; }
     }
 }

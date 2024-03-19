@@ -7,6 +7,7 @@
     using BuyBike.Infrastructure.Data.Entities;
     using System.ComponentModel.DataAnnotations.Schema;
     using BuyBike.Infrastructure.Data.Configuraton;
+    using BuyBike.Infrastructure.Data.Configuratons;
 
     /// <summary>
     /// Application database context
@@ -20,7 +21,9 @@
             this.seedDb = seedDb;
         }
 
-        public virtual DbSet<Model> Models { get; set; } = null!;
+        public virtual DbSet<Attribute> Attributes { get; set; } = null!;
+        public virtual DbSet<ProductCategory> ProductsCategories { get; set; } = null!;
+        public virtual DbSet<ProductAttributeValue> AttributeValues { get; set; } = null!;
         public virtual DbSet<Manufacturer> Manufacturers { get; set; } = null!;
         public virtual DbSet<Product> Products { get; set; } = null!;        
         public virtual DbSet<Bicycle> Bicycles { get; set; } = null!;        
@@ -42,7 +45,7 @@
             if (seedDb)
             {
                 modelBuilder.ApplyConfiguration(new SeedManufacturersEntityConfiguration());
-                modelBuilder.ApplyConfiguration(new SeedModelsAndBicyclesConfiguraton());
+                modelBuilder.ApplyConfiguration(new SeedProductsCategoriesTableConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedBicyclesEntityConfiguration());
             }
         }

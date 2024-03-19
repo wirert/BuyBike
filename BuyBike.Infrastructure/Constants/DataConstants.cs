@@ -8,6 +8,62 @@
     public static class DataConstants
     {
         /// <summary>
+        /// Product model constants
+        /// </summary>
+        public static class Product
+        {
+            /// <summary>
+            /// Product image URL maximum length
+            /// </summary>
+            public const int MaxImageUrlLength = 2048;
+
+            /// <summary>
+            /// Product color maximum length
+            /// </summary>
+            public const int MaxColorLength = 20;
+
+            /// <summary>
+            /// Model description maximum length
+            /// </summary>
+            public const int MaxDescriptionLenght = 2048;
+        }
+
+        /// <summary>
+        /// Bicycle model constants
+        /// </summary>
+        public static class Bicycle
+        {
+            /// <summary>
+            /// Model name maximum length
+            /// </summary>
+            public const int MaxNameLength = 60;
+            /// <summary>
+            /// Model name minimum length
+            /// </summary>
+            public const int MinNameLength = 1;
+        }
+
+        /// <summary>
+        /// Product category constants 
+        /// </summary>
+        public static class ProductCategory
+        {
+            /// <summary>
+            /// Category name maximum length
+            /// </summary>
+            public const int MaxNameLength = 30;
+            /// <summary>
+            /// Category name minimum length
+            /// </summary>
+            public const int MinNameLength = 3;
+
+            /// <summary>
+            /// Category description maximum length
+            /// </summary>
+            public const int MaxDescriptionLenght = 2048;
+        }
+
+        /// <summary>
         /// Application user model constants
         /// </summary>
         public static class AppUser
@@ -31,36 +87,6 @@
             public const int MinLastNameLength = 2;
 
             public const string EmailRegExPattern = @"^("".*""|(?>[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]|\\.)+(?>\.(?>[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]|\\.)+)*)@([a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]+(?>\.[a-zA-Z0-9!#\$%&'\*\+\-\/=\?\^_`{}\|~]+)*)$";
-        }
-
-        /// <summary>
-        /// Bicycle Model model constants
-        /// </summary>
-        public static class Model
-        {
-            /// <summary>
-            /// Model name maximum length
-            /// </summary>
-            public const int MaxNameLength = 60;
-            /// <summary>
-            /// Model name minimum length
-            /// </summary>
-            public const int MinNameLength = 1;
-
-            /// <summary>
-            /// Image URL maximum length
-            /// </summary>
-            public const int MaxImageUrlLength = 2048;
-
-            /// <summary>
-            /// Model color maximum length
-            /// </summary>
-            public const int MaxColorLength = 20;
-
-            /// <summary>
-            /// Model description maximum length
-            /// </summary>
-            public const int MaxDescriptionLenght = 2048;
         }
 
         /// <summary>

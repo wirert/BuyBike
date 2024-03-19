@@ -1,10 +1,12 @@
 ﻿namespace BuyBike.Infrastructure.Data.Entities
 {
-    using BuyBike.Infrastructure.Constants;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    
+    using Microsoft.EntityFrameworkCore;
+
+    using BuyBike.Infrastructure.Constants;
 
     public class Manufacturer
     {
@@ -20,6 +22,6 @@
         [Comment("Soft delete boolean property")]
         public bool IsActive { get; set; } = true;
 
-        public virtual ICollection<Model> Models { get; set; } = new HashSet<Model>();
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
     }
 }

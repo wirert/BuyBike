@@ -9,7 +9,6 @@
             Login to application
             </summary>
             <param name="model">Login credentials</param>
-            <param name="returnUrl">Return URL</param>
             <returns></returns>
         </member>
         <member name="M:BuyBike.Api.Controllers.AccountController.Register(BuyBike.Core.Models.Account.RegisterDto)">

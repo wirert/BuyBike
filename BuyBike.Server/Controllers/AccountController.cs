@@ -1,13 +1,15 @@
 ﻿namespace BuyBike.Api.Controllers
 {
-    using BuyBike.Core.Models.Account;
-    using BuyBike.Core.Services.Contracts;
-    using BuyBike.Infrastructure.Data.Entities;
+    using System.Net;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using System.Net;
+
+    using BuyBike.Core.Models.Account;
+    using BuyBike.Core.Services.Contracts;
+    using BuyBike.Infrastructure.Data.Entities;
 
     [Route("api/account")]
     [ApiController]
@@ -27,7 +29,6 @@
         /// Login to application
         /// </summary>
         /// <param name="model">Login credentials</param>
-        /// <param name="returnUrl">Return URL</param>
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost("login")]

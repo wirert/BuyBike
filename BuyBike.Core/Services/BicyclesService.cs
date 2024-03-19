@@ -28,24 +28,24 @@
 
         public async Task<ICollection<BicycleModelDto>> GetAllModelsAsync(BikeType? bikeType)
         {
-            Expression<Func<Model, bool>> searchTerms = m => m.IsActive;
+            Expression<Func<Bicycle, bool>> searchTerms = b => b.IsActive;
 
             if (bikeType != null)
             {
-                searchTerms = m => m.IsActive && m.Type == bikeType;
+                searchTerms = b => b.IsActive && b.Category.Name == bikeType.ToString();
             }
 
             return await repo.AllReadonly(searchTerms)
-                .Select(m => new BicycleModelDto
+                .Select(b => new BicycleModelDto
                 {
-                    Id = m.Id,
-                    Model = m.Name,
-                    Make = m.Make.Name,
-                    ImageUrl = m.ImageUrl,
-                    TyreSize = m.TyreSize,
-                    Price = m.Bicycles.First().Price,
-                    Color = m.Color,
-                    Type = m.Type.ToString(),
+                    Id = b.Id,
+                    Model = b.Model,
+                    Make = b.Make.Name,
+                    ImageUrl = b.ImageUrl,
+                    TyreSize = b.TyreSize,
+                    Price = b.Price,
+                    Color = b.Color,
+                    Type = b.Category.Name,
 
                 }).ToListAsync();
         }
@@ -59,11 +59,11 @@
                 throw new ArgumentException("Incorrect page number or page size.");
             }
 
-            Expression<Func<Model, bool>> searchTerms = m => m.IsActive;
+            Expression<Func<Bicycle, bool>> searchTerms = b => b.IsActive;
 
             if (bikeType != null)
             {
-                searchTerms = m => m.IsActive && m.Type == bikeType;
+                searchTerms = b => b.IsActive && b.Category.Name == bikeType.ToString();
             }
 
             int totalCount = await repo.AllReadonly(searchTerms).CountAsync();
@@ -79,16 +79,16 @@
             }
 
             var data = repo.AllReadonly(searchTerms)
-                .Select(m => new BicycleModelDto
+                .Select(b => new BicycleModelDto
                 {
-                    Id = m.Id,
-                    Model = m.Name,
-                    Make = m.Make.Name,
-                    ImageUrl = m.ImageUrl,
-                    TyreSize = m.TyreSize,
-                    Price = m.Bicycles.First().Price,
-                    Color = m.Color,
-                    Type = m.Type.ToString(),
+                    Id = b.Id,
+                    Model = b.Model,
+                    Make = b.Make.Name,
+                    ImageUrl = b.ImageUrl,
+                    TyreSize = b.TyreSize,
+                    Price = b.Price,
+                    Color = b.Color,
+                    Type = b.Category.Name,
 
                 }).AsQueryable();
 

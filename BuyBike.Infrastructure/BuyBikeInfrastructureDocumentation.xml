@@ -9,6 +9,61 @@
             Models constants
             </summary>
         </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Product">
+            <summary>
+            Product model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxImageUrlLength">
+            <summary>
+            Product image URL maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxColorLength">
+            <summary>
+            Product color maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxDescriptionLenght">
+            <summary>
+            Model description maximum length
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Bicycle">
+            <summary>
+            Bicycle model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MaxNameLength">
+            <summary>
+            Model name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MinNameLength">
+            <summary>
+            Model name minimum length
+            </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory">
+            <summary>
+            Product category constants 
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory.MaxNameLength">
+            <summary>
+            Category name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory.MinNameLength">
+            <summary>
+            Category name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory.MaxDescriptionLenght">
+            <summary>
+            Category description maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.AppUser">
             <summary>
             Application user model constants
@@ -32,36 +87,6 @@
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.AppUser.MinLastNameLength">
             <summary>
             Last name minimum length
-            </summary>
-        </member>
-        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Model">
-            <summary>
-            Bicycle Model model constants
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxNameLength">
-            <summary>
-            Model name maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MinNameLength">
-            <summary>
-            Model name minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxImageUrlLength">
-            <summary>
-            Image URL maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxColorLength">
-            <summary>
-            Model color maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Model.MaxDescriptionLenght">
-            <summary>
-            Model description maximum length
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer">
@@ -282,6 +307,18 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">
