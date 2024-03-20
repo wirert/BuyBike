@@ -51,12 +51,40 @@
         }
 
         public async Task<BicycleDetailsDto> GetById(Guid id)
-        {
-            return await repo.AllReadonly<Bicycle>(b => b.IsActive && b.Id == id)
+        {            
+            var result =  await repo.AllReadonly<Bicycle>(b => b.IsActive && b.Id == id)
                 .Select(b => new BicycleDetailsDto
                 {
-
+                    Model = b.Model,
+                    Make = b.Make.Name,
+                    ImageUrl = b.ImageUrl,
+                    TyreSize = b.TyreSize,
+                    Price = b.Price,
+                    Color = b.Color,
+                    Type = b.Category.Name,
+                    Gender = b.Gender,
+                    Description = b.Description,
+                    Items = b.Items.Select(i => new ItemDto 
+                    { 
+                        Id = i.Id,
+                        Size = i.Size.ToString()!,
+                        Sku = i.Sku,
+                        IsInStock = i.InStock > 0
+                    }),
+                    Attributes = b.AttributeValues.Select(av => new AttributeDto
+                    {
+                        Name = av.Attribute.Name,
+                        Value = av.Value
+                    })
                 } ).FirstOrDefaultAsync();
+
+
+            if (result == null)
+            {
+                throw new ArgumentException("Invalid bicycle identifier.");
+            }
+
+            return result;
         }
 
         public async Task<PagedBicyclesDto> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)

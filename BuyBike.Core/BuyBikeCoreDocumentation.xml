@@ -49,6 +49,11 @@
             User last name
             </summary>
         </member>
+        <member name="T:BuyBike.Core.Models.ItemDto">
+            <summary>
+            Product item model
+            </summary>
+        </member>
         <member name="T:BuyBike.Core.Services.BicyclesService">
             <summary>
             Bicycles Service

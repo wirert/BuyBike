@@ -25,7 +25,7 @@
         </member>
         <member name="M:BuyBike.Api.Controllers.BicyclesController.Get(System.String)">
             <summary>
-            Get Bicycles from Db
+            Get Bicycles by category or all
             </summary>
             <param name="type">Bicycles type (optional)</param>
             <returns>Collection of Bicycle DTO</returns>
@@ -39,6 +39,13 @@
             <param name="orderBy">Order by string</param>
             <param name="desc">Is descending order</param>
             <param name="type">Bicycles type</param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Api.Controllers.BicyclesController.GetById(System.Guid)">
+            <summary>
+            Get Bicycle details by Id
+            </summary>
+            <param name="id">Bicycle identifier</param>
             <returns></returns>
         </member>
         <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">

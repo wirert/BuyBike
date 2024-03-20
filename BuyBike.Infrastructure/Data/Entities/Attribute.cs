@@ -14,13 +14,14 @@
 
         [Comment("Attribute name")]
         [Required]
-        //[MaxLength(DataConstants.Specification.MaxNameLength)]
+        [MaxLength(DataConstants.Attribute.MaxNameLength)]
         public string Name { get; set; } = null!;
 
-        [Comment("Product property type (default: string)")]
-        //[MaxLength(DataConstants.Specification.MaxDataTypeLength)]
+        [Comment("Product property value type (default: string)")]
+        [MaxLength(DataConstants.Attribute.MaxValueTypeLenght)]
         public string DataType { get; set; } = "string";
 
+        [Comment("Product category id for current attribute")]
         [Required]
         public int ProductCategoryId { get; set; }
 

@@ -69,6 +69,31 @@
             Category description maximum length
             </summary>
         </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Attribute">
+            <summary>
+            Product additional attribute (property) constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MaxNameLength">
+            <summary>
+            Attribute name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MinNameLenght">
+            <summary>
+            Attribute name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MaxValueLenght">
+            <summary>
+            Attribute value max lenght
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MaxValueTypeLenght">
+            <summary>
+            Attribute value type maximum lenght
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.AppUser">
             <summary>
             Application user model constants
@@ -336,6 +361,18 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">

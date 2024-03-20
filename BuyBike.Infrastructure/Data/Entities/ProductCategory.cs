@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    [Comment("Product category")]
     public class ProductCategory
     {
         [Key]

@@ -41,6 +41,8 @@
 
             modelBuilder.Entity<OrderItem>().HasKey(op => new { op.OrderId, op.ItemId });
 
+            modelBuilder.Entity<ProductAttributeValue>().HasKey(pav => new { pav.ProductId, pav.AttributeId });
+
             base.OnModelCreating(modelBuilder);
 
 

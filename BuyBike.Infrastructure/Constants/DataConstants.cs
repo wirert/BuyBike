@@ -30,7 +30,7 @@
             /// <summary>
             /// Item SCU lenght
             /// </summary>
-            public const int ScuLenght = 10;
+            public const int ScuLenght = 10;            
         }
 
         /// <summary>
@@ -66,6 +66,31 @@
             /// Category description maximum length
             /// </summary>
             public const int MaxDescriptionLenght = 2048;
+        }
+
+        /// <summary>
+        /// Product additional attribute (property) constants
+        /// </summary>
+        public static class Attribute
+        {
+            /// <summary>
+            /// Attribute name maximum length
+            /// </summary>
+            public const int MaxNameLength = 20;
+            /// <summary>
+            /// Attribute name minimum length
+            /// </summary>
+            public const int MinNameLenght = 3;
+
+            /// <summary>
+            /// Attribute value max lenght
+            /// </summary>
+            public const int MaxValueLenght = 80;
+
+            /// <summary>
+            /// Attribute value type maximum lenght
+            /// </summary>
+            public const int MaxValueTypeLenght = 10;
         }
 
         /// <summary>

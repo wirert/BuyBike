@@ -21,12 +21,11 @@
         }
 
         /// <summary>
-        /// Get Bicycles from Db
+        /// Get Bicycles by category or all
         /// </summary>
-        /// <param name="type">Bicycles type (optional)</param>
+        /// <param name="type">Bicycles category (optional)</param>
         /// <returns>Collection of Bicycle DTO</returns>
         [HttpGet]
-        [Route("Get")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<BicycleModelDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -69,7 +68,7 @@
         /// <param name="type">Bicycles type</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("GetPaged")]
+        [Route("Paged")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedBicyclesDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -106,10 +105,33 @@
             }
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Get Bicycle details by Id
+        /// </summary>
+        /// <param name="id">Bicycle identifier</param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BicycleDetailsDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok();
+            try
+            {
+                var bicycle = await bicyclesService.GetById(id);
+
+                return Ok(bicycle);
+            }
+            catch(ArgumentException e)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, e);
+            }
+            catch (Exception e)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, e);
+            }
         }
     
     }
