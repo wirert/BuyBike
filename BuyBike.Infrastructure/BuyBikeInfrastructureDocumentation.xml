@@ -26,7 +26,12 @@
         </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxDescriptionLenght">
             <summary>
-            Model description maximum length
+            Product description maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.ScuLenght">
+            <summary>
+            Item SCU lenght
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Bicycle">
@@ -319,6 +324,18 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.ItemTableAdded">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">

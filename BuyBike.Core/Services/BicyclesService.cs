@@ -50,6 +50,15 @@
                 }).ToListAsync();
         }
 
+        public async Task<BicycleDetailsDto> GetById(Guid id)
+        {
+            return await repo.AllReadonly<Bicycle>(b => b.IsActive && b.Id == id)
+                .Select(b => new BicycleDetailsDto
+                {
+
+                } ).FirstOrDefaultAsync();
+        }
+
         public async Task<PagedBicyclesDto> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)
         {
             int skipCount = (page - 1) * pageSize;

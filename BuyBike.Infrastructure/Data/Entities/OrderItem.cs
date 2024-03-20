@@ -4,15 +4,15 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Comment("Connecting table between orders and products")]
-    public class OrderProduct
+    [Comment("Connecting table between orders and items")]
+    public class OrderItem
     {       
-        [Comment("Product id")]
+        [Comment("Ordered item id")]
         [Required]
-        public Guid ProductId { get; set; }
+        public Guid ItemId { get; set; }
 
-        [ForeignKey(nameof(ProductId))]
-        public Product Product { get; set; } = null!;
+        [ForeignKey(nameof(ItemId))]
+        public Item Item { get; set; } = null!;
 
         [Comment("Order id")]
         [Required]
@@ -21,7 +21,7 @@
         [ForeignKey(nameof(OrderId))]
         public Order Order { get; set; } = null!;
 
-        [Comment("Product quantity")]
+        [Comment("Item quantity")]
         public int Quantity { get; set; }
     }
 }

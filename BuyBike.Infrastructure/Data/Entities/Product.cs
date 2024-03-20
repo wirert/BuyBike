@@ -12,9 +12,9 @@
     {
         public Product()
         {
-            Id = Guid.NewGuid();
-            OrderProducts = new HashSet<OrderProduct>();
+            Id = Guid.NewGuid();            
             AttributeValues = new List<ProductAttributeValue>();
+            Items = new List<Item>();
         }
 
         [Key]
@@ -29,10 +29,6 @@
         [Required]
         [MaxLength(DataConstants.Product.MaxImageUrlLength)]
         public string ImageUrl { get; set; } = null!;
-
-        [Comment("Bicycle count in stock")]
-        [Required]
-        public int InStock { get; set; }
 
         [Comment("Product manufacturer id")]
         [Required]
@@ -56,13 +52,14 @@
         public bool IsActive { get; set; } = true;
 
         [Comment("Product category identifier")]
-        public int? CategoryId { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
 
         [ForeignKey(nameof(CategoryId))]
         public virtual ProductCategory Category { get; set; } = null!;
 
         public virtual ICollection<ProductAttributeValue> AttributeValues { get; set; }
-       
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; }
+
+        public virtual ICollection<Item> Items { get; set; }
     }
 }

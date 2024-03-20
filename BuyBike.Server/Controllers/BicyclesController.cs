@@ -1,5 +1,6 @@
 ﻿namespace BuyBike.Api.Controllers
 {
+    using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
     using Microsoft.AspNetCore.Http;
@@ -27,7 +28,7 @@
         [HttpGet]
         [Route("Get")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<BicycleModelDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromQuery] string? type = null)
@@ -40,7 +41,7 @@
 
                 if (!isBikeType)
                 {
-                    return BadRequest("Invalid bicycle type.");                    
+                    return BadRequest("Invalid bicycle type.");
                 }
 
                 bikeType = result;
@@ -57,7 +58,7 @@
                 return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
         }
-        
+
         /// <summary>
         /// Fetch sorted and paged bicycles
         /// </summary>
@@ -70,10 +71,10 @@
         [HttpGet]
         [Route("GetPaged")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedBicyclesDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPaged([FromQuery] int page,[FromQuery] int itemsPerPage, [FromQuery] string orderBy,[FromQuery] bool desc, [FromQuery] string? type = null)
+        public async Task<IActionResult> GetPaged([FromQuery] int page, [FromQuery] int itemsPerPage, [FromQuery] string orderBy, [FromQuery] bool desc, [FromQuery] string? type = null)
         {
             BikeType? bikeType = null;
 
@@ -104,5 +105,12 @@
                 return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            return Ok();
+        }
+    
     }
 }

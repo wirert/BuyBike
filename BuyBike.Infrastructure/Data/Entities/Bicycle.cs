@@ -15,11 +15,7 @@
         [Comment("Bicycle model name")]
         [Required]
         [MaxLength(DataConstants.Bicycle.MaxNameLength)]
-        public string Model { get; set; } = null!;
-
-        [Comment("Bicycle frame size (enumeration)")]
-        [Required]
-        public BikeSize Size { get; set; }
+        public string Model { get; set; } = null!;        
 
         [Comment("Tyre size")]
         [Required]

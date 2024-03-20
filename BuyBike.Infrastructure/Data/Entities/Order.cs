@@ -42,6 +42,6 @@
         [StringLength(DataConstants.Order.MaxCountryLength)]
         public string Country { get; set; } = null!;
 
-        public virtual ICollection<OrderProduct> OrderProducts { get; set; } = new HashSet<OrderProduct>();
+        public virtual ICollection<OrderItem> OrderProducts { get; set; } = new HashSet<OrderItem>();
     }
 }

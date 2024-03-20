@@ -27,5 +27,12 @@
         /// <param name="bikeType">bicycle type or null (for all types)</param>
         /// <returns>Paged bicycle object with total models count and Collection of Bicycle model DTO</returns>
         Task<PagedBicyclesDto> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType);
+
+        /// <summary>
+        /// Get Bicycle by Id
+        /// </summary>
+        /// <param name="id">Bicycle Identifier</param>
+        /// <returns>Bicycle Data Transfer Object with details</returns>
+        Task<BicycleDetailsDto> GetById(Guid id);
     }
 }

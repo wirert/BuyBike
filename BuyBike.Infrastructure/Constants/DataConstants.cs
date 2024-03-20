@@ -23,9 +23,14 @@
             public const int MaxColorLength = 20;
 
             /// <summary>
-            /// Model description maximum length
+            /// Product description maximum length
             /// </summary>
             public const int MaxDescriptionLenght = 2048;
+
+            /// <summary>
+            /// Item SCU lenght
+            /// </summary>
+            public const int ScuLenght = 10;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿namespace BuyBike.Infrastructure.Data.Entities.Enumerations
 {
-    public enum BikeSize
+    public enum Size
     {
         XS,
         S,
