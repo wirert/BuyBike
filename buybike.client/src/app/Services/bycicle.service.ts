@@ -3,6 +3,7 @@ import { Bicycle } from '../Models/bicycle-model';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
 import { BicyclePage } from '../Models/paged-bicycles';
+import { BicycleDetails } from '../Models/bicycle-details';
 
 @Injectable({ providedIn: 'root' })
 export class BicycleService {
@@ -40,9 +41,13 @@ export class BicycleService {
       params = params.append('type', type);
     }
 
-    return this.http.get<any>(this.url + 'GetPaged', {
+    return this.http.get<BicyclePage>(this.url + 'Paged', {
       params: params,
       responseType: 'json',
     });
+  }
+
+  getBicycleDetails(id: string): Observable<BicycleDetails> {
+    return this.http.get<BicycleDetails>(this.url + id);
   }
 }

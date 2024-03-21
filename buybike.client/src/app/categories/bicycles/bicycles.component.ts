@@ -1,5 +1,5 @@
 import { Component, DoCheck, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Bicycle } from '../../Models/bicycle-model';
 import { BicycleService } from '../../Services/bycicle.service';
 import { CommonModule } from '@angular/common';
@@ -20,7 +20,7 @@ import { StringIndex } from '../../Contracts/map-string-index';
   templateUrl: './bicycles.component.html',
   styleUrl: './bicycles.component.css',
 })
-export class BicyclesComponent implements DoCheck {
+export class BicyclesComponent implements OnInit {
   private router: Router = inject(Router);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private bikeService: BicycleService = inject(BicycleService);
@@ -41,11 +41,10 @@ export class BicyclesComponent implements DoCheck {
     Electric: 'Електрически',
   };
 
-  ngDoCheck(): void {
-    if (this.typeChanged()) {
-      this.currentPage = 1;
-      this.fetchData();
-    }
+  ngOnInit(): void {
+    this.activatedRoute.pathFromRoot[1].url.subscribe((val) =>
+      this.changeType(val)
+    );
   }
 
   onPageChange(page: number) {
@@ -85,30 +84,13 @@ export class BicyclesComponent implements DoCheck {
       });
   }
 
-  private typeChanged(): boolean {
-    let param = this.activatedRoute.snapshot.params['type'];
-
-    if (!param) {
-      param = null;
+  private changeType(val: UrlSegment[]) {
+    if (val.length > 1) {
+      const path = val[1].path.toLowerCase();
+      this.type = path;
     }
 
-    if (param === this.type) {
-      return false;
-    }
-
-    if (
-      !param ||
-      param === 'kids' ||
-      param === 'mountain' ||
-      param === 'road' ||
-      param === 'city' ||
-      param === 'electric'
-    ) {
-      this.type = param;
-    } else {
-      this.router.navigateByUrl('bicycles');
-    }
-
-    return true;
+    this.currentPage = 1;
+    this.fetchData();
   }
 }
