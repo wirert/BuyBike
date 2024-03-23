@@ -10,6 +10,8 @@
     {
         public decimal Price { get; set; }
 
+        public int? DiscountPercent { get; set; }
+
         public string ImageUrl { get; set; } = null!;
 
         public string Make { get; set; } = null!;

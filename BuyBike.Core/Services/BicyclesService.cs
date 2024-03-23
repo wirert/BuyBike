@@ -60,6 +60,7 @@
                     ImageUrl = b.ImageUrl,
                     TyreSize = b.TyreSize,
                     Price = b.Price,
+                    DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
                     Color = b.Color,
                     Type = b.Category.Name,
                     Gender = b.Gender,

@@ -1,40 +1,50 @@
 <div class="product-wrapper">
   <div class="product-left">
-    <div class="img-wrapper">
-      <img src="../../../assets/bikeTypes/mountain.png" alt="снимка" />
-    </div>
+    <div
+      class="product-image"
+      #imageDiv
+      [ngStyle]="{
+        background:
+          'center / contain no-repeat url(../../../assets/bikeTypes/mountain.png)'
+      }"
+      (mousemove)="onMouseMoveOverPicture($event)"
+      (mouseout)="onMouseOutOfPicture()"
+    ></div>
   </div>
   <div class="product-right">
     <div class="product-info">
       <div class="product-name-group">
-        <h2>Име Модел</h2>
-        <p class="sku">Кат. номер: <span>dsfa5454</span></p>
+        <div>
+          <h2>Име Модел</h2>
+          <p class="sku">Кат. номер: <span>dsfa5454</span></p>
+        </div>
         <a href="#" class="brand">Марка</a>
       </div>
 
       <div class="product-price-group">
-        <div class="product-price">4525 лв.</div>
+        <div class="product-price">4525.00 лв.</div>
         <div class="product-status">
           <div>В наличност</div>
         </div>
       </div>
 
       <div class="product-options">
-        <label for="size">Размер:</label>
-        <select name="size">
-          <option value="L">L</option>
-          <option value="">XL</option>
-          <option value="">M</option>
-        </select>
-
+        <div>
+          <label for="size">Размер:</label>
+          <select name="size">
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+            <option value="">M</option>
+          </select>
+        </div>
         <button class="btn btn-success">Купи</button>
 
-        <div class="ask-obout">
+        <div class="ask-about">
           <button class="btn btn-danger">Запитване</button>
           <p>
             Този продукт / размер в момента не е наличен в нашия склад. За
-            информация за възможна индивидуална поръчка и срок на доставка може
-            да изпратите запитване към нас.
+            информация за възможна <b>индивидуална поръчка</b> и срок на
+            доставка може да изпратите запитване към нас.
           </p>
         </div>
       </div>

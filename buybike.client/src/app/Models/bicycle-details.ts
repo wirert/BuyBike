@@ -5,6 +5,7 @@ export class BicycleDetails {
     public Model: string,
     public Make: string,
     public Price: number,
+    public DiscountPercent: number | null,
     public ImageUrl: string,
     public Color: string | null,
     public Description: string | null,
