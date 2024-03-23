@@ -1,11 +1,13 @@
 ﻿namespace BuyBike.Infrastructure.Data.Entities
 {
-    using BuyBike.Infrastructure.Constants;
-    using BuyBike.Infrastructure.Data.Entities.Enumerations;
-    using Microsoft.EntityFrameworkCore;
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    
+    using Microsoft.EntityFrameworkCore;
+    
+    using BuyBike.Infrastructure.Constants;
+    using BuyBike.Infrastructure.Data.Entities.Enumerations;
 
     [Comment("Shop product model")]
     public class Product
@@ -24,6 +26,12 @@
         [Comment("Product price")]
         [Required]
         public decimal Price { get; set; }
+
+        [Comment("Product discount id")]
+        public int? DiscountId { get; set; }
+
+        [ForeignKey(nameof(DiscountId))]
+        public Discount? Discount { get; set; }
 
         [Comment("Model Image URL")]
         [Required]

@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
 import { Bicycle } from '../../Models/bicycle-model';
 import { BicycleService } from '../../Services/bycicle.service';
@@ -25,14 +25,6 @@ export class BicyclesComponent implements OnInit {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private bikeService: BicycleService = inject(BicycleService);
 
-  type: string | null = '';
-  bicycles: Bicycle[] = [];
-  currentPage: number = 1;
-  itemsPerPage: number = 12;
-  totalItems: number = 0;
-  orderBy: string = 'price';
-  isDescending: boolean = false;
-
   bikeTypes: StringIndex = {
     Mountain: 'Планински',
     Kids: 'Детски',
@@ -40,6 +32,14 @@ export class BicyclesComponent implements OnInit {
     City: 'Градски',
     Electric: 'Електрически',
   };
+
+  type: string | null = '';
+  bicycles: Bicycle[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 12;
+  totalItems: number = 0;
+  orderBy: string = 'price';
+  isDescending: boolean = false;
 
   ngOnInit(): void {
     this.activatedRoute.pathFromRoot[1].url.subscribe((val) =>

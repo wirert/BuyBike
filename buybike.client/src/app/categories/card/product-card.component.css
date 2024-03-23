@@ -1,4 +1,5 @@
 .product-card {
+  display: block;
   border: solid 1px rgb(229, 229, 229);
   padding: 1em;
   position: relative;
@@ -36,7 +37,7 @@
   opacity: 0.4;
 }
 
-.product-card a {
+.card-content {
   display: flex;
   flex-direction: column;
 }

@@ -27,7 +27,7 @@
             <summary>
             Get Bicycles by category or all
             </summary>
-            <param name="type">Bicycles type (optional)</param>
+            <param name="type">Bicycles category (optional)</param>
             <returns>Collection of Bicycle DTO</returns>
         </member>
         <member name="M:BuyBike.Api.Controllers.BicyclesController.GetPaged(System.Int32,System.Int32,System.String,System.Boolean,System.String)">

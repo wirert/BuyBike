@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Bicycle } from '../Models/bicycle-model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { BicyclePage } from '../Models/paged-bicycles';
 import { BicycleDetails } from '../Models/bicycle-details';
 

@@ -135,6 +135,26 @@
         }
 
         /// <summary>
+        /// Discount model constants
+        /// </summary>
+        public static class Discount
+        {
+            /// <summary>
+            /// Discount name maximum length
+            /// </summary>
+            public const int MaxNameLength = 20;
+            /// <summary>
+            /// Discount name minimum length
+            /// </summary>
+            public const int MinNameLength = 1;
+
+            /// <summary>
+            /// Discount description maximum length
+            /// </summary>
+            public const int MaxDescriptionLenght = 128;
+        }
+
+        /// <summary>
         /// Order model constants
         /// </summary>
         public static class Order

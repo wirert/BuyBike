@@ -134,6 +134,26 @@
             Manufacturer name minimum length
             </summary>
         </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Discount">
+            <summary>
+            Discount model constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Discount.MaxNameLength">
+            <summary>
+            Discount name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Discount.MinNameLength">
+            <summary>
+            Discount name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Discount.MaxDescriptionLenght">
+            <summary>
+            Discount description maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Order">
             <summary>
             Order model constants
@@ -373,6 +393,18 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.AddDiscountTable">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
         <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">

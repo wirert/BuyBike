@@ -1,5 +1,5 @@
-<div class="product-card">
-  <a>
+<a [routerLink]="['/p', nameForUrl]" class="product-card">
+  <div class="card-content">
     <div class="image-wrapper">
       <img [src]="imgUrl" alt="product picture" />
     </div>
@@ -8,5 +8,5 @@
       <h3>{{ name }}</h3>
       <div class="price">{{ price }} лв.</div>
     </div>
-  </a>
-</div>
+  </div>
+</a>

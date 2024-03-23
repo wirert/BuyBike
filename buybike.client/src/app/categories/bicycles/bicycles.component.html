@@ -12,11 +12,16 @@
 <div class="bicycles-wrapper">
   <ng-container *ngFor="let bike of bicycles">
     <product-card
+      [id]="bike.id"
+      [itemType]="'bicycle'"
+      [category]="type ? type : ''"
       [make]="bike.make"
       [price]="bike.price"
       [name]="
         bikeTypes[bike.type] +
         ' велосипед ' +
+        bike.make +
+        ' ' +
         bike.model +
         ' ' +
         bike.tyreSize +
