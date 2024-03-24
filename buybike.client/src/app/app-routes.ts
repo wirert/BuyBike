@@ -39,7 +39,7 @@ const routes: Routes = [
   {
     path: 'p/:name',
     component: ProductDetailsComponent,
-    title: 'Велосипеди',
+    title: 'Детайли',
   },
   { path: '**', component: NotFoundComponent },
 ];

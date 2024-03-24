@@ -1,23 +1,22 @@
 import { Injectable, inject } from '@angular/core';
-import { Bicycle } from '../Models/bicycle-model';
+import { BicycleModel } from '../Models/bicycle.model';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, map, tap } from 'rxjs';
-import { BicyclePage } from '../Models/paged-bicycles';
-import { BicycleDetails } from '../Models/bicycle-details';
+import { Observable } from 'rxjs';
+import { BicyclePageModel } from '../Models/paged-bicycles.model';
 
 @Injectable({ providedIn: 'root' })
 export class BicycleService {
   private url: string = 'https://localhost:7129/api/Bicycles/';
   private http: HttpClient = inject(HttpClient);
 
-  getBicycles(type: string | null): Observable<Bicycle[]> {
+  getBicycles(type: string | null): Observable<BicycleModel[]> {
     let params = new HttpParams();
 
     if (type !== null) {
       params = params.append('type', type);
     }
 
-    return this.http.get<Bicycle[]>(this.url + 'Get', {
+    return this.http.get<BicycleModel[]>(this.url + 'Get', {
       params: params,
       responseType: 'json',
     });
@@ -29,7 +28,7 @@ export class BicycleService {
     orderBy: string,
     desc: boolean,
     type: string | null
-  ): Observable<BicyclePage> {
+  ): Observable<BicyclePageModel> {
     let params = new HttpParams();
 
     params = params.append('page', page);
@@ -41,13 +40,9 @@ export class BicycleService {
       params = params.append('type', type);
     }
 
-    return this.http.get<BicyclePage>(this.url + 'Paged', {
+    return this.http.get<BicyclePageModel>(this.url + 'Paged', {
       params: params,
       responseType: 'json',
     });
-  }
-
-  getBicycleDetails(id: string): Observable<BicycleDetails> {
-    return this.http.get<BicycleDetails>(this.url + id);
   }
 }

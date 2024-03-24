@@ -1,4 +1,8 @@
-<a [routerLink]="['/p', nameForUrl]" class="product-card">
+<a
+  [routerLink]="['/p', nameForUrl]"
+  [state]="{ id: id, type: itemType }"
+  class="product-card"
+>
   <div class="card-content">
     <div class="image-wrapper">
       <img [src]="imgUrl" alt="product picture" />

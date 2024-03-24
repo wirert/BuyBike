@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
-import { Bicycle } from '../../Models/bicycle-model';
+import { BicycleModel } from '../../Models/bicycle.model';
 import { BicycleService } from '../../Services/bycicle.service';
 import { CommonModule } from '@angular/common';
 import { CategoryBannerComponent } from '../category-banner/category-banner.component';
@@ -34,7 +34,7 @@ export class BicyclesComponent implements OnInit {
   };
 
   type: string | null = '';
-  bicycles: Bicycle[] = [];
+  bicycles: BicycleModel[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 12;
   totalItems: number = 0;

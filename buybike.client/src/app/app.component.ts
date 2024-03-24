@@ -1,18 +1,11 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
 import { BicyclesComponent } from './categories/bicycles/bicycles.component';
 import { ProductDetailsComponent } from './categories/product-details/product-details.component';
-
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
 
 @Component({
   standalone: true,
@@ -29,9 +22,6 @@ interface WeatherForecast {
     HttpClientModule,
   ],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'Buy Bike';
-  private http: HttpClient = inject(HttpClient);
-
-  ngOnInit() {}
 }

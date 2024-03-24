@@ -1,6 +1,6 @@
 import { StringIndex } from '../Contracts/map-string-index';
 
-export class Bicycle {
+export class BicycleModel {
   constructor(
     public id: string,
     public model: string,
