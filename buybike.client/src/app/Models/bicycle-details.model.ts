@@ -1,7 +1,7 @@
 import { ProductDetailsModel } from './product-details.model';
 
 export interface BicycleDetailsModel extends ProductDetailsModel {
-  TyreSize: number;
+  tyreSize: number;
 
   // constructor(
   //   model: string,

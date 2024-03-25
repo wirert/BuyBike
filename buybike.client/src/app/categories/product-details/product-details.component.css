@@ -20,6 +20,7 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: solid 1px rgb(223, 222, 222);
+  padding-bottom: 1em;
 }
 
 .product-options {
@@ -30,13 +31,19 @@
   padding-top: 1em;
 }
 
-.product-options label {
-  display: block;
+.product-options label,
+select {
   font-size: 0.8em;
 }
 
-select {
+.product-options label {
+  display: block;
+  font-weight: bold;
+}
+
+.product-options select {
   min-width: 5em;
+  padding: 0.2em 0.5em;
 }
 
 .product-name-group h2 {

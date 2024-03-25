@@ -9,7 +9,10 @@ export class ProductService {
   private url: string = 'https://localhost:7129/api/';
   private http: HttpClient = inject(HttpClient);
 
-  getProductDetails(id: string, type: string): Observable<ProductDetailsModel> {
+  getProductDetails(
+    id: string,
+    type: string
+  ): Observable<ProductDetailsModel | BicycleDetailsModel> {
     switch (type) {
       case 'bicycle':
         return this.http.get<BicycleDetailsModel>(`${this.url}Bicycles/${id}`);

@@ -3,10 +3,7 @@
     <div
       class="product-image"
       #imageDiv
-      [ngStyle]="{
-        background:
-          'center / contain no-repeat url(../../../assets/bikeTypes/mountain.png)'
-      }"
+      [ngStyle]="productImageStyleObj"
       (mousemove)="onMouseMoveOverPicture($event)"
       (mouseout)="onMouseOutOfPicture()"
     ></div>
@@ -15,26 +12,31 @@
     <div class="product-info">
       <div class="product-name-group">
         <div>
-          <h2>Име Модел</h2>
-          <p class="sku">Кат. номер: <span>dsfa5454</span></p>
+          <h2>
+            {{ productName }}
+          </h2>
+          <div class="sku" *ngIf="selectItemScu">
+            Кат. номер: <span>{{ selectItemScu }}</span>
+          </div>
         </div>
         <a href="#" class="brand">Марка</a>
       </div>
 
       <div class="product-price-group">
-        <div class="product-price">4525.00 лв.</div>
+        <div class="product-price">{{ product?.price }}</div>
         <div class="product-status">
           <div>В наличност</div>
         </div>
       </div>
 
       <div class="product-options">
-        <div>
+        <div *ngIf="haveSize">
           <label for="size">Размер:</label>
-          <select name="size">
-            <option value="L">L</option>
-            <option value="XL">XL</option>
-            <option value="">M</option>
+          <select name="size" [(ngModel)]="selectItemScu">
+            <option value="">-- Избери размер --</option>
+            <option *ngFor="let item of product?.items" value="{{ item.sku }}">
+              {{ item.size }}{{ item.isInStock ? "" : " (няма налични)" }}
+            </option>
           </select>
         </div>
         <button class="btn btn-success">Купи</button>

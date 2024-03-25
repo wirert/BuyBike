@@ -5,7 +5,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ProductDetailsComponent } from './categories/product-details/product-details.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, title: 'Home page' },
+  { path: '', component: HomeComponent, title: 'BUY BIKE' },
   {
     path: 'bicycles',
     component: BicyclesComponent,

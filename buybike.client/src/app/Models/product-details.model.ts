@@ -1,15 +1,15 @@
 import { ItemModel } from './item.model';
 
 export interface ProductDetailsModel {
-  Model: string;
-  Make: string;
-  Price: number;
-  DiscountPercent: number | null;
-  ImageUrl: string;
-  Color: string | null;
-  Description: string | null;
-  Gender: string | null;
-  Category: string;
-  Items: ItemModel[];
-  Attributes: { name: string; value: string }[];
+  model: string;
+  make: string;
+  price: number;
+  discountPercent: number | null;
+  imageUrl: string;
+  color: string | null;
+  description: string | null;
+  gender: string | null;
+  type: string;
+  items: ItemModel[];
+  attributes: { name: string; value: string }[];
 }
