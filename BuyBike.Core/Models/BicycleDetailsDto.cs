@@ -16,6 +16,8 @@
 
         public string Make { get; set; } = null!;
 
+        public string MakeLogoUrl { get; set; } = string.Empty;
+
         public string? Color { get; set; }
 
         public Gender? Gender { get; set; }

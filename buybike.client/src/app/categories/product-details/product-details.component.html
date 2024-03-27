@@ -15,33 +15,65 @@
           <h2>
             {{ productName }}
           </h2>
-          <div class="sku" *ngIf="selectItemScu">
-            Кат. номер: <span>{{ selectItemScu }}</span>
+          <div class="sku" *ngIf="selectedItemIndex">
+            Кат. номер:
+            <span>{{ (product?.items)![+selectedItemIndex].sku }}</span>
           </div>
         </div>
-        <a href="#" class="brand">Марка</a>
+        <a class="logo"
+          ><img [src]="product?.makeLogoUrl" [alt]="product?.make"
+        /></a>
       </div>
 
       <div class="product-price-group">
-        <div class="product-price">{{ product?.price }}</div>
-        <div class="product-status">
-          <div>В наличност</div>
+        <div
+          class="product-price"
+          [ngStyle]="{
+            'text-decoration-line': product?.discountPercent
+              ? 'line-through'
+              : null
+          }"
+        >
+          {{ product?.price?.toFixed(2) }} лв.
+        </div>
+        <div class="new-price" *ngIf="product?.discountPercent">
+          {{
+            (
+              (product?.price! * (100 - product?.discountPercent!)) /
+              100
+            ).toFixed(2)
+          }}
+          лв.
         </div>
       </div>
 
       <div class="product-options">
         <div *ngIf="haveSize">
           <label for="size">Размер:</label>
-          <select name="size" [(ngModel)]="selectItemScu">
+          <select name="size" [(ngModel)]="selectedItemIndex">
             <option value="">-- Избери размер --</option>
-            <option *ngFor="let item of product?.items" value="{{ item.sku }}">
+            <option
+              *ngFor="let item of product?.items; index as i"
+              value="{{ i }}"
+            >
               {{ item.size }}{{ item.isInStock ? "" : " (няма налични)" }}
             </option>
           </select>
         </div>
-        <button class="btn btn-success">Купи</button>
+        <button
+          class="btn btn-success"
+          [disabled]="(product?.items)![+selectedItemIndex].isInStock === false"
+        >
+          Купи
+        </button>
 
-        <div class="ask-about">
+        <div
+          class="ask-about"
+          *ngIf="
+            selectedItemIndex &&
+            (product?.items)![+selectedItemIndex].isInStock === false
+          "
+        >
           <button class="btn btn-danger">Запитване</button>
           <p>
             Този продукт / размер в момента не е наличен в нашия склад. За

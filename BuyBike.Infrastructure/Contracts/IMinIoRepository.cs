@@ -7,6 +7,13 @@
     /// </summary>
     public interface IMinIoRepository
     {
+       /// <summary>
+       /// Create bucket if not exist 
+       /// </summary>
+       /// <param name="bucketName"></param>
+       /// <returns></returns>
+        Task EnsureCreated(string bucketName);
+
         /// <summary>
         /// Adds object to the MinIO database
         /// </summary>

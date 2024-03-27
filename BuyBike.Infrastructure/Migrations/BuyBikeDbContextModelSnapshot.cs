@@ -196,6 +196,29 @@ namespace BuyBike.Infrastructure.Migrations
                         {
                             t.HasComment("Prodict discount");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DiscountPercent = 10,
+                            IsActive = true,
+                            Name = "10"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DiscountPercent = 20,
+                            IsActive = true,
+                            Name = "20"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DiscountPercent = 40,
+                            IsActive = true,
+                            Name = "40"
+                        });
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Item", b =>
@@ -880,6 +903,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Id = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
                             CategoryId = 1,
                             Color = "Black",
+                            DiscountId = 1,
                             ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
                             IsActive = true,
                             MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
@@ -905,6 +929,7 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 1,
                             Color = "White",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 2,
                             ImageUrl = "bicycles/mountain/Epic_Expert_Morn_White.jpg",
                             IsActive = true,
                             MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
@@ -958,6 +983,7 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 2,
                             Color = "Blue",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 3,
                             ImageUrl = "bicycles/road/Litening_Aero_28_Blue.jpg",
                             IsActive = true,
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
@@ -971,6 +997,7 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 4,
                             Color = "Blue",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 2,
                             ImageUrl = "bicycles/kids/Boxer_12_blue.jpg",
                             IsActive = true,
                             MakeId = new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
@@ -984,6 +1011,7 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 4,
                             Color = "Black",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 1,
                             ImageUrl = "bicycles/kids/Faro_12_black.jpg",
                             IsActive = true,
                             MakeId = new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"),

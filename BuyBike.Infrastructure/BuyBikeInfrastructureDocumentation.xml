@@ -199,6 +199,13 @@
             Abstraction of repository access methods
             </summary>
         </member>
+        <member name="M:BuyBike.Infrastructure.Contracts.IMinIoRepository.EnsureCreated(System.String)">
+            <summary>
+            Create bucket if not exist 
+            </summary>
+            <param name="bucketName"></param>
+            <returns></returns>
+        </member>
         <member name="M:BuyBike.Infrastructure.Contracts.IMinIoRepository.AddAsync(System.String,System.String,Microsoft.AspNetCore.Http.IFormFile)">
             <summary>
             Adds object to the MinIO database
@@ -349,9 +356,16 @@
             <summary>
             Adds object to the MinIO database
             </summary>
-            <param name="BucketName">MinIO bucket name</param>
+            <param name="bucketName">MinIO bucket name</param>
             <param name="fileName">The name of the object</param>
             <param name="content">Content to add (Byte array)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.MinIoRepository.EnsureCreated(System.String)">
+            <summary>
+            Create bucket if not exist 
+            </summary>
+            <param name="bucketName"></param>
             <returns></returns>
         </member>
         <member name="M:BuyBike.Infrastructure.Data.Common.MinIoRepository.FindAsync(System.String,System.String)">
@@ -521,90 +535,6 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.TptMappingStrategyForProducts.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.seedBicycles">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.seedBicycles.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.RemovedModelsAndAddAttributeTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.ItemTableAdded">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.ItemTableAdded.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddValueColumnToAttributeValueTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.AddDiscountTable">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

@@ -29,6 +29,5 @@
 
         [Comment("Soft delete boolean property")]
         public bool IsActive { get; set; } = true;
-
     }
 }

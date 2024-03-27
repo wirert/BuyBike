@@ -22,6 +22,7 @@
                     Id = Guid.Parse("78804049-030f-4373-be3c-dfb4df261846"),
                     Price = 3499,
                     Model = "Fathom 1",
+                    DiscountId = 1,
                     MakeId = Guid.Parse("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                     CategoryId = 1,
                     TyreSize = 29,
@@ -45,6 +46,7 @@
                 {
                     Id = Guid.Parse("6f88c752-2b55-4380-8287-0e85a569abd5"),
                     Price = 13599,
+                    DiscountId = 2,
                     Model = "Epic Expert Morn",
                     MakeId = Guid.Parse("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                     CategoryId = 1,
@@ -95,6 +97,7 @@
                 {
                     Id = Guid.Parse("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
                     Price = 14899,
+                    DiscountId = 3,
                     Model = "Litening Aero",
                     MakeId = Guid.Parse("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                     CategoryId = 2,
@@ -107,6 +110,7 @@
                 {
                     Id = Guid.Parse("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
                     Price = 299,
+                    DiscountId = 2,
                     Model = "Boxer",
                     MakeId = Guid.Parse("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
                     CategoryId = 4,
@@ -119,6 +123,7 @@
                 {
                     Id = Guid.Parse("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
                     Price = 279,
+                    DiscountId = 1,
                     Model = "Faro",
                     MakeId = Guid.Parse("fb2ef438-d045-4e5c-8022-d979204b4f29"),
                     CategoryId = 4,

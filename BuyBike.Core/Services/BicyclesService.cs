@@ -58,6 +58,7 @@
                 {
                     Model = b.Model,
                     Make = b.Make.Name,
+                    MakeLogoUrl = ImgBaseUrl + b.Make.LogoUrl,
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
                     TyreSize = b.TyreSize,
                     Price = b.Price,

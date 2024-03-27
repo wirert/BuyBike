@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {
   Component,
   ElementRef,
-  Input,
   OnInit,
   ViewChild,
   inject,
@@ -12,7 +11,6 @@ import { ProductDetailsModel } from '../../Models/product-details.model';
 import { Router } from '@angular/router';
 import { BicycleDetailsModel } from '../../Models/bicycle-details.model';
 import { FormsModule } from '@angular/forms';
-import { ItemModel } from '../../Models/item.model';
 
 @Component({
   selector: 'product-details',
@@ -40,7 +38,7 @@ export class ProductDetailsComponent implements OnInit {
   };
 
   @ViewChild('imageDiv') imageDiv!: ElementRef;
-  selectItemScu: string = '';
+  selectedItemIndex: string = '';
 
   constructor() {
     const navState = this.router.getCurrentNavigation()?.extras.state;
@@ -63,7 +61,7 @@ export class ProductDetailsComponent implements OnInit {
         if (data.items[0].size) {
           this.haveSize = true;
         } else {
-          this.selectItemScu = data.items[0].sku;
+          this.selectedItemIndex = data.items[0].sku;
         }
         this.productImageStyleObj[
           'background-image'

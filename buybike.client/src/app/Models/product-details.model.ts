@@ -3,6 +3,7 @@ import { ItemModel } from './item.model';
 export interface ProductDetailsModel {
   model: string;
   make: string;
+  makeLogoUrl: string;
   price: number;
   discountPercent: number | null;
   imageUrl: string;

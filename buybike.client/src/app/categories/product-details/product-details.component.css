@@ -21,6 +21,7 @@
   align-items: center;
   border-bottom: solid 1px rgb(223, 222, 222);
   padding-bottom: 1em;
+  gap: 1em;
 }
 
 .product-options {
@@ -46,6 +47,15 @@ select {
   padding: 0.2em 0.5em;
 }
 
+.product-price-group {
+  font-weight: bold;
+}
+
+.new-price {
+  font-size: 1.2em;
+  color: red;
+}
+
 .product-name-group h2 {
   font-size: 1.1em;
   text-transform: uppercase;
@@ -55,6 +65,15 @@ select {
 
 .sku {
   font-size: 0.6em;
+}
+
+a.logo {
+  width: 20%;
+  cursor: pointer;
+}
+
+a.logo img {
+  object-fit: contain;
 }
 
 button {

@@ -12,15 +12,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     [DbContext(typeof(BuyBikeDbContext))]
-    [Migration("20240320160729_AddValueColumnToAttributeValueTable")]
-    partial class AddValueColumnToAttributeValueTable
+    [Migration("20240327161923_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.2")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -156,6 +156,71 @@ namespace BuyBike.Infrastructure.Migrations
                     b.ToTable("attributes", null, t =>
                         {
                             t.HasComment("EAV pattern attribute model");
+                        });
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Discount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasComment("Discount identifier");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Desc")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("desc")
+                        .HasComment("Discount description (optional)");
+
+                    b.Property<int>("DiscountPercent")
+                        .HasColumnType("integer")
+                        .HasColumnName("discount_percent")
+                        .HasComment("Discount value - percentage");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_active")
+                        .HasComment("Soft delete boolean property");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("name")
+                        .HasComment("Discount name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_discount");
+
+                    b.ToTable("discount", null, t =>
+                        {
+                            t.HasComment("Prodict discount");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DiscountPercent = 10,
+                            IsActive = true,
+                            Name = "10"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DiscountPercent = 20,
+                            IsActive = true,
+                            Name = "20"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DiscountPercent = 40,
+                            IsActive = true,
+                            Name = "40"
                         });
                 });
 
@@ -338,6 +403,13 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("is_active")
                         .HasComment("Soft delete boolean property");
 
+                    b.Property<string>("LogoUrl")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("logo_url")
+                        .HasComment("Manufacturer logo URL");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -355,30 +427,35 @@ namespace BuyBike.Infrastructure.Migrations
                         {
                             Id = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                             IsActive = true,
+                            LogoUrl = "brand-logos/giant.png",
                             Name = "Giant"
                         },
                         new
                         {
                             Id = new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
                             IsActive = true,
+                            LogoUrl = "brand-logos/cross.jpg",
                             Name = "Cross"
                         },
                         new
                         {
                             Id = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                             IsActive = true,
+                            LogoUrl = "brand-logos/cube.png",
                             Name = "Cube"
                         },
                         new
                         {
                             Id = new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"),
                             IsActive = true,
+                            LogoUrl = "brand-logos/head.png",
                             Name = "Head"
                         },
                         new
                         {
                             Id = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                             IsActive = true,
+                            LogoUrl = "brand-logos/specialized.png",
                             Name = "Specialized"
                         });
                 });
@@ -493,6 +570,11 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("description")
                         .HasComment("Product description (optional");
 
+                    b.Property<int?>("DiscountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("discount_id")
+                        .HasComment("Product discount id");
+
                     b.Property<int?>("Gender")
                         .HasColumnType("integer")
                         .HasColumnName("gender")
@@ -500,8 +582,8 @@ namespace BuyBike.Infrastructure.Migrations
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
-                        .HasMaxLength(2048)
-                        .HasColumnType("character varying(2048)")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
                         .HasColumnName("image_url")
                         .HasComment("Model Image URL");
 
@@ -524,6 +606,9 @@ namespace BuyBike.Infrastructure.Migrations
 
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_products_category_id");
+
+                    b.HasIndex("DiscountId")
+                        .HasDatabaseName("ix_products_discount_id");
 
                     b.HasIndex("MakeId")
                         .HasDatabaseName("ix_products_make_id");
@@ -821,7 +906,8 @@ namespace BuyBike.Infrastructure.Migrations
                             Id = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
                             CategoryId = 1,
                             Color = "Black",
-                            ImageUrl = "https://www.velozona.bg/image/cache/catalog/GIANT-2022/MY21FATHOM_29_1_ColorBBlack_Charcoal-1000x1000.jpg",
+                            DiscountId = 1,
+                            ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
                             IsActive = true,
                             MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                             Price = 3499m,
@@ -833,7 +919,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Id = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
                             CategoryId = 1,
                             Color = "White",
-                            ImageUrl = "https://www.velozona.bg/image/cache/catalog/GIANT-2021/MY21FATHOM_29_1_ColorADesertSage-1000x1000.jpg",
+                            ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
                             IsActive = true,
                             MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                             Price = 3499m,
@@ -846,7 +932,8 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 1,
                             Color = "White",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_29_specialized_epic_expert_morn_dknvy.jpg",
+                            DiscountId = 2,
+                            ImageUrl = "bicycles/mountain/Epic_Expert_Morn_White.jpg",
                             IsActive = true,
                             MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                             Price = 13599m,
@@ -857,14 +944,14 @@ namespace BuyBike.Infrastructure.Migrations
                         {
                             Id = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
                             CategoryId = 3,
-                            Color = "Grey",
+                            Color = "Silver",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
                             Gender = 1,
-                            ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_cube_kathmandu_slx_sil_blk.jpg",
+                            ImageUrl = "bicycles/city/Touring_Pro_28_Silver.jpg",
                             IsActive = true,
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
-                            Price = 3899m,
-                            Model = "Kathmandu XLR",
+                            Price = 1699m,
+                            Model = "Touring Pro",
                             TyreSize = 28.0
                         },
                         new
@@ -873,7 +960,7 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 3,
                             Color = "Grey",
                             Gender = 2,
-                            ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_cube_nulane_pro_gry_blk_tr.jpg",
+                            ImageUrl = "bicycles/city/Nulane_Pro_28_Grey.png",
                             IsActive = true,
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                             Price = 3899m,
@@ -886,7 +973,7 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 2,
                             Color = "Red",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_specialized_allez_e5_disc_mrn_sil.jpg",
+                            ImageUrl = "bicycles/road/Allez_E5_28_red.jpg",
                             IsActive = true,
                             MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                             Price = 2399m,
@@ -897,12 +984,13 @@ namespace BuyBike.Infrastructure.Migrations
                         {
                             Id = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
                             CategoryId = 2,
-                            Color = "Black",
+                            Color = "Blue",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_cube_litening_aero_c68x_pro_crbn.jpg",
+                            DiscountId = 3,
+                            ImageUrl = "bicycles/road/Litening_Aero_28_Blue.jpg",
                             IsActive = true,
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
-                            Price = 9199m,
+                            Price = 14899m,
                             Model = "Litening Aero",
                             TyreSize = 28.0
                         },
@@ -912,7 +1000,8 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 4,
                             Color = "Blue",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            ImageUrl = "https://www.velozona.bg/image/cache/catalog/CROSS/12-cross-boxer-alloy-boy-1276x1276.jpg",
+                            DiscountId = 2,
+                            ImageUrl = "bicycles/kids/Boxer_12_blue.jpg",
                             IsActive = true,
                             MakeId = new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
                             Price = 299m,
@@ -925,7 +1014,8 @@ namespace BuyBike.Infrastructure.Migrations
                             CategoryId = 4,
                             Color = "Black",
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            ImageUrl = "https://www.velozona.bg/image/cache/catalog/HEAD-2019/HEAD-Faro-12-black-1276x1276.jpg",
+                            DiscountId = 1,
+                            ImageUrl = "bicycles/kids/Faro_12_black.jpg",
                             IsActive = true,
                             MakeId = new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"),
                             Price = 279m,
@@ -1016,6 +1106,11 @@ namespace BuyBike.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_products_products_categories_category_id");
 
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Discount", "Discount")
+                        .WithMany("Products")
+                        .HasForeignKey("DiscountId")
+                        .HasConstraintName("fk_products_discount_discount_id");
+
                     b.HasOne("BuyBike.Infrastructure.Data.Entities.Manufacturer", "Make")
                         .WithMany("Products")
                         .HasForeignKey("MakeId")
@@ -1024,6 +1119,8 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasConstraintName("fk_products_manufacturers_make_id");
 
                     b.Navigation("Category");
+
+                    b.Navigation("Discount");
 
                     b.Navigation("Make");
                 });
@@ -1134,6 +1231,11 @@ namespace BuyBike.Infrastructure.Migrations
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Attribute", b =>
                 {
                     b.Navigation("Values");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Discount", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Item", b =>

@@ -47,6 +47,7 @@
 
             if (seedDb)
             {
+                modelBuilder.ApplyConfiguration(new SeedDiscountsConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedManufacturersEntityConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedItemsTableConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedProductsCategoriesTableConfiguration());
