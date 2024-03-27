@@ -11,6 +11,7 @@ import { ProductDetailsModel } from '../../Models/product-details.model';
 import { Router } from '@angular/router';
 import { BicycleDetailsModel } from '../../Models/bicycle-details.model';
 import { FormsModule } from '@angular/forms';
+import { CartProductModel } from '../../Models/cart-product.model';
 
 @Component({
   selector: 'product-details',
@@ -81,5 +82,38 @@ export class ProductDetailsComponent implements OnInit {
   onMouseOutOfPicture() {
     this.imageDiv.nativeElement.style.backgroundSize = 'contain';
     this.imageDiv.nativeElement.style.backgroundPosition = 'center';
+  }
+
+  onBuyButtonClick() {
+    if (!this.product || !this.selectedItemIndex) {
+      return;
+    }
+
+    const cartString = localStorage.getItem('productsCart');
+    let cart: CartProductModel[] = [];
+
+    if (cartString) {
+      cart = JSON.parse(cartString);
+    }
+
+    let item = cart.find((p) => p.id === this.productId);
+
+    if (!item) {
+      item = new CartProductModel(
+        this.productId,
+        this.productName,
+        this.product.items[+this.selectedItemIndex].sku,
+        this.product.imageUrl,
+        this.product.price,
+        this.product.discountPercent,
+        this.product.make,
+        this.product.items[+this.selectedItemIndex].id
+      );
+      cart.push(item);
+    } else {
+      item.quantity += 1;
+    }
+
+    localStorage['productsCart'] = JSON.stringify(cart);
   }
 }

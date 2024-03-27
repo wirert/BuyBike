@@ -3,15 +3,19 @@
   flex-wrap: wrap;
 }
 
-.product-left,
+.product-left {
+  flex-basis: 60%;
+  padding: 0.5em;
+}
+
 .product-right {
-  flex-basis: 50%;
+  flex-basis: 40%;
   padding: 0.5em;
 }
 
 .product-image {
   width: 100%;
-  height: 26em;
+  aspect-ratio: 1/1;
   cursor: crosshair;
 }
 

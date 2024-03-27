@@ -63,6 +63,7 @@
         <button
           class="btn btn-success"
           [disabled]="(product?.items)![+selectedItemIndex].isInStock === false"
+          (click)="onBuyButtonClick()"
         >
           Купи
         </button>
