@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Minio;
 
 using BuyBike.Api.Extentions;
 using BuyBike.Infrastructure.Data;
@@ -12,6 +13,12 @@ using BuyBike.Infrastructure.Data.Entities;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddApplicationDbContext(builder.Configuration);
+builder.Services.AddApplicatonServices();
+builder.Services.AddMinio(configClient => configClient
+            .WithEndpoint(builder.Configuration.GetValue<string>("MinIo:Endpoint")!)
+            .WithCredentials(builder.Configuration.GetValue<string>("MinIo:AccessKey")!, builder.Configuration.GetValue<string>("MinIo:SecretKey")!)
+            .WithSSL(false));
 
 builder.Services.AddControllers(options =>
 {
@@ -19,9 +26,7 @@ builder.Services.AddControllers(options =>
     //options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
 }).AddNewtonsoftJson();
 
-builder.Services
-    .AddApplicationDbContext(builder.Configuration)
-    .AddApplicatonServices();
+
 
 
 builder.Services.AddAuthorization();
@@ -130,5 +135,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.MapFallbackToFile("/index.html");
+
+app.SeedPictures().Wait();
 
 app.Run();

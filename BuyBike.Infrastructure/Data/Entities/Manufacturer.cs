@@ -19,6 +19,11 @@
         [Comment("Manufacturer name")]
         public string Name { get; set; } = null!;
 
+        [Required]
+        [MaxLength(DataConstants.Manufacturer.MaxLogoUrlLength)]
+        [Comment("Manufacturer logo URL")]
+        public string LogoUrl { get; set; } = null!;
+
         [Comment("Soft delete boolean property")]
         public bool IsActive { get; set; } = true;
 

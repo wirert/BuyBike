@@ -8,7 +8,8 @@
     using Minio;
     using Minio.DataModel.Args;
 
-    using PrintingHouse.Infrastructure.Data.Common.Contracts;
+    using BuyBike.Infrastructure.Contracts;
+    using Minio.Exceptions;
 
     /// <summary>
     /// Implementation of repository access methods
@@ -30,7 +31,7 @@
         /// <param name="fileName">The name of the object</param>
         /// <param name="content">Content to add (Byte array)</param>
         /// <returns></returns>
-        public async Task AddFileAsync(Guid BucketName, string fileName, IFormFile content)
+        public async Task AddAsync(string BucketName, string fileName, IFormFile content)
         {
             var bucketExistArgs = new BucketExistsArgs().WithBucket(BucketName.ToString());
 
@@ -49,7 +50,12 @@
                 .WithContentType("application/octet-stream")
                 .WithStreamData(content.OpenReadStream());
 
-            await minioClient.PutObjectAsync(putObjectArgs);
+           var response = await minioClient.PutObjectAsync(putObjectArgs);
+
+            if (response != null)
+            {
+                Console.WriteLine(response);
+            }
         }
 
         /// <summary>
@@ -58,27 +64,39 @@
         /// <param name="BucketName">Bucket name</param>
         /// <param name="fileName">Object name</param>
         /// <returns>Byte array</returns>
-        public async Task<MemoryStream> GetFileAsync(Guid BucketName, string fileName)
+        public async Task<MemoryStream?> FindAsync(string BucketName, string fileName)
         {
-            var bucketExistArgs = new BucketExistsArgs().WithBucket(BucketName.ToString());
+            var bucketExistArgs = new BucketExistsArgs().WithBucket(BucketName);
             if (await minioClient.BucketExistsAsync(bucketExistArgs) == false)
             {
-                throw new ArgumentException("There is no such file in store or id is incorrect");
+                throw new ArgumentException("There is no such file in store or name is incorrect");
             }
 
-            using var result = new MemoryStream();
+
+            //var result = await minioClient.PresignedGetObjectAsync(new PresignedGetObjectArgs().WithBucket(BucketName).WithObject(fileName)).ConfigureAwait(false)
+
+            using var file = new MemoryStream();
 
             var args = new GetObjectArgs()
-                .WithBucket(BucketName.ToString())
+                .WithBucket(BucketName)
                 .WithObject(fileName)
                 .WithCallbackStream(async stream =>
-                {
-                    await stream.CopyToAsync(result);
+                {   
+                    
+                    await stream.CopyToAsync(file);
                 });
 
-            await minioClient.GetObjectAsync(args);
+            try
+            {
+                await minioClient.GetObjectAsync(args);
 
-            return result;
+                return file;
+            }
+            catch (ObjectNotFoundException)
+            {
+                return null;
+            }
+            
         }
     }
 }

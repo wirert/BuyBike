@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Infrastructure.Data.Configuratons
+﻿namespace BuyBike.Infrastructure.Data.SeedConfigurations
 {
     using System;
 
@@ -25,10 +25,10 @@
                     MakeId = Guid.Parse("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                     CategoryId = 1,
                     TyreSize = 29,
-                    ImageUrl = "https://www.velozona.bg/image/cache/catalog/GIANT-2022/MY21FATHOM_29_1_ColorBBlack_Charcoal-1000x1000.jpg",
+                    ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
                     Color = "Black"
                 },
-                
+
                 new Bicycle()
                 {
                     Id = Guid.Parse("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
@@ -37,10 +37,10 @@
                     MakeId = Guid.Parse("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                     CategoryId = 1,
                     TyreSize = 29,
-                    ImageUrl = "https://www.velozona.bg/image/cache/catalog/GIANT-2021/MY21FATHOM_29_1_ColorADesertSage-1000x1000.jpg",
+                    ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
                     Color = "White"
                 },
-               
+
                 new Bicycle()
                 {
                     Id = Guid.Parse("6f88c752-2b55-4380-8287-0e85a569abd5"),
@@ -49,24 +49,24 @@
                     MakeId = Guid.Parse("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                     CategoryId = 1,
                     TyreSize = 29,
-                    ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_29_specialized_epic_expert_morn_dknvy.jpg",
+                    ImageUrl = "bicycles/mountain/Epic_Expert_Morn_White.jpg",
                     Color = "White",
                     Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!"
                 },
                 new Bicycle()
                 {
                     Id = Guid.Parse("c77e1e5a-86eb-4356-86c1-c6868494df85"),
-                    Price = 3899,
-                    Model = "Kathmandu XLR",
+                    Price = 1699,
+                    Model = "Touring Pro",
                     MakeId = Guid.Parse("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                     CategoryId = 3,
                     TyreSize = 28,
                     Gender = Gender.Male,
-                    ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_cube_kathmandu_slx_sil_blk.jpg",
-                    Color = "Grey",
+                    ImageUrl = "bicycles/city/Touring_Pro_28_Silver.jpg",
+                    Color = "Silver",
                     Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!"
                 },
-                
+
                  new Bicycle()
                 {
                     Id = Guid.Parse("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
@@ -76,7 +76,7 @@
                     CategoryId = 3,
                     TyreSize = 28,
                     Gender = Gender.Female,
-                    ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_cube_nulane_pro_gry_blk_tr.jpg",
+                    ImageUrl = "bicycles/city/Nulane_Pro_28_Grey.png",
                     Color = "Grey"
                 },
                  new Bicycle()
@@ -87,20 +87,20 @@
                     MakeId = Guid.Parse("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                     CategoryId = 2,
                     TyreSize = 28,
-                    ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_specialized_allez_e5_disc_mrn_sil.jpg",
+                    ImageUrl = "bicycles/road/Allez_E5_28_red.jpg",
                     Color = "Red",
                     Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!"
                 },
                  new Bicycle()
                 {
                     Id = Guid.Parse("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
-                    Price = 9199,
+                    Price = 14899,
                     Model = "Litening Aero",
                     MakeId = Guid.Parse("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                     CategoryId = 2,
                     TyreSize = 28,
-                    ImageUrl = "https://www.bikecenter.bg/media/catalog/product/cache/1/image/85e4522595efc69f496374d01ef2bf13/_/2/_28_cube_litening_aero_c68x_pro_crbn.jpg",
-                    Color = "Black",
+                    ImageUrl = "bicycles/road/Litening_Aero_28_Blue.jpg",
+                    Color = "Blue",
                     Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!"
                 },
                  new Bicycle()
@@ -111,7 +111,7 @@
                     MakeId = Guid.Parse("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
                     CategoryId = 4,
                     TyreSize = 12,
-                    ImageUrl = "https://www.velozona.bg/image/cache/catalog/CROSS/12-cross-boxer-alloy-boy-1276x1276.jpg",
+                    ImageUrl = "bicycles/kids/Boxer_12_blue.jpg",
                     Color = "Blue",
                     Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!"
                 },
@@ -123,7 +123,7 @@
                     MakeId = Guid.Parse("fb2ef438-d045-4e5c-8022-d979204b4f29"),
                     CategoryId = 4,
                     TyreSize = 12,
-                    ImageUrl = "https://www.velozona.bg/image/cache/catalog/HEAD-2019/HEAD-Faro-12-black-1276x1276.jpg",
+                    ImageUrl = "bicycles/kids/Faro_12_black.jpg",
                     Color = "Black",
                     Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!"
                 },

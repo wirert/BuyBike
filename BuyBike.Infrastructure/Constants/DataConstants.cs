@@ -15,7 +15,7 @@
             /// <summary>
             /// Product image URL maximum length
             /// </summary>
-            public const int MaxImageUrlLength = 2048;
+            public const int MaxImageUrlLength = 1024;
 
             /// <summary>
             /// Product color maximum length
@@ -132,6 +132,11 @@
             /// Manufacturer name minimum length
             /// </summary>
             public const int MinNameLength = 1;
+
+            /// <summary>
+            /// Manufacturer logo image URL maximum length
+            /// </summary>
+            public const int MaxLogoUrlLength = 1024;
         }
 
         /// <summary>

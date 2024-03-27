@@ -134,6 +134,11 @@
             Manufacturer name minimum length
             </summary>
         </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer.MaxLogoUrlLength">
+            <summary>
+            Manufacturer logo image URL maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Discount">
             <summary>
             Discount model constants
@@ -188,6 +193,27 @@
             <summary>
             City minimum length
             </summary>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Contracts.IMinIoRepository">
+            <summary>
+            Abstraction of repository access methods
+            </summary>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Contracts.IMinIoRepository.AddAsync(System.String,System.String,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Adds object to the MinIO database
+            </summary>
+            <param name="BucketName">MinIO bucket name</param>
+            <param name="fileName">The name of the object</param>
+            <param name="content">Content to add (Byte array)</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Contracts.IMinIoRepository.FindAsync(System.String,System.String)">
+            <summary>
+            Get image by name
+            </summary>
+            <param name="BucketName">Bucket name</param>
+            <param name="fileName">Object name</param>
+            <returns>Byte array or null</returns>
         </member>
         <member name="T:BuyBike.Infrastructure.Contracts.IRepository">
             <summary>
@@ -313,6 +339,168 @@
             Application database context
             </summary>
         </member>
+        <member name="T:BuyBike.Infrastructure.Data.Common.MinIoRepository">
+            <summary>
+            Implementation of repository access methods
+            for MinIO object store database
+            </summary>   
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.MinIoRepository.AddAsync(System.String,System.String,Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            Adds object to the MinIO database
+            </summary>
+            <param name="BucketName">MinIO bucket name</param>
+            <param name="fileName">The name of the object</param>
+            <param name="content">Content to add (Byte array)</param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.MinIoRepository.FindAsync(System.String,System.String)">
+            <summary>
+            Get object from database by bucket name and object name
+            </summary>
+            <param name="BucketName">Bucket name</param>
+            <param name="fileName">Object name</param>
+            <returns>Byte array</returns>
+        </member>
+        <member name="T:BuyBike.Infrastructure.Data.Common.Repository">
+            <summary>
+            Implementation of repository access methods
+            for Relational Database Engine with generic methods
+            </summary>
+        </member>
+        <member name="P:BuyBike.Infrastructure.Data.Common.Repository.Context">
+            <summary>
+            Entity framework DB context holding connection information and properties
+            and tracking entity states 
+            </summary>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.DbSet``1">
+            <summary>
+            Representation of table in database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.AddAsync``1(``0)">
+            <summary>
+            Adds entity to the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity to add</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.AddRangeAsync``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Ads collection of entities to the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable list of entities</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.All``1">
+            <summary>
+            All records in a table
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns>Queryable expression tree</returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.AllReadonly``1">
+            <summary>
+            The result collection won't be tracked by the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <returns>Expression tree</returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.DeleteAsync``1(System.Object)">
+            <summary>
+            Deletes a record from database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">Identificator of record to be deleted</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.Delete``1(``0)">
+            <summary>
+            Deletes a record from database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity representing record to be deleted</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.Detach``1(``0)">
+            <summary>
+            Detaches given entity from the context
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity to be detached</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.Dispose">
+            <summary>
+            Disposing the context when it is not neede
+            Don't have to call this method explicitely
+            Leave it to the IoC container
+            </summary>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.GetByIdAsync``1(System.Object)">
+            <summary>
+            Gets specific record from database by primary key
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">record identificator</param>
+            <returns>Single record (nullable)</returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.GetByIdsAsync``1(System.Object[])">
+            <summary>
+            Gets specific record from database by composed primary key
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="id">Object array of identificators</param>
+            <returns>Single record (nullable)</returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.SaveChangesAsync">
+            <summary>
+            Saves all made changes in trasaction
+            </summary>
+            <returns>Error code</returns>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.Update``1(``0)">
+            <summary>
+            Updates a record in database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entity">Entity for record to be updated</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.UpdateRange``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Updates set of records in the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable collection of entities to be updated</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.DeleteRange``1(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Remove set of records from the database
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="entities">Enumerable collection of entities to be removed</param>
+        </member>
+        <member name="M:BuyBike.Infrastructure.Data.Common.Repository.DeleteRange``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
+            <summary>
+            Remove set of records from the database with Where clause
+            </summary>
+            <typeparam name="T">Generic parameter of type class
+            representing data table</typeparam>
+            <param name="deleteWhereClause">Delegate function as lambda expression to filter result</param>
+        </member>
         <member name="T:BuyBike.Infrastructure.Data.Entities.AppUser">
             <summary>
             Application user entity model extention
@@ -407,144 +595,17 @@
         <member name="M:BuyBike.Infrastructure.Migrations.AddDiscountTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
-        <member name="T:PrintingHouse.Infrastructure.Data.Common.Repository">
-            <summary>
-            Implementation of repository access methods
-            for Relational Database Engine with generic methods
-            </summary>
+        <member name="T:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers">
+            <inheritdoc />
         </member>
-        <member name="P:PrintingHouse.Infrastructure.Data.Common.Repository.Context">
-            <summary>
-            Entity framework DB context holding connection information and properties
-            and tracking entity states 
-            </summary>
+        <member name="M:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
         </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DbSet``1">
-            <summary>
-            Representation of table in database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <returns></returns>
+        <member name="M:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
         </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.AddAsync``1(``0)">
-            <summary>
-            Adds entity to the database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entity">Entity to add</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.AddRangeAsync``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Ads collection of entities to the database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entities">Enumerable list of entities</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.All``1">
-            <summary>
-            All records in a table
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <returns>Queryable expression tree</returns>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.AllReadonly``1">
-            <summary>
-            The result collection won't be tracked by the context
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <returns>Expression tree</returns>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DeleteAsync``1(System.Object)">
-            <summary>
-            Deletes a record from database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="id">Identificator of record to be deleted</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Delete``1(``0)">
-            <summary>
-            Deletes a record from database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entity">Entity representing record to be deleted</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Detach``1(``0)">
-            <summary>
-            Detaches given entity from the context
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entity">Entity to be detached</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Dispose">
-            <summary>
-            Disposing the context when it is not neede
-            Don't have to call this method explicitely
-            Leave it to the IoC container
-            </summary>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.GetByIdAsync``1(System.Object)">
-            <summary>
-            Gets specific record from database by primary key
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="id">record identificator</param>
-            <returns>Single record (nullable)</returns>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.GetByIdsAsync``1(System.Object[])">
-            <summary>
-            Gets specific record from database by composed primary key
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="id">Object array of identificators</param>
-            <returns>Single record (nullable)</returns>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.SaveChangesAsync">
-            <summary>
-            Saves all made changes in trasaction
-            </summary>
-            <returns>Error code</returns>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.Update``1(``0)">
-            <summary>
-            Updates a record in database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entity">Entity for record to be updated</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.UpdateRange``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Updates set of records in the database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entities">Enumerable collection of entities to be updated</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DeleteRange``1(System.Collections.Generic.IEnumerable{``0})">
-            <summary>
-            Remove set of records from the database
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="entities">Enumerable collection of entities to be removed</param>
-        </member>
-        <member name="M:PrintingHouse.Infrastructure.Data.Common.Repository.DeleteRange``1(System.Linq.Expressions.Expression{System.Func{``0,System.Boolean}})">
-            <summary>
-            Remove set of records from the database with Where clause
-            </summary>
-            <typeparam name="T">Generic parameter of type class
-            representing data table</typeparam>
-            <param name="deleteWhereClause">Delegate function as lambda expression to filter result</param>
+        <member name="M:BuyBike.Infrastructure.Migrations.addLogoUrlToManufacturers.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
         </member>
     </members>
 </doc>

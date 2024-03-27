@@ -20,6 +20,7 @@
     public class BicyclesService : IBicyclesService
     {
         private readonly IRepository repo;
+        private const string ImgBaseUrl = @"http://localhost:9000/buy-bike/";
 
         public BicyclesService(IRepository _repo)
         {
@@ -41,7 +42,7 @@
                     Id = b.Id,
                     Model = b.Model,
                     Make = b.Make.Name,
-                    ImageUrl = b.ImageUrl,
+                    ImageUrl = ImgBaseUrl + b.ImageUrl,
                     TyreSize = b.TyreSize,
                     Price = b.Price,
                     Color = b.Color,
@@ -57,7 +58,7 @@
                 {
                     Model = b.Model,
                     Make = b.Make.Name,
-                    ImageUrl = b.ImageUrl,
+                    ImageUrl = ImgBaseUrl + b.ImageUrl,
                     TyreSize = b.TyreSize,
                     Price = b.Price,
                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
@@ -122,7 +123,7 @@
                     Id = b.Id,
                     Model = b.Model,
                     Make = b.Make.Name,
-                    ImageUrl = b.ImageUrl,
+                    ImageUrl = ImgBaseUrl + b.ImageUrl,
                     TyreSize = b.TyreSize,
                     Price = b.Price,
                     Color = b.Color,

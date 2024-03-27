@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Infrastructure.Data.Configuratons
+﻿namespace BuyBike.Infrastructure.Data.SeedConfigurations
 {
     using BuyBike.Infrastructure.Data.Entities;
     using Microsoft.EntityFrameworkCore;

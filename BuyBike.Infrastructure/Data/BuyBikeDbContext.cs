@@ -5,16 +5,15 @@
     using Microsoft.EntityFrameworkCore;
 
     using BuyBike.Infrastructure.Data.Entities;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using BuyBike.Infrastructure.Data.Configuraton;
-    using BuyBike.Infrastructure.Data.Configuratons;
+    using BuyBike.Infrastructure.Data.SeedConfigurations;
 
     /// <summary>
     /// Application database context
     /// </summary>
     public class BuyBikeDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
-        private bool seedDb;
+        //Seed Databases (in delvelopment)
+        private bool seedDb;        
 
         public BuyBikeDbContext(DbContextOptions<BuyBikeDbContext> options, bool seedDb = true) : base(options)
         {

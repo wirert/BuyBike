@@ -1,4 +1,4 @@
-﻿namespace PrintingHouse.Infrastructure.Data.Common.Contracts
+﻿namespace BuyBike.Infrastructure.Contracts
 {
     using Microsoft.AspNetCore.Http;
 
@@ -13,14 +13,14 @@
         /// <param name="BucketName">MinIO bucket name</param>
         /// <param name="fileName">The name of the object</param>
         /// <param name="content">Content to add (Byte array)</param>
-        Task AddFileAsync(Guid BucketName, string fileName, IFormFile content);
+        Task AddAsync(string BucketName, string fileName, IFormFile content);
 
         /// <summary>
-        /// Get object form database by bucket name and object name
+        /// Get image by name
         /// </summary>
         /// <param name="BucketName">Bucket name</param>
         /// <param name="fileName">Object name</param>
-        /// <returns>Byte array</returns>
-        Task<MemoryStream> GetFileAsync(Guid BucketName, string fileName);
+        /// <returns>Byte array or null</returns>
+        Task<MemoryStream?> FindAsync(string BucketName, string fileName);
     }
 }

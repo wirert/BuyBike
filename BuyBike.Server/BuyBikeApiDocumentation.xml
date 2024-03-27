@@ -48,6 +48,13 @@
             <param name="id">Bicycle identifier</param>
             <returns></returns>
         </member>
+        <member name="M:BuyBike.Api.Extentions.ApplicationBuilderExtention.SeedPictures(Microsoft.AspNetCore.Builder.IApplicationBuilder)">
+            <summary>
+            Seed pictures in MinIO object store
+            </summary>
+            <param name="app"></param>
+            <returns></returns>
+        </member>
         <member name="T:BuyBike.Api.Extentions.ServiceCollectionExtension">
             <summary>
             Adds extention methods to the ServiceCollection of application

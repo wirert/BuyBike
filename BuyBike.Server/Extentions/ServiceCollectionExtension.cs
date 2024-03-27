@@ -1,13 +1,13 @@
 ﻿namespace BuyBike.Api.Extentions
 {
+    using Microsoft.EntityFrameworkCore;
+    using Minio;
     using BuyBike.Core.Services;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data;
-    using Microsoft.EntityFrameworkCore;
-    using Minio;
-    using Minio.AspNetCore;
-    using PrintingHouse.Infrastructure.Data.Common;
+    using BuyBike.Infrastructure.Data.Common;
+
 
     /// <summary>
     /// Adds extention methods to the ServiceCollection of application
@@ -44,37 +44,9 @@
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBicyclesService, BicyclesService>();
-            //services.AddScoped<IMinIoRepository, MinIoRepository>();
+            services.AddScoped<IMinIoRepository, MinIoRepository>();
 
             return services;
-        }
-
-        /// <summary>
-        /// Register and configure MinIO object storage
-        /// </summary>
-        /// <param name="services"></param>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static IServiceCollection AddMinIO(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddSingleton<IMinioClient, MinioClient>(cfg => cfg.GetRequiredService<MinioClient>());
-            
-            services.AddMinio(options =>
-            {
-                options.Endpoint = configuration.GetValue<string>("MinIo:Endpoint")!;
-                options.AccessKey = configuration.GetValue<string>("MinIo:AccessKey")!;
-                options.SecretKey = configuration.GetValue<string>("MinIo:SecretKey")!;
-
-                options.ConfigureClient(client =>
-                {
-                    client.WithEndpoint(options.Endpoint)
-                        .WithCredentials(options.AccessKey, options.SecretKey)
-                        .WithSSL(false)
-                        .Build();
-                });
-            });
-
-            return services;
-        }
+        }       
     }
 }
