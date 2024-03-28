@@ -1,0 +1,12 @@
+import { Component } from '@angular/core';
+import { BannerComponent } from './banner/banner.component';
+import { BikeTypesComponent } from '../../shared/bike-types/bike-types.component';
+
+@Component({
+  selector: 'app-home',
+  standalone: true,
+  imports: [BannerComponent, BikeTypesComponent],
+  templateUrl: './home.component.html',
+  styleUrl: './home.component.css',
+})
+export class HomeComponent {}
