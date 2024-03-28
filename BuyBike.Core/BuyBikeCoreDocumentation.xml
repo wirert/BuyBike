@@ -54,24 +54,19 @@
             Product item model
             </summary>
         </member>
-        <member name="T:BuyBike.Core.Services.BicyclesService">
-            <summary>
-            Bicycles Service
-            </summary>
-        </member>
-        <member name="T:BuyBike.Core.Services.Contracts.IBicyclesService">
+        <member name="T:BuyBike.Core.Services.Contracts.IProductService">
             <summary>
             Bicycles service
             </summary>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicyclesService.GetAllModelsAsync(System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetAllModelsAsync(System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
             <summary>
             Gets all bicycles models by bicycle type or all models
             </summary>
             <param name="bikeType">Bicycle type(or null)</param>
             <returns>Collection of Bicycle DTO</returns>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicyclesService.GetPagedModelsAsync(System.Int32,System.Int32,System.String,System.Boolean,System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetPagedModelsAsync(System.Int32,System.Int32,System.String,System.Boolean,System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
             <summary>
             Get a set of bicyle models by type 
             </summary>
@@ -82,12 +77,17 @@
             <param name="bikeType">bicycle type or null (for all types)</param>
             <returns>Paged bicycle object with total models count and Collection of Bicycle model DTO</returns>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicyclesService.GetById(System.Guid)">
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetById(System.Guid)">
             <summary>
             Get Bicycle by Id
             </summary>
             <param name="id">Bicycle Identifier</param>
             <returns>Bicycle Data Transfer Object with details</returns>
+        </member>
+        <member name="T:BuyBike.Core.Services.ProductService">
+            <summary>
+            Product Service
+            </summary>
         </member>
     </members>
 </doc>

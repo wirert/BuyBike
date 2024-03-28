@@ -1,7 +1,6 @@
 ﻿namespace BuyBike.Api.Extentions
 {
     using Microsoft.EntityFrameworkCore;
-    using Minio;
     using BuyBike.Core.Services;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
@@ -44,7 +43,6 @@
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IBicyclesService, BicyclesService>();
             services.AddScoped<IMinIoRepository, MinIoRepository>();
 
             return services;

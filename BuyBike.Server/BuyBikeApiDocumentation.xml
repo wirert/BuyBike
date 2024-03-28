@@ -18,19 +18,19 @@
             <param name="model">User register form data</param>
             <returns></returns>
         </member>
-        <member name="T:BuyBike.Api.Controllers.BicyclesController">
+        <member name="T:BuyBike.Api.Controllers.ProductController">
             <summary>
             Bicycles controller
             </summary>
         </member>
-        <member name="M:BuyBike.Api.Controllers.BicyclesController.Get(System.String)">
+        <member name="M:BuyBike.Api.Controllers.ProductController.Get(System.String)">
             <summary>
-            Get Bicycles by category or all
+            Get Products by category or all
             </summary>
-            <param name="type">Bicycles category (optional)</param>
+            <param name="type">Product category (optional)</param>
             <returns>Collection of Bicycle DTO</returns>
         </member>
-        <member name="M:BuyBike.Api.Controllers.BicyclesController.GetPaged(System.Int32,System.Int32,System.String,System.Boolean,System.String)">
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetPaged(System.Int32,System.Int32,System.String,System.Boolean,System.String)">
             <summary>
             Fetch sorted and paged bicycles
             </summary>
@@ -41,7 +41,7 @@
             <param name="type">Bicycles type</param>
             <returns></returns>
         </member>
-        <member name="M:BuyBike.Api.Controllers.BicyclesController.GetById(System.Guid)">
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetById(System.Guid)">
             <summary>
             Get Bicycle details by Id
             </summary>
@@ -74,6 +74,22 @@
             </summary>
             <param name="services"></param>
             <returns></returns>
+        </member>
+        <member name="T:BuyBike.Api.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:BuyBike.Api.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:BuyBike.Api.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
         </member>
     </members>
 </doc>

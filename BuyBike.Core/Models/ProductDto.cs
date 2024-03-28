@@ -2,11 +2,11 @@
 {
     using System;
 
-    public class BicycleModelDto
+    public class ProductDto
     {
         public Guid Id { get; set; }
 
-        public string Model { get; set; } = null!;
+        public string Name { get; set; } = null!;
 
         public string Make { get; set; } = null!;
 
