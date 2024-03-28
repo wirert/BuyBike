@@ -29,7 +29,7 @@
 
         public async Task<ICollection<BicycleModelDto>> GetAllModelsAsync(BikeType? bikeType)
         {
-            Expression<Func<Bicycle, bool>> searchTerms = b => b.IsActive;
+            Expression<Func<Product, bool>> searchTerms = b => b.IsActive;
 
             if (bikeType != null)
             {
@@ -40,27 +40,26 @@
                 .Select(b => new BicycleModelDto
                 {
                     Id = b.Id,
-                    Model = b.Model,
+                    Model = b.Name,
                     Make = b.Make.Name,
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
-                    TyreSize = b.TyreSize,
                     Price = b.Price,
                     Color = b.Color,
                     Type = b.Category.Name,
+                    TyreSize = 28
 
                 }).ToListAsync();
         }
 
         public async Task<BicycleDetailsDto> GetById(Guid id)
         {            
-            var result =  await repo.AllReadonly<Bicycle>(b => b.IsActive && b.Id == id)
+            var result =  await repo.AllReadonly<Product>(b => b.IsActive && b.Id == id)
                 .Select(b => new BicycleDetailsDto
                 {
-                    Model = b.Model,
+                    Model = b.Name,
                     Make = b.Make.Name,
                     MakeLogoUrl = ImgBaseUrl + b.Make.LogoUrl,
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
-                    TyreSize = b.TyreSize,
                     Price = b.Price,
                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
                     Color = b.Color,
@@ -87,6 +86,13 @@
                 throw new ArgumentException("Invalid bicycle identifier.");
             }
 
+           var tyreSize = result.Attributes?.FirstOrDefault(a => a.Name == "TyreSize")?.Value;
+
+            if (tyreSize != null)
+            {
+                result.TyreSize = double.Parse(tyreSize);
+            }
+
             return result;
         }
 
@@ -99,7 +105,7 @@
                 throw new ArgumentException("Incorrect page number or page size.");
             }
 
-            Expression<Func<Bicycle, bool>> searchTerms = b => b.IsActive;
+            Expression<Func<Product, bool>> searchTerms = b => b.IsActive;
 
             if (bikeType != null)
             {
@@ -122,10 +128,9 @@
                 .Select(b => new BicycleModelDto
                 {
                     Id = b.Id,
-                    Model = b.Model,
+                    Model = b.Name,
                     Make = b.Make.Name,
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
-                    TyreSize = b.TyreSize,
                     Price = b.Price,
                     Color = b.Color,
                     Type = b.Category.Name,

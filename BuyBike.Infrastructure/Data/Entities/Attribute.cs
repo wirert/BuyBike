@@ -21,12 +21,12 @@
         [MaxLength(DataConstants.Attribute.MaxValueTypeLenght)]
         public string DataType { get; set; } = "string";
 
-        [Comment("Product category id for current attribute")]
+        [Comment("Product type category id")]
         [Required]
-        public int ProductCategoryId { get; set; }
+        public int ProductTypeId { get; set; }
 
-        [ForeignKey(nameof(ProductCategoryId))]
-        public virtual ProductCategory ProductCategory { get; set; } = null!;
+        [ForeignKey(nameof(ProductTypeId))]
+        public virtual Category ProductType { get; set; } = null!;
 
         public virtual ICollection<ProductAttributeValue> Values { get; set; } = new List<ProductAttributeValue>();
     }

@@ -43,6 +43,7 @@
 
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IBicyclesService, BicyclesService>();
             services.AddScoped<IMinIoRepository, MinIoRepository>();
 

@@ -14,6 +14,16 @@
             Product model constants
             </summary>
         </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxNameLength">
+            <summary>
+            Product name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MinNameLength">
+            <summary>
+            Product name minimum length
+            </summary>
+        </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxImageUrlLength">
             <summary>
             Product image URL maximum length
@@ -34,37 +44,22 @@
             Item SCU lenght
             </summary>
         </member>
-        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Bicycle">
-            <summary>
-            Bicycle model constants
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MaxNameLength">
-            <summary>
-            Model name maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MinNameLength">
-            <summary>
-            Model name minimum length
-            </summary>
-        </member>
-        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory">
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Category">
             <summary>
             Product category constants 
             </summary>
         </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory.MaxNameLength">
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Category.MaxNameLength">
             <summary>
             Category name maximum length
             </summary>
         </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory.MinNameLength">
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Category.MinNameLength">
             <summary>
             Category name minimum length
             </summary>
         </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductCategory.MaxDescriptionLenght">
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Category.MaxDescriptionLenght">
             <summary>
             Category description maximum length
             </summary>
@@ -525,16 +520,16 @@
             Extracts Claims information from ClaimsPrincipal via HttpContextAccessor 
             </summary>
         </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.InitialMigration">
+        <member name="T:BuyBike.Infrastructure.Migrations.initialMigration">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.initialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.initialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.initialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

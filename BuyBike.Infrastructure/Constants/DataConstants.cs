@@ -13,6 +13,15 @@
         public static class Product
         {
             /// <summary>
+            /// Product name maximum length
+            /// </summary>
+            public const int MaxNameLength = 60;
+            /// <summary>
+            /// Product name minimum length
+            /// </summary>
+            public const int MinNameLength = 1;
+
+            /// <summary>
             /// Product image URL maximum length
             /// </summary>
             public const int MaxImageUrlLength = 1024;
@@ -34,24 +43,9 @@
         }
 
         /// <summary>
-        /// Bicycle model constants
-        /// </summary>
-        public static class Bicycle
-        {
-            /// <summary>
-            /// Model name maximum length
-            /// </summary>
-            public const int MaxNameLength = 60;
-            /// <summary>
-            /// Model name minimum length
-            /// </summary>
-            public const int MinNameLength = 1;
-        }
-
-        /// <summary>
         /// Product category constants 
         /// </summary>
-        public static class ProductCategory
+        public static class Category
         {
             /// <summary>
             /// Category name maximum length
