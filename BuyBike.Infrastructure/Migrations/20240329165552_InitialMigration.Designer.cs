@@ -3,6 +3,7 @@ using System;
 using BuyBike.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     [DbContext(typeof(BuyBikeDbContext))]
-    partial class BuyBikeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240329165552_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,16 +141,8 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("name")
                         .HasComment("Category name");
 
-                    b.Property<int?>("ParentCategoryId")
-                        .HasColumnType("integer")
-                        .HasColumnName("parent_category_id")
-                        .HasComment("Product parent category (If any) - self referencing foreign key");
-
                     b.HasKey("Id")
                         .HasName("pk_categories");
-
-                    b.HasIndex("ParentCategoryId")
-                        .HasDatabaseName("ix_categories_parent_category_id");
 
                     b.ToTable("categories", null, t =>
                         {
@@ -1035,16 +1030,6 @@ namespace BuyBike.Infrastructure.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Category", b =>
-                {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Category", "ParentCategory")
-                        .WithMany("SubCategories")
-                        .HasForeignKey("ParentCategoryId")
-                        .HasConstraintName("fk_categories_categories_parent_category_id");
-
-                    b.Navigation("ParentCategory");
-                });
-
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Item", b =>
                 {
                     b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", "Product")
@@ -1203,8 +1188,6 @@ namespace BuyBike.Infrastructure.Migrations
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Category", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("SubCategories");
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Discount", b =>

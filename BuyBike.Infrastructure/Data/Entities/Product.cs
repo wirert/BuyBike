@@ -3,12 +3,11 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    
+
     using Microsoft.EntityFrameworkCore;
-    
+
     using BuyBike.Infrastructure.Constants;
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
-    using Newtonsoft.Json.Linq;
 
     [Comment("Shop product model")]
     public class Product
@@ -16,7 +15,6 @@
         public Product()
         {
             Id = Guid.NewGuid();            
-            AttributeValues = new List<ProductAttributeValue>();
             Items = new List<Item>();
         }
 
@@ -74,8 +72,6 @@
 
         [Comment("Soft delete boolean property")]
         public bool IsActive { get; set; } = true;
-
-        public virtual ICollection<ProductAttributeValue> AttributeValues { get; set; }
 
         public virtual ICollection<Item> Items { get; set; }
     }

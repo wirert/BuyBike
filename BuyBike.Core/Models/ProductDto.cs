@@ -12,12 +12,10 @@
 
         public string ImageUrl { get; set; } = null!;
 
-        public double TyreSize { get; set; }
-
         public decimal Price { get; set; }
 
         public string? Color { get; set; }
 
-        public string Type { get; set; } = null!;
+        public string Category { get; set; } = null!;
     }
 }

@@ -2,7 +2,7 @@
 {
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
 
-    public class ProductDetailsDto
+    public class BicycleDetailsDto
     {
         public decimal Price { get; set; }
 
@@ -20,14 +20,14 @@
 
         public string? Description { get; set; }
 
-        public string Type { get; set; } = null!;
+        public string Category { get; set; } = null!;
 
         public string Name { get; set; } = null!;
 
         public double TyreSize { get; set; }
 
-        public IEnumerable<ItemDto> Items { get; set; } = new List<ItemDto>();
+        public string? Specification { get; set; }
 
-        public IEnumerable<AttributeDto> Attributes { get; set; } = new List<AttributeDto>();
+        public IEnumerable<ItemDto> Items { get; set; } = new List<ItemDto>();
     }
 }

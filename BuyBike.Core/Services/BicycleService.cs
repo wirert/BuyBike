@@ -17,17 +17,17 @@
     /// <summary>
     /// Product Service
     /// </summary>
-    public class ProductService : IProductService
+    public class BicycleService : IBicycleService
     {
         private readonly IRepository repo;
         private const string ImgBaseUrl = @"http://localhost:9000/buy-bike/";
 
-        public ProductService(IRepository _repo)
+        public BicycleService(IRepository _repo)
         {
             repo = _repo;
         }
 
-        public async Task<ICollection<ProductDto>> GetAllModelsAsync(BikeType? bikeType)
+        public async Task<ICollection<BicycleDto>> GetAllModelsAsync(BikeType? bikeType)
         {
             Expression<Func<Product, bool>> searchTerms = b => b.IsActive;
 
@@ -37,7 +37,7 @@
             }
 
             return await repo.AllReadonly(searchTerms)
-                .Select(b => new ProductDto
+                .Select(b => new BicycleDto
                 {
                     Id = b.Id,
                     Name = b.Name,
@@ -45,16 +45,16 @@
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
                     Price = b.Price,
                     Color = b.Color,
-                    Type = b.Category.Name,
+                    Category = b.Category.Name,
                     TyreSize = 28
 
                 }).ToListAsync();
         }
 
-        public async Task<ProductDetailsDto> GetById(Guid id)
+        public async Task<BicycleDetailsDto> GetById(Guid id)
         {            
-            var result =  await repo.AllReadonly<Product>(b => b.IsActive && b.Id == id)
-                .Select(b => new ProductDetailsDto
+            var result =  await repo.AllReadonly<Bicycle>(b => b.IsActive && b.Id == id)
+                .Select(b => new BicycleDetailsDto
                 {
                     Name = b.Name,
                     Make = b.Make.Name,
@@ -63,8 +63,9 @@
                     Price = b.Price,
                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
                     Color = b.Color,
-                    Type = b.Category.Name,
+                    Category = b.Category.Name,
                     Gender = b.Gender,
+                    TyreSize = b.TyreSize,
                     Description = b.Description,
                     Items = b.Items.Select(i => new ItemDto 
                     { 
@@ -73,30 +74,18 @@
                         Sku = i.Sku,
                         IsInStock = i.InStock > 0
                     }),
-                    Attributes = b.AttributeValues.Select(av => new AttributeDto
-                    {
-                        Name = av.Attribute.Name,
-                        Value = av.Value
-                    })
+                    Specification = b.Specification,
                 } ).FirstOrDefaultAsync();
-
 
             if (result == null)
             {
                 throw new ArgumentException("Invalid bicycle identifier.");
             }
-
-           var tyreSize = result.Attributes?.FirstOrDefault(a => a.Name == "TyreSize")?.Value;
-
-            if (tyreSize != null)
-            {
-                result.TyreSize = double.Parse(tyreSize);
-            }
-
+          
             return result;
         }
 
-        public async Task<PagedProductsDto> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)
+        public async Task<PagedProductDto<BicycleDto>> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)
         {
             int skipCount = (page - 1) * pageSize;
 
@@ -125,7 +114,7 @@
             }
 
             var data = repo.AllReadonly(searchTerms)
-                .Select(b => new ProductDto
+                .Select(b => new BicycleDto
                 {
                     Id = b.Id,
                     Name = b.Name,
@@ -133,11 +122,11 @@
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
                     Price = b.Price,
                     Color = b.Color,
-                    Type = b.Category.Name,
+                    Category = b.Category.Name,
 
                 }).AsQueryable();
 
-            var result = new PagedProductsDto()
+            var result = new PagedProductDto<BicycleDto>()
             {
                 TotalProducts = totalCount,
                 Products = await SortAndFetchData(data, orderBy, isDesc, skipCount, pageSize)
@@ -146,7 +135,7 @@
             return result;
         }
 
-        private async Task<ICollection<ProductDto>> SortAndFetchData(IQueryable<ProductDto> data, string orderBy, bool isDesc, int skipCount, int pageSize)
+        private async Task<ICollection<BicycleDto>> SortAndFetchData(IQueryable<BicycleDto> data, string orderBy, bool isDesc, int skipCount, int pageSize)
         {
             orderBy = orderBy.ToLower();
 

@@ -11,11 +11,11 @@
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductController : ControllerBase
+    public class BicycleController : ControllerBase
     {
-        private readonly IProductService bicyclesService;
+        private readonly IBicycleService bicyclesService;
 
-        public ProductController(IProductService _bicyclesService)
+        public BicycleController(IBicycleService _bicyclesService)
         {
             bicyclesService = _bicyclesService;
         }
@@ -27,7 +27,7 @@
         /// <returns>Collection of Bicycle DTO</returns>
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<ProductDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<BicycleDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get([FromQuery] string? type = null)
@@ -70,7 +70,7 @@
         [HttpGet]
         [Route("Paged")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductsDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductDto<BicycleDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetPaged([FromQuery] int page, [FromQuery] int itemsPerPage, [FromQuery] string orderBy, [FromQuery] bool desc, [FromQuery] string? type = null)
@@ -112,7 +112,7 @@
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDetailsDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BicycleDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(Guid id)

@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initialMigration : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,17 +62,11 @@ namespace BuyBike.Infrastructure.Migrations
                     id = table.Column<int>(type: "integer", nullable: false, comment: "Category identifier")
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false, comment: "Category name"),
-                    description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true, comment: "Category description (optional"),
-                    parent_category_id = table.Column<int>(type: "integer", nullable: true, comment: "Product parent category (If any) - self referencing foreign key")
+                    description = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true, comment: "Category description (optional")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_categories", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_categories_categories_parent_category_id",
-                        column: x => x.parent_category_id,
-                        principalTable: "categories",
-                        principalColumn: "id");
                 },
                 comment: "Product category");
 
@@ -238,28 +232,6 @@ namespace BuyBike.Infrastructure.Migrations
                 comment: "User products order");
 
             migrationBuilder.CreateTable(
-                name: "attributes",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "integer", nullable: false, comment: "Attribute Id")
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false, comment: "Attribute name"),
-                    data_type = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: false, comment: "Product property value type (default: string)"),
-                    product_type_id = table.Column<int>(type: "integer", nullable: false, comment: "Product type category id")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_attributes", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_attributes_categories_product_type_id",
-                        column: x => x.product_type_id,
-                        principalTable: "categories",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "EAV pattern attribute model");
-
-            migrationBuilder.CreateTable(
                 name: "products",
                 columns: table => new
                 {
@@ -278,7 +250,7 @@ namespace BuyBike.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_products", x => x.id);
+                    table.PrimaryKey("PK_products", x => x.id);
                     table.ForeignKey(
                         name: "fk_products_categories_category_id",
                         column: x => x.category_id,
@@ -300,30 +272,27 @@ namespace BuyBike.Infrastructure.Migrations
                 comment: "Shop product model");
 
             migrationBuilder.CreateTable(
-                name: "attribute_values",
+                name: "bicycles",
                 columns: table => new
                 {
-                    attribute_id = table.Column<int>(type: "integer", nullable: false, comment: "Attribute identifier"),
-                    product_id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Attribute product identifier"),
-                    value = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false, comment: "Attribute actual value")
+                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product primary key"),
+                    tyre_size = table.Column<double>(type: "double precision", nullable: false, comment: "Tyre size"),
+                    material = table.Column<int>(type: "integer", nullable: false, comment: "Frame's material"),
+                    brakes = table.Column<int>(type: "integer", nullable: false, comment: "Brakes type"),
+                    suspention = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false, comment: "Suspention type"),
+                    style = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: true, comment: "Bicycle riding style")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_attribute_values", x => new { x.product_id, x.attribute_id });
+                    table.PrimaryKey("PK_bicycles", x => x.id);
                     table.ForeignKey(
-                        name: "fk_attribute_values_attributes_attribute_id",
-                        column: x => x.attribute_id,
-                        principalTable: "attributes",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "fk_attribute_values_products_product_id",
-                        column: x => x.product_id,
+                        name: "fk_bicycles_products_id",
+                        column: x => x.id,
                         principalTable: "products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 },
-                comment: "Optional attribute value table");
+                comment: "Bicycle");
 
             migrationBuilder.CreateTable(
                 name: "items",
@@ -347,6 +316,24 @@ namespace BuyBike.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 },
                 comment: "Product item for sale");
+
+            migrationBuilder.CreateTable(
+                name: "parts",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product primary key")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_parts", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_parts_products_id",
+                        column: x => x.id,
+                        principalTable: "products",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Bicycle parts");
 
             migrationBuilder.CreateTable(
                 name: "order_items",
@@ -376,8 +363,15 @@ namespace BuyBike.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "categories",
-                columns: new[] { "id", "description", "name", "parent_category_id" },
-                values: new object[] { 6, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Bicycle", null });
+                columns: new[] { "id", "description", "name" },
+                values: new object[,]
+                {
+                    { 1, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Mountain" },
+                    { 2, "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Road" },
+                    { 3, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!", "City" },
+                    { 4, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Kids" },
+                    { 5, "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Electric" }
+                });
 
             migrationBuilder.InsertData(
                 table: "discounts",
@@ -402,93 +396,35 @@ namespace BuyBike.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "attributes",
-                columns: new[] { "id", "data_type", "name", "product_type_id" },
-                values: new object[,]
-                {
-                    { 1, "double", "TyreSize", 6 },
-                    { 2, "string", "Material", 6 },
-                    { 3, "string", "Brakes", 6 },
-                    { 4, "string", "Suspention", 6 },
-                    { 5, "string", "Style", 6 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "categories",
-                columns: new[] { "id", "description", "name", "parent_category_id" },
-                values: new object[,]
-                {
-                    { 1, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Mountain", 6 },
-                    { 2, "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Road", 6 },
-                    { 3, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!", "City", 6 },
-                    { 4, "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Kids", 6 },
-                    { 5, "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!", "Electric", 6 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "products",
                 columns: new[] { "id", "category_id", "color", "description", "discount_id", "gender", "image_url", "is_active", "make_id", "name", "price", "specification" },
                 values: new object[,]
                 {
                     { new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), 2, "Blue", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", 3, null, "bicycles/road/Litening_Aero_28_Blue.jpg", true, new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"), "Litening Aero", 14899m, "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}" },
-                    { new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), 3, "Grey", null, null, 2, "bicycles/city/Nulane_Pro_28_Grey.png", true, new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"), "Nulane Pro", 3899m, null },
+                    { new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), 3, "Grey", null, null, 1, "bicycles/city/Nulane_Pro_28_Grey.png", true, new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"), "Nulane Pro", 3899m, null },
                     { new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), 1, "White", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", 2, null, "bicycles/mountain/Epic_Expert_Morn_White.jpg", true, new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"), "Epic Expert Morn", 13599m, null },
                     { new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), 1, "White", null, null, null, "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg", true, new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"), "Fathom 1", 3499m, "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}" },
                     { new Guid("78804049-030f-4373-be3c-dfb4df261846"), 1, "Black", null, 1, null, "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg", true, new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"), "Fathom 1", 3499m, "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}" },
                     { new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), 4, "Black", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", 1, null, "bicycles/kids/Faro_12_black.jpg", true, new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"), "Faro", 279m, "{\"Рамка\": \"лека алуминиева\", \"Седалка\": \"регулируема седалка от 350 мм до 400 мм\", \"Кормило\": \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\", \"Спирачка\": \"V\", \"Тегло\": \"4.4 кг\"}" },
-                    { new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), 3, "Silver", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", null, 1, "bicycles/city/Touring_Pro_28_Silver.jpg", true, new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"), "Touring Pro", 1699m, "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}" },
+                    { new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), 3, "Silver", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", null, 0, "bicycles/city/Touring_Pro_28_Silver.jpg", true, new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"), "Touring Pro", 1699m, "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}" },
                     { new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), 4, "Blue", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", 2, null, "bicycles/kids/Boxer_12_blue.jpg", true, new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"), "Boxer", 299m, "{\"Рамка\": \"лека алуминиева\", \"Седалка\": \"регулируема седалка от 350 мм до 400 мм\", \"Кормило\": \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\", \"Спирачка\": \"V\", \"Тегло\": \"4.4 кг\"}" },
                     { new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), 2, "Red", "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!", null, null, "bicycles/road/Allez_E5_28_red.jpg", true, new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"), "Allez E5", 2399m, "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}" }
                 });
 
             migrationBuilder.InsertData(
-                table: "attribute_values",
-                columns: new[] { "attribute_id", "product_id", "value" },
+                table: "bicycles",
+                columns: new[] { "id", "brakes", "material", "style", "suspention", "tyre_size" },
                 values: new object[,]
                 {
-                    { 1, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "28" },
-                    { 2, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "carbon" },
-                    { 3, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "disc" },
-                    { 4, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "Пълно окачване" },
-                    { 5, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "Gravel" },
-                    { 1, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "28" },
-                    { 2, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "alloy" },
-                    { 3, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "disc" },
-                    { 4, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "Твърда вилка" },
-                    { 5, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "Градски / City" },
-                    { 1, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "29" },
-                    { 2, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "carbon" },
-                    { 3, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "disc" },
-                    { 4, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "Пълно окачване" },
-                    { 5, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "All Mountain / Trail" },
-                    { 1, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "29" },
-                    { 2, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "alloy" },
-                    { 3, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "v-brake" },
-                    { 4, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "Пълно окачване" },
-                    { 5, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "Крос кънтри / XC" },
-                    { 1, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "29" },
-                    { 2, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "alloy" },
-                    { 3, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "disc" },
-                    { 4, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "Пълно окачване" },
-                    { 5, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "Крос кънтри / XC" },
-                    { 1, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "12" },
-                    { 2, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "steel" },
-                    { 3, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "v-brake" },
-                    { 4, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "Твърда вилка" },
-                    { 1, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "28" },
-                    { 2, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "alloy" },
-                    { 3, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "disc" },
-                    { 4, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "Пълно окачване" },
-                    { 5, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "Treking" },
-                    { 1, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "12" },
-                    { 2, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "alloy" },
-                    { 3, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "v-brake" },
-                    { 4, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "Амортисьорна вилка" },
-                    { 1, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "28" },
-                    { 2, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "alloy" },
-                    { 3, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "disc" },
-                    { 4, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "Амортисьорна вилка" },
-                    { 5, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "Шосе" }
+                    { new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), 0, 1, "Шосе", "Амортисьорна вилка", 28.0 },
+                    { new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), 1, 0, "Treking", "Твърда вилка", 28.0 },
+                    { new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), 0, 1, "DOWNHILL", "Пълно окачване", 29.0 },
+                    { new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), 0, 0, "Крос кънтри / XC", "Амортисьорна вилка", 29.0 },
+                    { new Guid("78804049-030f-4373-be3c-dfb4df261846"), 0, 0, "Крос кънтри / XC", "Амортисьорна вилка", 29.0 },
+                    { new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), 1, 2, null, "Твърда вилка", 12.0 },
+                    { new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), 1, 0, "City / Градски", "Твърда вилка", 28.0 },
+                    { new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), 0, 0, null, "Амортисьорна вилка", 12.0 },
+                    { new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), 1, 0, "Gravel Bike", "Амортисьорна вилка", 28.0 }
                 });
 
             migrationBuilder.InsertData(
@@ -549,21 +485,6 @@ namespace BuyBike.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "ix_attribute_values_attribute_id",
-                table: "attribute_values",
-                column: "attribute_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_attributes_product_type_id",
-                table: "attributes",
-                column: "product_type_id");
-
-            migrationBuilder.CreateIndex(
-                name: "ix_categories_parent_category_id",
-                table: "categories",
-                column: "parent_category_id");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_items_product_id",
                 table: "items",
                 column: "product_id");
@@ -613,16 +534,16 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "attribute_values");
+                name: "bicycles");
 
             migrationBuilder.DropTable(
                 name: "order_items");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "parts");
 
             migrationBuilder.DropTable(
-                name: "attributes");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "items");

@@ -42,7 +42,7 @@
 
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IBicycleService, BicycleService>();
             services.AddScoped<IMinIoRepository, MinIoRepository>();
 
             return services;

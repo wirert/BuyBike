@@ -11,7 +11,7 @@
         </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Product">
             <summary>
-            Product model constants
+            Product entity constants
             </summary>
         </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxNameLength">
@@ -44,6 +44,26 @@
             Item SCU lenght
             </summary>
         </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Bicycle">
+            <summary>
+            Bicycle entity constants 
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MaxSuspentionLength">
+            <summary>
+            Suspention type maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MinSuspentionLength">
+            <summary>
+            Suspention type minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Bicycle.MaxStyleLength">
+            <summary>
+            Style maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Category">
             <summary>
             Product category constants 
@@ -62,31 +82,6 @@
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Category.MaxDescriptionLenght">
             <summary>
             Category description maximum length
-            </summary>
-        </member>
-        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Attribute">
-            <summary>
-            Product additional attribute (property) constants
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MaxNameLength">
-            <summary>
-            Attribute name maximum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MinNameLenght">
-            <summary>
-            Attribute name minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MaxValueLenght">
-            <summary>
-            Attribute value max lenght
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Attribute.MaxValueTypeLenght">
-            <summary>
-            Attribute value type maximum lenght
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.AppUser">
@@ -520,16 +515,28 @@
             Extracts Claims information from ClaimsPrincipal via HttpContextAccessor 
             </summary>
         </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.initialMigration">
+        <member name="T:BuyBike.Infrastructure.Migrations.InitialMigration">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.initialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.initialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
             <inheritdoc />
         </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.initialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+        <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.AddedSubcategories">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

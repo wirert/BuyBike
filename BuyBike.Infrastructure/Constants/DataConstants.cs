@@ -8,7 +8,7 @@
     public static class DataConstants
     {
         /// <summary>
-        /// Product model constants
+        /// Product entity constants
         /// </summary>
         public static class Product
         {
@@ -43,6 +43,26 @@
         }
 
         /// <summary>
+        /// Bicycle entity constants 
+        /// </summary>
+        public static class Bicycle
+        {            
+            /// <summary>
+            /// Suspention type maximum length
+            /// </summary>
+            public const int MaxSuspentionLength = 20;
+            /// <summary>
+            /// Suspention type minimum length
+            /// </summary>
+            public const int MinSuspentionLength = 1;
+
+            /// <summary>
+            /// Style maximum length
+            /// </summary>
+            public const int MaxStyleLength = 25;            
+        }
+
+        /// <summary>
         /// Product category constants 
         /// </summary>
         public static class Category
@@ -60,31 +80,6 @@
             /// Category description maximum length
             /// </summary>
             public const int MaxDescriptionLenght = 2048;
-        }
-
-        /// <summary>
-        /// Product additional attribute (property) constants
-        /// </summary>
-        public static class Attribute
-        {
-            /// <summary>
-            /// Attribute name maximum length
-            /// </summary>
-            public const int MaxNameLength = 20;
-            /// <summary>
-            /// Attribute name minimum length
-            /// </summary>
-            public const int MinNameLenght = 3;
-
-            /// <summary>
-            /// Attribute value max lenght
-            /// </summary>
-            public const int MaxValueLenght = 80;
-
-            /// <summary>
-            /// Attribute value type maximum lenght
-            /// </summary>
-            public const int MaxValueTypeLenght = 10;
         }
 
         /// <summary>

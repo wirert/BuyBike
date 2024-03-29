@@ -12,33 +12,30 @@
     /// </summary>
     public class BuyBikeDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {
-        //Seed Databases (in delvelopment)
-        private bool seedDb;        
+        //Seed Databases
+        private bool seedDb;
 
         public BuyBikeDbContext(DbContextOptions<BuyBikeDbContext> options, bool seedDb = true) : base(options)
         {
             this.seedDb = seedDb;
         }
 
-        public virtual DbSet<Attribute> Attributes { get; set; } = null!;
+       public virtual DbSet<Part> Parts { get; set; } = null!;
         public virtual DbSet<Item> Items { get; set; } = null!;
         public virtual DbSet<Discount> Discounts { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
-        public virtual DbSet<ProductAttributeValue> AttributeValues { get; set; } = null!;
+        public virtual DbSet<Bicycle> Bicycles { get; set; } = null!;
         public virtual DbSet<Manufacturer> Manufacturers { get; set; } = null!;
-        public virtual DbSet<Product> Products { get; set; } = null!;   
+       public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<Order> Orders { get; set; } = null!;
         public virtual DbSet<OrderItem> OrderItems { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           // modelBuilder.Entity<Product>().UseTptMappingStrategy();
-                     
+           modelBuilder.Entity<Product>().UseTptMappingStrategy();
 
             modelBuilder.Entity<OrderItem>().HasKey(op => new { op.OrderId, op.ItemId });
-
-            modelBuilder.Entity<ProductAttributeValue>().HasKey(pav => new { pav.ProductId, pav.AttributeId });
 
             base.OnModelCreating(modelBuilder);
 
@@ -49,9 +46,7 @@
                 modelBuilder.ApplyConfiguration(new SeedManufacturersEntityConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedItemsTableConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedCategoriesTableConfiguration());
-                modelBuilder.ApplyConfiguration(new SeedAttributesConfiguration());
-                modelBuilder.ApplyConfiguration(new SeedProductsEntityConfiguration());
-                modelBuilder.ApplyConfiguration(new SeedAttributeValuesConfiguration());
+                modelBuilder.ApplyConfiguration(new SeedBicyclesEntityConfiguration());    
             }
         }
     }

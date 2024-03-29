@@ -1,9 +1,11 @@
 ﻿namespace BuyBike.Infrastructure.Data.Entities
 {
-    using BuyBike.Infrastructure.Constants;
-    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
+    using Microsoft.EntityFrameworkCore;
+
+    using BuyBike.Infrastructure.Constants;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Comment("Product category")]
@@ -27,8 +29,6 @@
 
         [ForeignKey(nameof(ParentCategoryId))]
         public Category? ParentCategory { get; set; }
-
-        public virtual ICollection<Attribute> Attributes { get; set; } = new List<Attribute>();
 
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
