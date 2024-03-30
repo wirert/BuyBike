@@ -25,7 +25,7 @@ export class PaginatorComponent implements AfterViewInit, OnInit {
   @Output() sortingChanged: EventEmitter<{ orderBy: string; desc: boolean }> =
     new EventEmitter();
 
-  orderBy: string = 'price';
+  orderBy: string = 'Price';
   isDescending: boolean = false;
 
   ngOnInit(): void {}

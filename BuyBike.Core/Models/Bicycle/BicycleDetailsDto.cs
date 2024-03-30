@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Core.Models
+﻿namespace BuyBike.Core.Models.Bicycle
 {
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
 

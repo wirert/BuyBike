@@ -23,22 +23,11 @@
             Bicycles controller
             </summary>
         </member>
-        <member name="M:BuyBike.Api.Controllers.BicycleController.Get(System.String)">
+        <member name="M:BuyBike.Api.Controllers.BicycleController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
             <summary>
-            Get Products by category or all
+            Get bicycles 
             </summary>
-            <param name="type">Product category (optional)</param>
-            <returns>Collection of Bicycle DTO</returns>
-        </member>
-        <member name="M:BuyBike.Api.Controllers.BicycleController.GetPaged(System.Int32,System.Int32,System.String,System.Boolean,System.String)">
-            <summary>
-            Fetch sorted and paged bicycles
-            </summary>
-            <param name="page">page number</param>
-            <param name="itemsPerPage">Bicycles per page</param>
-            <param name="orderBy">Order by string</param>
-            <param name="desc">Is descending order</param>
-            <param name="type">Bicycles type</param>
+            <param name="query">Query params model</param>
             <returns></returns>
         </member>
         <member name="M:BuyBike.Api.Controllers.BicycleController.GetById(System.Guid)">

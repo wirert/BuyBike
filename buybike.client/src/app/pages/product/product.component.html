@@ -88,51 +88,12 @@
 
   <div class="product-description">
     <h4>Описание и техническа спецификация</h4>
-    <p>
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quis libero hic
-      cumque soluta temporibus inventore nisi quia aliquid perferendis debitis,
-      voluptate deleniti, excepturi, at sequi fuga saepe? Dolore, accusamus
-      voluptatibus?
-    </p>
+    <p>{{ product?.description }}</p>
     <table class="table table-hover table-striped">
       <tbody>
-        <tr>
-          <td>Рамка</td>
-          <td>
-            S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First
-            Engineered™, threaded BB, 12x148mm rear spacing, internal cable
-            routing, 100mm of travel
-          </td>
-        </tr>
-        <tr>
-          <td>Вилка</td>
-          <td>
-            RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air,
-            15x110mm, 44mm offset, 100mm Travel
-          </td>
-        </tr>
-        <tr>
-          <td>Заден дерайльор</td>
-          <td>SRAM XX1 Eagle AXS</td>
-        </tr>
-        <tr>
-          <td>Команди</td>
-          <td>SRAM Eagle AXS Rocker Paddle</td>
-        </tr>
-        <tr>
-          <td>Касета</td>
-          <td>Sram XG-1299, 12-Speed, 10-52t</td>
-        </tr>
-        <tr>
-          <td>Курбели</td>
-          <td>Quarq XX1 Powermeter, DUB, 170/175mm, 34t</td>
-        </tr>
-        <tr>
-          <td>Кормило</td>
-          <td>
-            S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep,
-            10mm rise, 760mm, 31.8mm
-          </td>
+        <tr *ngFor="let spec of product?.specification">
+          <td>{{ spec[0] }}:</td>
+          <td>{{ spec[1] }}</td>
         </tr>
       </tbody>
     </table>

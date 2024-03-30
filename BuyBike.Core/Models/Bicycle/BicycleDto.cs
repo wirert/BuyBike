@@ -1,4 +1,4 @@
-﻿namespace BuyBike.Core.Models
+﻿namespace BuyBike.Core.Models.Bicycle
 {
     public class BicycleDto : ProductDto
     {

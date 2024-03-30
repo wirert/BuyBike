@@ -49,6 +49,16 @@
             User last name
             </summary>
         </member>
+        <member name="T:BuyBike.Core.Models.GetAllQueryModel">
+            <summary>
+            Query parameters model
+            </summary>
+        </member>
+        <member name="P:BuyBike.Core.Models.GetAllQueryModel.Category">
+            <summary>
+            Product category
+            </summary>
+        </member>
         <member name="T:BuyBike.Core.Models.ItemDto">
             <summary>
             Product item model
@@ -64,14 +74,7 @@
             Bicycles service
             </summary>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicycleService.GetAllModelsAsync(System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
-            <summary>
-            Gets all bicycles models by bicycle type or all models
-            </summary>
-            <param name="bikeType">Bicycle type(or null)</param>
-            <returns>Collection of Bicycle DTO</returns>
-        </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicycleService.GetPagedModelsAsync(System.Int32,System.Int32,System.String,System.Boolean,System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
+        <member name="M:BuyBike.Core.Services.Contracts.IBicycleService.GetAllAsync(System.Int32,System.Int32,System.String,System.Boolean,System.Nullable{BuyBike.Infrastructure.Data.Entities.Enumerations.BikeType})">
             <summary>
             Get a set of bicyle models by type 
             </summary>

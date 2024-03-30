@@ -14,7 +14,7 @@ export class BicycleDetails implements ProductDetails {
     public gender: string | null,
     public type: string,
     public items: Item[],
-    public attributes: { name: string; value: string }[],
+    public specification: string[][],
     public tyreSize: number
   ) {}
 }

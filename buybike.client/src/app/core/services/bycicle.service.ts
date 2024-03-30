@@ -2,21 +2,21 @@ import { Injectable, inject } from '@angular/core';
 import { Bicycle } from '../models/bicycle/bicycle';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { BicyclePage } from '../models/bicycle/paged-bicycles';
+import { ProductPage } from '../models/products-page';
 
 @Injectable({ providedIn: 'root' })
 export class BicycleService {
-  private url: string = 'https://localhost:7129/api/Bicycles/';
+  private url: string = 'https://localhost:7129/api/Bicycle';
   private http: HttpClient = inject(HttpClient);
 
-  getBicycles(type: string | null): Observable<Bicycle[]> {
+  getBicycles(category: string | null): Observable<Bicycle[]> {
     let params = new HttpParams();
 
-    if (type !== null) {
-      params = params.append('type', type);
+    if (category !== null) {
+      params = params.append('type', category);
     }
 
-    return this.http.get<Bicycle[]>(this.url + 'Get', {
+    return this.http.get<Bicycle[]>(this.url, {
       params: params,
       responseType: 'json',
     });
@@ -27,8 +27,8 @@ export class BicycleService {
     itemsPerPage: number,
     orderBy: string,
     desc: boolean,
-    type: string | null
-  ): Observable<BicyclePage> {
+    category: string | null
+  ): Observable<ProductPage<Bicycle>> {
     let params = new HttpParams();
 
     params = params.append('page', page);
@@ -36,11 +36,11 @@ export class BicycleService {
     params = params.append('orderBy', orderBy);
     params = params.append('desc', desc);
 
-    if (type !== null) {
-      params = params.append('type', type);
+    if (category !== null) {
+      params = params.append('category', category);
     }
 
-    return this.http.get<BicyclePage>(this.url + 'Paged', {
+    return this.http.get<ProductPage<Bicycle>>(this.url, {
       params: params,
       responseType: 'json',
     });

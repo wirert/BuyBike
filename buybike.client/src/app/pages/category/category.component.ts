@@ -27,12 +27,12 @@ export class CategoryComponent implements OnInit {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private bikeService: BicycleService = inject(BicycleService);
 
-  type: string | null = '';
+  category: string | null = '';
   bicycles: Bicycle[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 12;
   totalItems: number = 0;
-  orderBy: string = 'price';
+  orderBy: string = 'Price';
   isDescending: boolean = false;
   bikeTypes = AppConstants.bikeTypes;
 
@@ -66,12 +66,12 @@ export class CategoryComponent implements OnInit {
         this.itemsPerPage,
         this.orderBy,
         this.isDescending,
-        this.type
+        this.category
       )
       .subscribe({
         next: (data) => {
-          this.bicycles = data.bicycles;
-          this.totalItems = data.totalBicycles;
+          this.bicycles = data.products;
+          this.totalItems = data.totalProducts;
 
           console.log(data);
         },
@@ -82,7 +82,7 @@ export class CategoryComponent implements OnInit {
   private changeType(val: UrlSegment[]) {
     if (val.length > 1) {
       const path = val[1].path.toLowerCase();
-      this.type = path;
+      this.category = path;
     }
 
     this.currentPage = 1;

@@ -1,4 +1,4 @@
-<category-banner [categoryType]="type"></category-banner>
+<category-banner [categoryType]="category"></category-banner>
 
 <app-paginator
   [currentPage]="currentPage"
@@ -14,15 +14,15 @@
     <product-card
       [id]="bike.id"
       [itemType]="'bicycle'"
-      [category]="type ? type : ''"
+      [category]="category ? category : ''"
       [make]="bike.make"
       [price]="bike.price"
       [name]="
-        bikeTypes[bike.type] +
+        bikeTypes[bike.category] +
         ' велосипед ' +
         bike.make +
         ' ' +
-        bike.model +
+        bike.name +
         ' ' +
         bike.tyreSize +
         '&quot; ' +

@@ -1,10 +1,13 @@
 ﻿namespace BuyBike.Api.Controllers
 {
-    using BuyBike.Core.Models;
-    using BuyBike.Core.Services.Contracts;
-    using BuyBike.Infrastructure.Data.Entities.Enumerations;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+
+    using BuyBike.Core.Models;
+    using BuyBike.Core.Models.Bicycle;
+    using BuyBike.Core.Services.Contracts;
+    using BuyBike.Infrastructure.Data.Entities.Enumerations;
+    using BuyBike.Core.Constants;
 
     /// <summary>
     /// Bicycles controller
@@ -19,71 +22,29 @@
         {
             bicyclesService = _bicyclesService;
         }
-
+           
         /// <summary>
-        /// Get Products by category or all
+        /// Get bicycles 
         /// </summary>
-        /// <param name="type">Product category (optional)</param>
-        /// <returns>Collection of Bicycle DTO</returns>
-        [HttpGet]
-        [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<BicycleDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> Get([FromQuery] string? type = null)
-        {
-            BikeType? bikeType = null;
-
-            if (type != null)
-            {
-                bool isBikeType = Enum.TryParse(type, ignoreCase: true, out BikeType result);
-
-                if (!isBikeType)
-                {
-                    return BadRequest("Invalid bicycle type.");
-                }
-
-                bikeType = result;
-            }
-
-            try
-            {
-                var bicycles = await bicyclesService.GetAllModelsAsync(bikeType);
-
-                return Ok(bicycles);
-            }
-            catch (Exception e)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, e);
-            }
-        }
-
-        /// <summary>
-        /// Fetch sorted and paged bicycles
-        /// </summary>
-        /// <param name="page">page number</param>
-        /// <param name="itemsPerPage">Bicycles per page</param>
-        /// <param name="orderBy">Order by string</param>
-        /// <param name="desc">Is descending order</param>
-        /// <param name="type">Bicycles type</param>
+        /// <param name="query">Query params model</param>
         /// <returns></returns>
         [HttpGet]
-        [Route("Paged")]
+        [Route("")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductDto<BicycleDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetPaged([FromQuery] int page, [FromQuery] int itemsPerPage, [FromQuery] string orderBy, [FromQuery] bool desc, [FromQuery] string? type = null)
+        public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
         {
             BikeType? bikeType = null;
 
-            if (type != null)
+            if (query.Category != null)
             {
-                bool isBikeType = Enum.TryParse(type, ignoreCase: true, out BikeType result);
+                bool isBikeType = Enum.TryParse(query.Category, ignoreCase: true, out BikeType result);
 
                 if (!isBikeType)
                 {
-                    return BadRequest("Invalid bicycle type.");
+                    return BadRequest("Invalid bicycle category.");
                 }
 
                 bikeType = result;
@@ -91,7 +52,7 @@
 
             try
             {
-                var pagedBicycles = await bicyclesService.GetPagedModelsAsync(page, itemsPerPage, orderBy, desc, bikeType);
+                var pagedBicycles = await bicyclesService.GetAllAsync(query.Page, query.ItemsPerPage, query.OrderBy.ToString(), query.Desc, bikeType);
 
                 return Ok(pagedBicycles);
             }

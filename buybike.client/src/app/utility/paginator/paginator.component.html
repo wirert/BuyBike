@@ -2,10 +2,10 @@
   <div class="sort">
     <label for="selectSort">Сортирай по: </label>
     <select name="selectSort" (change)="changeSorting($event)">
-      <option value="price">Цена</option>
-      <option value="name">Име</option>
-      <option value="manufacturer">Производител</option>
-      <option value="position">Позиция</option>
+      <option value="Price">Цена</option>
+      <option value="Name">Име</option>
+      <option value="Make">Производител</option>
+      <option value="Discount">Намалени</option>
     </select>
     <a (click)="reverseSorting()" class="sort-arrow"
       ><i

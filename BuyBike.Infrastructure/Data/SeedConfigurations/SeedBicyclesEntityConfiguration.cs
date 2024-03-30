@@ -32,7 +32,7 @@
                     Brakes = BikeBrakes.Дискови,
                     Suspention = "Амортисьорна вилка",
                     Style = "Крос кънтри / XC",
-                     Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}"
+                     Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]"
                 },
 
                 new Bicycle()
@@ -49,7 +49,7 @@
                     Brakes = BikeBrakes.Дискови,
                     Suspention = "Амортисьорна вилка",
                     Style = "Крос кънтри / XC",
-                     Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}"
+                     Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]"
                 },
 
                 new Bicycle()
@@ -85,7 +85,7 @@
                     Brakes = BikeBrakes.V,
                     Suspention = "Твърда вилка",
                     Style = "City / Градски",
-                    Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}"
+                    Specification = "[[\"Рамка\", \"Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 760mm, 31.8mm\"]]"
                 },
 
                  new Bicycle()
@@ -120,7 +120,7 @@
                     Brakes = BikeBrakes.V,
                     Suspention = "Амортисьорна вилка",
                     Style = "Gravel Bike",
-                    Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}"
+                    Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]"
                 },
                  new Bicycle()
                 {
@@ -138,7 +138,7 @@
                     Brakes = BikeBrakes.Дискови,
                     Suspention = "Амортисьорна вилка",
                     Style = "Шосе",
-                    Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}"
+                    Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]"
                 },
                  new Bicycle()
                 {
@@ -155,7 +155,7 @@
                     Material  = BikeMaterial.Aлуминий,
                     Brakes = BikeBrakes.Дискови,
                     Suspention = "Амортисьорна вилка",
-                    Specification = "{\"Рамка\": \"лека алуминиева\", \"Седалка\": \"регулируема седалка от 350 мм до 400 мм\", \"Кормило\": \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\", \"Спирачка\": \"V\", \"Тегло\": \"4.4 кг\"}"
+                    Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]"
                 },
                 new Bicycle()
                 {
@@ -172,7 +172,7 @@
                     Material  = BikeMaterial.Стомана,
                     Brakes = BikeBrakes.V,
                     Suspention = "Твърда вилка",
-                    Specification = "{\"Рамка\": \"лека алуминиева\", \"Седалка\": \"регулируема седалка от 350 мм до 400 мм\", \"Кормило\": \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\", \"Спирачка\": \"V\", \"Тегло\": \"4.4 кг\"}"
+                    Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]"
                 },
             ];
     }

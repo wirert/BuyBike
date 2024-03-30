@@ -12,5 +12,5 @@ export interface ProductDetails {
   gender: string | null;
   type: string;
   items: Item[];
-  attributes: { name: string; value: string }[];
+  specification: string[][];
 }

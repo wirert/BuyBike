@@ -7,12 +7,15 @@
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
+    using Newtonsoft.Json.Linq;
 
     using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
+    using BuyBike.Core.Models.Bicycle;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Product Service
@@ -25,30 +28,6 @@
         public BicycleService(IRepository _repo)
         {
             repo = _repo;
-        }
-
-        public async Task<ICollection<BicycleDto>> GetAllModelsAsync(BikeType? bikeType)
-        {
-            Expression<Func<Product, bool>> searchTerms = b => b.IsActive;
-
-            if (bikeType != null)
-            {
-                searchTerms = b => b.IsActive && b.Category.Name == bikeType.ToString();
-            }
-
-            return await repo.AllReadonly(searchTerms)
-                .Select(b => new BicycleDto
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                    Make = b.Make.Name,
-                    ImageUrl = ImgBaseUrl + b.ImageUrl,
-                    Price = b.Price,
-                    Color = b.Color,
-                    Category = b.Category.Name,
-                    TyreSize = 28
-
-                }).ToListAsync();
         }
 
         public async Task<BicycleDetailsDto> GetById(Guid id)
@@ -85,7 +64,7 @@
             return result;
         }
 
-        public async Task<PagedProductDto<BicycleDto>> GetPagedModelsAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)
+        public async Task<PagedProductDto<BicycleDto>> GetAllAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)
         {
             int skipCount = (page - 1) * pageSize;
 
@@ -94,7 +73,7 @@
                 throw new ArgumentException("Incorrect page number or page size.");
             }
 
-            Expression<Func<Product, bool>> searchTerms = b => b.IsActive;
+            Expression<Func<Bicycle, bool>> searchTerms = b => b.IsActive;
 
             if (bikeType != null)
             {
@@ -123,7 +102,7 @@
                     Price = b.Price,
                     Color = b.Color,
                     Category = b.Category.Name,
-
+                    TyreSize = b.TyreSize,
                 }).AsQueryable();
 
             var result = new PagedProductDto<BicycleDto>()

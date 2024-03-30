@@ -539,5 +539,17 @@
         <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
