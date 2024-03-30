@@ -1,21 +1,17 @@
 ﻿namespace BuyBike.Core.Services
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
-    using Newtonsoft.Json.Linq;
 
     using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
-    using BuyBike.Infrastructure.Data.Entities.Enumerations;
     using BuyBike.Core.Models.Bicycle;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Product Service
@@ -64,35 +60,42 @@
             return result;
         }
 
-        public async Task<PagedProductDto<BicycleDto>> GetAllAsync(int page, int pageSize, string orderBy, bool isDesc, BikeType? bikeType)
+        public async Task<PagedProductDto<BicycleDto>> GetAllAsync(GetAllQueryModel query)
         {
-            int skipCount = (page - 1) * pageSize;
+            int skipCount = (query.Page - 1) * query.ItemsPerPage;            
 
-            if (skipCount < 0)
+            Expression<Func<Bicycle, bool>> filterExpr = b => b.IsActive;
+
+            if (string.IsNullOrEmpty(query.Category) == false)
             {
-                throw new ArgumentException("Incorrect page number or page size.");
+                filterExpr = b => b.IsActive && b.Category.Name == query.Category;
             }
 
-            Expression<Func<Bicycle, bool>> searchTerms = b => b.IsActive;
-
-            if (bikeType != null)
-            {
-                searchTerms = b => b.IsActive && b.Category.Name == bikeType.ToString();
-            }
-
-            int totalCount = await repo.AllReadonly(searchTerms).CountAsync();
+            int totalCount = await repo.AllReadonly(filterExpr).CountAsync();
 
             if (totalCount <= skipCount)
             {
                 throw new ArgumentException("Incorrect page number.");
             }
 
-            if (pageSize > totalCount)
+            if (query.ItemsPerPage > totalCount)
             {
-                pageSize = totalCount;
+                query.ItemsPerPage = totalCount;
             }
 
-            var data = repo.AllReadonly(searchTerms)
+            var result = new PagedProductDto<BicycleDto>()
+            {
+                TotalProducts = totalCount
+            };
+
+            var data = repo.AllReadonly(filterExpr);
+
+            data = SortData(data, query.OrderBy, query.Desc);
+
+
+            result.Products = await data
+                .Skip(skipCount)
+                .Take(query.ItemsPerPage)
                 .Select(b => new BicycleDto
                 {
                     Id = b.Id,
@@ -103,77 +106,32 @@
                     Color = b.Color,
                     Category = b.Category.Name,
                     TyreSize = b.TyreSize,
-                }).AsQueryable();
-
-            var result = new PagedProductDto<BicycleDto>()
-            {
-                TotalProducts = totalCount,
-                Products = await SortAndFetchData(data, orderBy, isDesc, skipCount, pageSize)
-            };
+                }).ToListAsync();
 
             return result;
         }
 
-        private async Task<ICollection<BicycleDto>> SortAndFetchData(IQueryable<BicycleDto> data, string orderBy, bool isDesc, int skipCount, int pageSize)
+        private IQueryable<Bicycle> SortData(IQueryable<Bicycle> data, string orderBy, bool isDesc)
         {
-            orderBy = orderBy.ToLower();
-
             if (isDesc)
             {
-                if (orderBy == "price")
-                    return await data
-                        .OrderByDescending(m => m.Price)
-                        .Skip(skipCount)
-                        .Take(pageSize)
-                        .ToListAsync();
-                else if (orderBy == "manufacturer")
-                    return await data
-                       .OrderByDescending(m => m.Make)
-                       .Skip(skipCount)
-                       .Take(pageSize)
-                       .ToListAsync();
-
-                else if (orderBy == "name")
-                    return await data
-                       .OrderByDescending(m => m.Name)
-                       .Skip(skipCount)
-                       .Take(pageSize)
-                       .ToListAsync();
-
-                else
-                    return await data
-                    .OrderByDescending(m => m)
-                    .Skip(skipCount)
-                    .Take(pageSize)
-                    .ToListAsync();
-
+                return orderBy switch
+                {
+                    "Discount" => data.OrderByDescending(b => b.Discount == null? b.Price: b.Discount.DiscountPercent),
+                    "Name" => data.OrderByDescending(b => b.Name),
+                    "Make" => data.OrderByDescending(b => b.Make.Name),
+                    _ => data.OrderByDescending(b => b.Price),
+                };
             }
             else
             {
-                if (orderBy == "price")
-                    return await data
-                        .OrderBy(m => m.Price)
-                        .Skip(skipCount)
-                        .Take(pageSize)
-                        .ToListAsync();
-                else if (orderBy == "manufacturer")
-                    return await data
-                       .OrderBy(m => m.Make)
-                       .Skip(skipCount)
-                       .Take(pageSize)
-                       .ToListAsync();
-                else if (orderBy == "name")
-                    return await data
-                       .OrderBy(m => m.Name)
-                       .Skip(skipCount)
-                       .Take(pageSize)
-                       .ToListAsync();
-                else
-                    return await data
-                    .OrderBy(m => m)
-                    .Skip(skipCount)
-                    .Take(pageSize)
-                    .ToListAsync();
+                return orderBy switch
+                {
+                    "Discount" => data.OrderBy(b => b.Discount == null ? b.Price : b.Discount.DiscountPercent),
+                    "Name" => data.OrderBy(b => b.Name),
+                    "Make" => data.OrderBy(b => b.Make.Name),
+                    _ => data.OrderBy(b => b.Price),
+                };
             }
         }
     }

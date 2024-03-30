@@ -1,17 +1,14 @@
 ﻿namespace BuyBike.Core.Models
 {
-    using BuyBike.Core.Constants;
-    using BuyBike.Core.Models.Enums;
     using System.ComponentModel.DataAnnotations;
+
+    using BuyBike.Core.Constants;
 
     /// <summary>
     /// Query parameters model
     /// </summary>
     public class GetAllQueryModel
-    {
-        /// <summary>
-        /// Product category
-        /// </summary>
+    {        
         public string? Category { get; set; }
 
         [Range(1, 10000)]

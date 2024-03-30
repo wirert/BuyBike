@@ -47,12 +47,12 @@
                     return BadRequest("Invalid bicycle category.");
                 }
 
-                bikeType = result;
+                query.Category = result.ToString();
             }
 
             try
             {
-                var pagedBicycles = await bicyclesService.GetAllAsync(query.Page, query.ItemsPerPage, query.OrderBy.ToString(), query.Desc, bikeType);
+                var pagedBicycles = await bicyclesService.GetAllAsync(query);
 
                 return Ok(pagedBicycles);
             }
