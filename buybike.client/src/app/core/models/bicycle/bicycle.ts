@@ -7,6 +7,7 @@ export class Bicycle {
     public imageUrl: string,
     public tyreSize: number,
     public color: string | null,
-    public category: string
+    public category: string,
+    public discountPercent: number | null
   ) {}
 }

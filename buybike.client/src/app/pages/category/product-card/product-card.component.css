@@ -46,3 +46,19 @@ h4 {
   color: red;
   text-transform: uppercase;
 }
+
+.discount {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  background-color: red;
+  color: whitesmoke;
+  width: 5em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.price .new-price {
+  color: red;
+  font-size: 1.1em;
+}

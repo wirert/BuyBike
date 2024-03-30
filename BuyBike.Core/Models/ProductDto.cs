@@ -17,5 +17,7 @@
         public string? Color { get; set; }
 
         public string Category { get; set; } = null!;
+
+        public int? DiscountPercent { get; set; }
     }
 }

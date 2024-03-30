@@ -106,6 +106,7 @@
                     Color = b.Color,
                     Category = b.Category.Name,
                     TyreSize = b.TyreSize,
+                    DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
                 }).ToListAsync();
 
             return result;
@@ -117,7 +118,7 @@
             {
                 return orderBy switch
                 {
-                    "Discount" => data.OrderByDescending(b => b.Discount == null? b.Price: b.Discount.DiscountPercent),
+                    "Discount" => data.Where(b => b.DiscountId != null).OrderByDescending(b => b.Discount!.DiscountPercent),
                     "Name" => data.OrderByDescending(b => b.Name),
                     "Make" => data.OrderByDescending(b => b.Make.Name),
                     _ => data.OrderByDescending(b => b.Price),
@@ -127,7 +128,7 @@
             {
                 return orderBy switch
                 {
-                    "Discount" => data.OrderBy(b => b.Discount == null ? b.Price : b.Discount.DiscountPercent),
+                    "Discount" => data.Where(b => b.DiscountId != null).OrderBy(b => b.Discount!.DiscountPercent),
                     "Name" => data.OrderBy(b => b.Name),
                     "Make" => data.OrderBy(b => b.Make.Name),
                     _ => data.OrderBy(b => b.Price),

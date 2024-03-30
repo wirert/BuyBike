@@ -36,8 +36,6 @@
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
         {
-            BikeType? bikeType = null;
-
             if (query.Category != null)
             {
                 bool isBikeType = Enum.TryParse(query.Category, ignoreCase: true, out BikeType result);
@@ -90,7 +88,6 @@
             }
             catch (Exception e)
             {
-
                 return StatusCode(StatusCodes.Status500InternalServerError, e);
             }
         }

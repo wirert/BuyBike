@@ -10,7 +10,18 @@
     <div class="product-info">
       <h4>{{ make }}</h4>
       <h3>{{ name }}</h3>
-      <div class="price">{{ price }} лв.</div>
+      <div class="price">
+        <span
+          [ngStyle]="{
+            'text-decoration': discountPercent ? 'line-through' : null
+          }"
+          >{{ price.toFixed(2) }} лв.</span
+        >
+        <span *ngIf="discountPercent" class="new-price"
+          >{{ ((price * (100 - discountPercent)) / 100).toFixed(2) }} лв.</span
+        >
+      </div>
     </div>
   </div>
+  <span class="discount" *ngIf="discountPercent">-{{ discountPercent }}%</span>
 </a>
