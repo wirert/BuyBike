@@ -1,3 +1,11 @@
+.category-container {
+  display: flex;
+}
+
+.category-content {
+  flex-basis: 40em;
+}
+
 .products-wrapper {
   display: flex;
   flex-wrap: wrap;

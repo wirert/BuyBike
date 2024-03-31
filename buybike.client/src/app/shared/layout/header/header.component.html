@@ -39,7 +39,12 @@
     <nav class="comp-container site-nav">
       <ul role="list">
         <li>
-          <a (mouseover)="onBikesMouseOver()">Велосипеди</a>
+          <a
+            routerLink="/bicycles"
+            routerLinkActive="router-link-active"
+            (mouseover)="onBikesMouseOver()"
+            >Велосипеди</a
+          >
         </li>
         <li><a href="#">Части</a></li>
         <li><a href="#">Аксесоари</a></li>

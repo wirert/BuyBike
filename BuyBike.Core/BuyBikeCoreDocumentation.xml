@@ -83,5 +83,16 @@
             <param name="id">Bicycle Identifier</param>
             <returns>Bicycle Data Transfer Object with details</returns>
         </member>
+        <member name="T:BuyBike.Core.Services.Contracts.ICategoryService">
+            <summary>
+            Category service
+            </summary>
+        </member>
+        <member name="M:BuyBike.Core.Services.Contracts.ICategoryService.GetCategoriesAsync">
+            <summary>
+            Get all categories with subcategories
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>

@@ -1,6 +1,5 @@
 .product-card {
   display: block;
-  border: solid 1px rgb(229, 229, 229);
   padding: 1em;
   position: relative;
 }
@@ -45,6 +44,12 @@
 h4 {
   color: red;
   text-transform: uppercase;
+  font-size: 1.2em;
+}
+
+h3 {
+  font-size: 1.1em;
+  letter-spacing: 1px;
 }
 
 .discount {

@@ -9,6 +9,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 
 import { Bicycle } from '../../core/models/bicycle/bicycle';
 import { AppConstants } from '../../core/constants/app-constants';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-category',
@@ -18,6 +19,7 @@ import { AppConstants } from '../../core/constants/app-constants';
     CategoryBannerComponent,
     PaginatorComponent,
     ProductCardComponent,
+    SidebarComponent,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',

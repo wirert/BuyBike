@@ -25,6 +25,7 @@ button:hover {
 
 a:hover {
   color: orange;
+  cursor: pointer;
 }
 
 ul,

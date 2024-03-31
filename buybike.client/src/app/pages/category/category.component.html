@@ -1,35 +1,40 @@
-<category-banner [categoryType]="category"></category-banner>
+<div class="category-container">
+  <category-sidebar></category-sidebar>
+  <div class="category-content">
+    <category-banner [categoryType]="category"></category-banner>
 
-<app-paginator
-  [currentPage]="currentPage"
-  [itemsPerPage]="itemsPerPage"
-  [totalItems]="totalItems"
-  (pageChanged)="onPageChange($event)"
-  (itemPerPageChanged)="onItemsPerPageChange($event)"
-  (sortingChanged)="onSortingChange($event)"
-></app-paginator>
+    <app-paginator
+      [currentPage]="currentPage"
+      [itemsPerPage]="itemsPerPage"
+      [totalItems]="totalItems"
+      (pageChanged)="onPageChange($event)"
+      (itemPerPageChanged)="onItemsPerPageChange($event)"
+      (sortingChanged)="onSortingChange($event)"
+    ></app-paginator>
 
-<div class="products-wrapper">
-  <ng-container *ngFor="let bike of bicycles">
-    <product-card
-      [id]="bike.id"
-      [itemType]="'bicycle'"
-      [category]="category ? category : ''"
-      [make]="bike.make"
-      [price]="bike.price"
-      [name]="
-        bikeTypes[bike.category] +
-        ' велосипед ' +
-        bike.make +
-        ' ' +
-        bike.name +
-        ' ' +
-        bike.tyreSize +
-        '&quot; ' +
-        bike.color
-      "
-      [imgUrl]="bike.imageUrl"
-      [discountPercent]="bike.discountPercent"
-    ></product-card>
-  </ng-container>
+    <div class="products-wrapper">
+      <ng-container *ngFor="let bike of bicycles">
+        <product-card
+          [id]="bike.id"
+          [itemType]="'bicycle'"
+          [category]="category ? category : ''"
+          [make]="bike.make"
+          [price]="bike.price"
+          [name]="
+            bikeTypes[bike.category] +
+            ' велосипед ' +
+            bike.make +
+            ' ' +
+            bike.name +
+            ' ' +
+            bike.tyreSize +
+            '&quot; ' +
+            bike.color
+          "
+          [imgUrl]="bike.imageUrl"
+          [discountPercent]="bike.discountPercent"
+        ></product-card>
+      </ng-container>
+    </div>
+  </div>
 </div>

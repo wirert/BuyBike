@@ -41,9 +41,11 @@
             services.AddHttpContextAccessor();
 
             services.AddScoped<IRepository, Repository>();
+            services.AddScoped<IMinIoRepository, MinIoRepository>();
+
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IBicycleService, BicycleService>();
-            services.AddScoped<IMinIoRepository, MinIoRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             return services;
         }       
