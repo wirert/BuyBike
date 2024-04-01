@@ -45,7 +45,7 @@
 
         [Comment("Model Image URL")]
         [Required]
-        [MaxLength(DataConstants.Product.MaxImageUrlLength)]
+        [MaxLength(DataConstants.MaxImageUrlLength)]
         public string ImageUrl { get; set; } = null!;
 
         [Comment("Product manufacturer id")]

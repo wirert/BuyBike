@@ -3,10 +3,11 @@ import { Bicycle } from '../models/bicycle/bicycle';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ProductPage } from '../models/products-page';
+import { API_URL } from '../constants/app-constants';
 
 @Injectable({ providedIn: 'root' })
 export class BicycleService {
-  private url: string = 'https://localhost:7129/api/Bicycle';
+  private url: string = inject(API_URL) + '/Bicycle';
   private http: HttpClient = inject(HttpClient);
 
   getBicycles(category: string | null): Observable<Bicycle[]> {

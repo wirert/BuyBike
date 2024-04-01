@@ -131,6 +131,11 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("description")
                         .HasComment("Category description (optional");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("image_url");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -157,33 +162,57 @@ namespace BuyBike.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 6,
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                            ImageUrl = "categories/bicycle-unsplash.jpg",
+                            Name = "Велосипеди"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                            ImageUrl = "categories/Parts-Explained.jpg",
+                            Name = "Части"
+                        },
+                        new
+                        {
                             Id = 1,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Mountain"
+                            ImageUrl = "categories/mountain-unsplash.jpg",
+                            Name = "Планински",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 2,
                             Description = "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Road"
+                            ImageUrl = "categories/road-unsplash.jpg",
+                            Name = "Шосейни",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 3,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!",
-                            Name = "City"
+                            ImageUrl = "categories/city-unsplash.jpg",
+                            Name = "Градски",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 4,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Kids"
+                            ImageUrl = "categories/kids-unsplash.jpg",
+                            Name = "Детски",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 5,
                             Description = "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Electric"
+                            ImageUrl = "categories/ebikes-unsplash.jpg",
+                            Name = "Електрически",
+                            ParentCategoryId = 6
                         });
                 });
 

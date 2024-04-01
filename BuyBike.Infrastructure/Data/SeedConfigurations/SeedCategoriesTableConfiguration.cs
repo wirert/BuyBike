@@ -13,49 +13,56 @@
                  new Category()
                 {
                     Id = 6,
-                    Name = "Колела",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!"
+                    Name = "Велосипеди",
+                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                    ImageUrl = "categories/bicycle-unsplash.jpg"
                 },
                 new Category()
                 {
                     Id = 7,
                     Name = "Части",
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!"
+                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                    ImageUrl = "categories/Parts-Explained.jpg"
                 },
                  new Category()
                 {
                     Id = 1,
-                    Name = "Mountain",
+                    Name = "Планински",
                     ParentCategoryId = 6,
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!"
+                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                    ImageUrl = "categories/mountain-unsplash.jpg"
                 },
                 new Category()
                 {
                     Id = 2,
-                    Name = "Road",
+                    Name = "Шосейни",
                     ParentCategoryId = 6,
-                    Description = "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!"
+                    Description = "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                    ImageUrl = "categories/road-unsplash.jpg"
                 },
                 new Category()
                 {
                     Id = 3,
-                    Name = "City",
+                    Name = "Градски",
                     ParentCategoryId = 6,
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!"
+                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!",
+                    ImageUrl = "categories/city-unsplash.jpg"
                 },
                 new Category()
                 {
                     Id = 4,
-                    Name = "Kids",
+                    Name = "Детски",
                     ParentCategoryId = 6,
-                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!"
+                    Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                    ImageUrl = "categories/kids-unsplash.jpg"
                 },
                 new Category()
                 {
                     Id = 5,
-                    Name = "Electric",
+                    Name = "Електрически",
                     ParentCategoryId = 6,
-                    Description = "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!"
+                    Description = "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                    ImageUrl = "categories/ebikes-unsplash.jpg"
                 },
                 ]);
         }

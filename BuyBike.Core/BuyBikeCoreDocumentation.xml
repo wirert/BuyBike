@@ -94,5 +94,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:BuyBike.Core.Services.Contracts.ICategoryService.GetIdByName(System.String)">
+            <summary>
+            Get Category id by name
+            </summary>
+            <param name="name">Category name</param>
+            <returns>category identifier</returns>
+        </member>
     </members>
 </doc>

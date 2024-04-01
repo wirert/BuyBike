@@ -8,6 +8,11 @@
     public static class DataConstants
     {
         /// <summary>
+        /// Product image URL maximum length
+        /// </summary>
+        public const int MaxImageUrlLength = 1024;
+
+        /// <summary>
         /// Product entity constants
         /// </summary>
         public static class Product
@@ -20,11 +25,6 @@
             /// Product name minimum length
             /// </summary>
             public const int MinNameLength = 1;
-
-            /// <summary>
-            /// Product image URL maximum length
-            /// </summary>
-            public const int MaxImageUrlLength = 1024;
 
             /// <summary>
             /// Product color maximum length
@@ -120,12 +120,7 @@
             /// <summary>
             /// Manufacturer name minimum length
             /// </summary>
-            public const int MinNameLength = 1;
-
-            /// <summary>
-            /// Manufacturer logo image URL maximum length
-            /// </summary>
-            public const int MaxLogoUrlLength = 1024;
+            public const int MinNameLength = 1;           
         }
 
         /// <summary>

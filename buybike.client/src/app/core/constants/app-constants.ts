@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 interface StringIndex {
   [key: string]: string | undefined;
 }
@@ -11,3 +13,5 @@ export abstract class AppConstants {
     Electric: 'Електрически',
   };
 }
+
+export const API_URL = new InjectionToken<string>('');

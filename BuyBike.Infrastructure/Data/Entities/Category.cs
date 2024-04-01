@@ -24,6 +24,9 @@
         [MaxLength(DataConstants.Category.MaxDescriptionLenght)]
         public string? Description { get; set; }
 
+        [MaxLength(DataConstants.MaxImageUrlLength)]
+        public string? ImageUrl { get; set; }
+
         [Comment("Product parent category (If any) - self referencing foreign key")]
         public int? ParentCategoryId { get; set; }
 

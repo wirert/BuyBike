@@ -2,10 +2,10 @@
 {
     public enum BikeType
     {
-        Mountain,
-        Road,
-        City,
-        Kids,
-        Electric
+        Планински,
+        Шосейни,
+        Градски,
+        Детски,
+        Електрически
     }
 }

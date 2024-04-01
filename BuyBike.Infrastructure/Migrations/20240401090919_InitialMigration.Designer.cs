@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     [DbContext(typeof(BuyBikeDbContext))]
-    [Migration("20240329173842_AddedSubcategories")]
-    partial class AddedSubcategories
+    [Migration("20240401090919_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -134,6 +134,11 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("description")
                         .HasComment("Category description (optional");
 
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("image_url");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
@@ -160,33 +165,57 @@ namespace BuyBike.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 6,
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                            ImageUrl = "categories/bicycle-unsplash.jpg",
+                            Name = "Велосипеди"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
+                            ImageUrl = "categories/Parts-Explained.jpg",
+                            Name = "Части"
+                        },
+                        new
+                        {
                             Id = 1,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Mountain"
+                            ImageUrl = "categories/mountain-unsplash.jpg",
+                            Name = "Планински",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 2,
                             Description = "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Road"
+                            ImageUrl = "categories/road-unsplash.jpg",
+                            Name = "Шосейни",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 3,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!",
-                            Name = "City"
+                            ImageUrl = "categories/city-unsplash.jpg",
+                            Name = "Градски",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 4,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Kids"
+                            ImageUrl = "categories/kids-unsplash.jpg",
+                            Name = "Детски",
+                            ParentCategoryId = 6
                         },
                         new
                         {
                             Id = 5,
                             Description = "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            Name = "Electric"
+                            ImageUrl = "categories/ebikes-unsplash.jpg",
+                            Name = "Електрически",
+                            ParentCategoryId = 6
                         });
                 });
 
@@ -875,7 +904,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                             Name = "Fathom 1",
                             Price = 3499m,
-                            Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}",
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
                             Brakes = 0,
                             Material = 0,
                             Style = "Крос кънтри / XC",
@@ -892,7 +921,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
                             Name = "Fathom 1",
                             Price = 3499m,
-                            Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}",
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
                             Brakes = 0,
                             Material = 0,
                             Style = "Крос кънтри / XC",
@@ -929,7 +958,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                             Name = "Touring Pro",
                             Price = 1699m,
-                            Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}",
+                            Specification = "[[\"Рамка\", \"Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 760mm, 31.8mm\"]]",
                             Brakes = 1,
                             Material = 0,
                             Style = "City / Градски",
@@ -964,7 +993,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                             Name = "Allez E5",
                             Price = 2399m,
-                            Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}",
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
                             Brakes = 1,
                             Material = 0,
                             Style = "Gravel Bike",
@@ -983,7 +1012,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                             Name = "Litening Aero",
                             Price = 14899m,
-                            Specification = "{\"Рамка\": \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\", \"Вилка\": \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\", \"Заден дерайльор\": \"SRAM XX1 Eagle AXS\", \"Команди\": \"SRAM Eagle AXS Rocker Paddle\", \"Касета\": \"Sram XG-1299, 12-Speed, 10-52t\", \"Курбели\": \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\", \"Кормило\": \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"}",
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
                             Brakes = 0,
                             Material = 1,
                             Style = "Шосе",
@@ -1002,7 +1031,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
                             Name = "Boxer",
                             Price = 299m,
-                            Specification = "{\"Рамка\": \"лека алуминиева\", \"Седалка\": \"регулируема седалка от 350 мм до 400 мм\", \"Кормило\": \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\", \"Спирачка\": \"V\", \"Тегло\": \"4.4 кг\"}",
+                            Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
                             Brakes = 0,
                             Material = 0,
                             Suspention = "Амортисьорна вилка",
@@ -1020,7 +1049,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"),
                             Name = "Faro",
                             Price = 279m,
-                            Specification = "{\"Рамка\": \"лека алуминиева\", \"Седалка\": \"регулируема седалка от 350 мм до 400 мм\", \"Кормило\": \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\", \"Спирачка\": \"V\", \"Тегло\": \"4.4 кг\"}",
+                            Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
                             Brakes = 1,
                             Material = 2,
                             Suspention = "Твърда вилка",

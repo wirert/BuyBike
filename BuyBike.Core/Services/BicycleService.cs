@@ -65,10 +65,22 @@
             int skipCount = (query.Page - 1) * query.ItemsPerPage;            
 
             Expression<Func<Bicycle, bool>> filterExpr = b => b.IsActive;
+            string? categoryImageUrl = string.Empty;
 
             if (string.IsNullOrEmpty(query.Category) == false)
             {
+                categoryImageUrl = await repo.AllReadonly<Category>(c => c.Name == query.Category).Select(c => c.ImageUrl).FirstOrDefaultAsync();
+
+                if(categoryImageUrl == null)
+                {
+                    throw new ArgumentException("Invalid category.");
+                }
+
                 filterExpr = b => b.IsActive && b.Category.Name == query.Category;
+            }
+            else
+            {
+                categoryImageUrl = await repo.AllReadonly<Category>(c => c.Name == "Велосипеди").Select(c => c.ImageUrl).FirstOrDefaultAsync();
             }
 
             int totalCount = await repo.AllReadonly(filterExpr).CountAsync();
@@ -85,13 +97,13 @@
 
             var result = new PagedProductDto<BicycleDto>()
             {
-                TotalProducts = totalCount
+                TotalProducts = totalCount,
+                CategoryImageUrl = categoryImageUrl!,
             };
 
             var data = repo.AllReadonly(filterExpr);
 
             data = SortData(data, query.OrderBy, query.Desc);
-
 
             result.Products = await data
                 .Skip(skipCount)

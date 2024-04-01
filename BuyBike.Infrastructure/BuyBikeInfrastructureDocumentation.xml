@@ -9,6 +9,11 @@
             Models constants
             </summary>
         </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.MaxImageUrlLength">
+            <summary>
+            Product image URL maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Product">
             <summary>
             Product entity constants
@@ -22,11 +27,6 @@
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MinNameLength">
             <summary>
             Product name minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxImageUrlLength">
-            <summary>
-            Product image URL maximum length
             </summary>
         </member>
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Product.MaxColorLength">
@@ -122,11 +122,6 @@
         <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer.MinNameLength">
             <summary>
             Manufacturer name minimum length
-            </summary>
-        </member>
-        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.Manufacturer.MaxLogoUrlLength">
-            <summary>
-            Manufacturer logo image URL maximum length
             </summary>
         </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Discount">
@@ -525,30 +520,6 @@
             <inheritdoc />
         </member>
         <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.AddedSubcategories">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.AddedSubcategories.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="T:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
-            <inheritdoc />
-        </member>
-        <member name="M:BuyBike.Infrastructure.Migrations.SeedChangesToProductsSpecification.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

@@ -8,10 +8,12 @@ import {
 import routes from './app/app-routes';
 import { provideHttpClient } from '@angular/common/http';
 import { LowerCaseUrlSerializer } from './app/lowerCaseUrlSerializer';
+import { API_URL } from './app/core/constants/app-constants';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes, withComponentInputBinding()),
+    { provide: API_URL, useValue: 'https://localhost:7129/api' },
     provideHttpClient(),
     {
       provide: UrlSerializer,

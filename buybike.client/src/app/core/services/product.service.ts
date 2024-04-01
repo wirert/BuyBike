@@ -3,10 +3,11 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { BicycleDetails } from '../models/bicycle/bicycle-details';
 import { ProductDetails } from '../models/product-details';
+import { API_URL } from '../constants/app-constants';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private url: string = 'https://localhost:7129/api/';
+  private url: string = inject(API_URL);
   private http: HttpClient = inject(HttpClient);
 
   getProductDetails(id: string, type: string): Observable<any> {

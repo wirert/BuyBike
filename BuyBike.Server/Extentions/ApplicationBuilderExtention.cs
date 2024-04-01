@@ -117,13 +117,56 @@
 
                 await repo.AddAsync("buy-bike", "brand-logos/head.png", file);
             }
-            using (FileStream fs = File.OpenRead(@"Data//Pictures/brand-logos/specialized.png"))
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/brand-logos/specialized.png"))
             {
                 var file = new FormFile(fs, 0, fs.Length, "specialized.png", fs.Name);
 
                 await repo.AddAsync("buy-bike", "brand-logos/specialized.png", file);
             }
 
+
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/city-unsplash.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "city-unsplash.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/city-unsplash.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/ebikes-unsplash.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "ebikes-unsplash.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/ebikes-unsplash.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/kids-unsplash.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "kids-unsplash.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/kids-unsplash.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/mountain-unsplash.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "mountain-unsplash.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/mountain-unsplash.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/road-unsplash.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "road-unsplash.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/road-unsplash.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/bicycle-unsplash.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "bicycle-unsplash.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/bicycle-unsplash.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/Parts-Explained.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "Parts-Explained.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/Parts-Explained.jpg", file);
+            }
         }
     }
 }

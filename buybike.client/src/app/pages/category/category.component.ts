@@ -39,9 +39,9 @@ export class CategoryComponent implements OnInit {
   bikeTypes = AppConstants.bikeTypes;
 
   ngOnInit(): void {
-    this.activatedRoute.pathFromRoot[1].url.subscribe((val) =>
-      this.changeType(val)
-    );
+    this.activatedRoute.pathFromRoot[1].url.subscribe((val) => {
+      this.changeCategory(val);
+    });
   }
 
   onPageChange(page: number) {
@@ -81,10 +81,11 @@ export class CategoryComponent implements OnInit {
       });
   }
 
-  private changeType(val: UrlSegment[]) {
+  private changeCategory(val: UrlSegment[]) {
     if (val.length > 1) {
       const path = val[1].path.toLowerCase();
       this.category = path;
+      console.log(this.category);
     }
 
     this.currentPage = 1;

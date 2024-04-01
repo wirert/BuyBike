@@ -6,6 +6,8 @@
     {
         public int TotalProducts { get; set; }
 
+        public string CategoryImageUrl { get; set; } = null!;
+
         public ICollection<T> Products { get; set; } = new List<T>();
     }
 }

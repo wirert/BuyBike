@@ -20,7 +20,7 @@
         public string Name { get; set; } = null!;
 
         [Required]
-        [MaxLength(DataConstants.Manufacturer.MaxLogoUrlLength)]
+        [MaxLength(DataConstants.MaxImageUrlLength)]
         [Comment("Manufacturer logo URL")]
         public string LogoUrl { get; set; } = null!;
 
