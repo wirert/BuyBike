@@ -12,6 +12,7 @@
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
     using BuyBike.Core.Models.Bicycle;
+    using Microsoft.AspNetCore.Mvc;
 
     /// <summary>
     /// Product Service
@@ -60,7 +61,7 @@
             return result;
         }
 
-        public async Task<PagedProductDto<BicycleDto>> GetAllAsync(GetAllQueryModel query)
+        public async Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query)
         {
             int skipCount = (query.Page - 1) * query.ItemsPerPage;            
 
@@ -85,6 +86,11 @@
 
             int totalCount = await repo.AllReadonly(filterExpr).CountAsync();
 
+            if (totalCount == 0)
+            {
+                throw new FileNotFoundException("Няма продукти в тази категория.");
+            }
+
             if (totalCount <= skipCount)
             {
                 throw new ArgumentException("Incorrect page number.");
@@ -95,10 +101,10 @@
                 query.ItemsPerPage = totalCount;
             }
 
-            var result = new PagedProductDto<BicycleDto>()
+            var result = new PagedProductDto<ProductDto>()
             {
                 TotalProducts = totalCount,
-                CategoryImageUrl = categoryImageUrl!,
+                CategoryImageUrl = ImgBaseUrl + categoryImageUrl!,
             };
 
             var data = repo.AllReadonly(filterExpr);
@@ -108,16 +114,15 @@
             result.Products = await data
                 .Skip(skipCount)
                 .Take(query.ItemsPerPage)
-                .Select(b => new BicycleDto
+                .Select(b => new ProductDto
                 {
                     Id = b.Id,
-                    Name = b.Name,
+                    Name = $"{b.Category.Name} велосипед {b.Name} {b.TyreSize}\" {b.Color}",
                     Make = b.Make.Name,
                     ImageUrl = ImgBaseUrl + b.ImageUrl,
                     Price = b.Price,
                     Color = b.Color,
                     Category = b.Category.Name,
-                    TyreSize = b.TyreSize,
                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
                 }).ToListAsync();
 

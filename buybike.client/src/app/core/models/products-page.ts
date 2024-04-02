@@ -1,3 +1,9 @@
-export class ProductPage<T> {
-  constructor(public totalProducts: number, public products: T[]) {}
+import { Product } from './product';
+
+export class ProductPage {
+  constructor(
+    public totalProducts: number,
+    public categoryImageUrl: string = '',
+    public products: Product[]
+  ) {}
 }

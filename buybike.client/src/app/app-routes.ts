@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import { Routes, UrlSegment } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -20,6 +20,16 @@ const routes: Routes = [
     component: ProductDetailsComponent,
     title: 'Детайли',
   },
+  // {
+  //   matcher: (url) =>{
+  //     if (url.length === 1 && url[0].path.match(/^@[\w]+$/gm)) {
+  //       return {consumed: url, posParams: {username: new UrlSegment(url[0].path.slice(1), {})}};
+  //     }
+
+  //     return null;
+  //   },
+  //   component: CategoryComponent
+  // },
   { path: '**', component: NotFoundComponent },
 ];
 

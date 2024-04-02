@@ -1,15 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router, UrlSegment } from '@angular/router';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaginatorComponent } from '../../utility/paginator/paginator.component';
-
-import { BicycleService } from '../../core/services/bycicle.service';
 import { CategoryBannerComponent } from './banner/banner.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 
-import { Bicycle } from '../../core/models/bicycle/bicycle';
 import { AppConstants } from '../../core/constants/app-constants';
 import { SidebarComponent } from './sidebar/sidebar.component';
+import { ProductPage } from '../../core/models/products-page';
+import { ProductService } from '../../core/services/product.service';
 
 @Component({
   selector: 'app-category',
@@ -25,12 +24,20 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   styleUrl: './category.component.css',
 })
 export class CategoryComponent implements OnInit {
-  private router: Router = inject(Router);
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-  private bikeService: BicycleService = inject(BicycleService);
 
+  private productService: ProductService = inject(ProductService);
+
+  constructor() {
+    console.log('category component constructor.');
+    this.activatedRoute.pathFromRoot[1].url.subscribe((val) => {
+      this.changeCategory(val);
+    });
+  }
+
+  productsType: string = '';
   category: string | null = '';
-  bicycles: Bicycle[] = [];
+  productPage: ProductPage | undefined;
   currentPage: number = 1;
   itemsPerPage: number = 12;
   totalItems: number = 0;
@@ -38,11 +45,7 @@ export class CategoryComponent implements OnInit {
   isDescending: boolean = false;
   bikeTypes = AppConstants.bikeTypes;
 
-  ngOnInit(): void {
-    this.activatedRoute.pathFromRoot[1].url.subscribe((val) => {
-      this.changeCategory(val);
-    });
-  }
+  ngOnInit(): void {}
 
   onPageChange(page: number) {
     this.currentPage = page;
@@ -62,19 +65,18 @@ export class CategoryComponent implements OnInit {
   }
 
   private fetchData(): void {
-    this.bikeService
-      .getPagedBicycles(
+    this.productService
+      .getPagedProducts(
         this.currentPage,
         this.itemsPerPage,
         this.orderBy,
         this.isDescending,
-        this.category
+        this.category,
+        this.productsType
       )
       .subscribe({
         next: (data) => {
-          this.bicycles = data.products;
-          this.totalItems = data.totalProducts;
-
+          this.productPage = data;
           console.log(data);
         },
         error: (err) => console.log(err),
@@ -82,12 +84,12 @@ export class CategoryComponent implements OnInit {
   }
 
   private changeCategory(val: UrlSegment[]) {
+    console.log(val);
     if (val.length > 1) {
       const path = val[1].path.toLowerCase();
       this.category = path;
-      console.log(this.category);
     }
-
+    this.productsType = val[0].path.toLowerCase();
     this.currentPage = 1;
     this.fetchData();
   }

@@ -14,7 +14,7 @@
         /// </summary>
         /// <param name="query">Query parameters</param>        
         /// <returns>Paged bicycle object with total models count and Collection of Bicycle model DTO</returns>
-        Task<PagedProductDto<BicycleDto>> GetAllAsync(GetAllQueryModel query);
+        Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query);
 
         /// <summary>
         /// Get Bicycle by Id

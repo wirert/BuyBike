@@ -3,7 +3,7 @@ import { ProductDetails } from '../product-details';
 
 export class BicycleDetails implements ProductDetails {
   constructor(
-    public model: string,
+    public name: string,
     public make: string,
     public makeLogoUrl: string,
     public price: number,
@@ -12,7 +12,7 @@ export class BicycleDetails implements ProductDetails {
     public color: string | null,
     public description: string | null,
     public gender: string | null,
-    public type: string,
+    public category: string,
     public items: Item[],
     public specification: string[][],
     public tyreSize: number

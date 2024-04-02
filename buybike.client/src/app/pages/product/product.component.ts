@@ -44,6 +44,8 @@ export class ProductComponent implements OnInit {
   constructor() {
     const navState = this.router.getCurrentNavigation()?.extras.state;
 
+    console.log(navState);
+
     if (navState) {
       this.productId = navState['id'];
       this.productType = navState['type'];

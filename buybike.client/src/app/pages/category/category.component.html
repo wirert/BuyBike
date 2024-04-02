@@ -1,7 +1,9 @@
 <div class="category-container">
   <category-sidebar></category-sidebar>
   <div class="category-content">
-    <category-banner [categoryType]="category"></category-banner>
+    <category-banner
+      [imageSrc]="productPage ? productPage.categoryImageUrl : ''"
+    ></category-banner>
 
     <app-paginator
       [currentPage]="currentPage"
@@ -13,26 +15,16 @@
     ></app-paginator>
 
     <div class="products-wrapper">
-      <ng-container *ngFor="let bike of bicycles">
+      <ng-container *ngFor="let product of productPage?.products">
         <product-card
-          [id]="bike.id"
-          [itemType]="'bicycle'"
-          [category]="category ? category : ''"
-          [make]="bike.make"
-          [price]="bike.price"
-          [name]="
-            bikeTypes[bike.category] +
-            ' велосипед ' +
-            bike.make +
-            ' ' +
-            bike.name +
-            ' ' +
-            bike.tyreSize +
-            '&quot; ' +
-            bike.color
-          "
-          [imgUrl]="bike.imageUrl"
-          [discountPercent]="bike.discountPercent"
+          [id]="product.id"
+          [itemType]="productsType"
+          [category]="product.category"
+          [make]="product.make"
+          [price]="product.price"
+          [name]="product.name"
+          [imgUrl]="product.imageUrl"
+          [discountPercent]="product.discountPercent"
         ></product-card>
       </ng-container>
     </div>

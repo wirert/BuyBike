@@ -31,8 +31,9 @@
         [HttpGet]
         [Route("")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductDto<BicycleDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductDto<ProductDto>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
         {
@@ -53,6 +54,10 @@
                 var pagedBicycles = await bicyclesService.GetAllAsync(query);
 
                 return Ok(pagedBicycles);
+            }
+            catch (FileNotFoundException fnfe)
+            {
+                return NotFound(fnfe.Message);
             }
             catch (ArgumentException e)
             {

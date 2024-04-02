@@ -12,6 +12,13 @@ export abstract class AppConstants {
     City: 'Градски',
     Electric: 'Електрически',
   };
+
+  public static productTypes: StringIndex = {
+    велосипеди: 'Bicycle',
+    части: 'Part',
+    аксесоари: 'Accessory',
+    екипировка: 'Equipment',
+  };
 }
 
 export const API_URL = new InjectionToken<string>('');

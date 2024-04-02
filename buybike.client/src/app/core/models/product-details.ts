@@ -1,7 +1,7 @@
 import { Item as Item } from './item';
 
 export interface ProductDetails {
-  model: string;
+  name: string;
   make: string;
   makeLogoUrl: string;
   price: number;
@@ -10,7 +10,7 @@ export interface ProductDetails {
   color: string | null;
   description: string | null;
   gender: string | null;
-  type: string;
+  category: string;
   items: Item[];
   specification: string[][];
 }
