@@ -11,7 +11,6 @@ export class ProductService {
   private http: HttpClient = inject(HttpClient);
 
   getProductDetails(id: string, type: string): Observable<any> {
-    console.log(type);
     switch (type) {
       case 'велосипеди':
         return this.http.get<any>(`${this.url}/Bicycle/${id}`).pipe(
@@ -22,7 +21,7 @@ export class ProductService {
           })
         );
       default:
-        return this.http.get<any>(`${this.url}/Bicycle/${id}`).pipe(
+        return this.http.get<any>(`${this.url}/Part/${id}`).pipe(
           map<any, BicycleDetails>((res, idx) => {
             res.specification = JSON.parse(res.specification);
             return res;
@@ -41,6 +40,8 @@ export class ProductService {
   ): Observable<any> {
     let params = new HttpParams();
     let controller = AppConstants.productTypes[type];
+
+    console.log(type);
 
     params = params.append('page', page);
     params = params.append('itemsPerPage', itemsPerPage);

@@ -7,30 +7,35 @@ import { ProductComponent as ProductDetailsComponent } from './pages/product/pro
 const routes: Routes = [
   { path: '', component: HomeComponent, title: 'BUY BIKE' },
   {
-    path: 'велосипеди',
-    component: CategoryComponent,
-    title: 'Велосипеди',
-  },
-  {
-    path: 'велосипеди/:category',
-    component: CategoryComponent,
-  },
-  {
     path: 'p/:name',
     component: ProductDetailsComponent,
     title: 'Детайли',
   },
-  // {
-  //   matcher: (url) =>{
-  //     if (url.length === 1 && url[0].path.match(/^@[\w]+$/gm)) {
-  //       return {consumed: url, posParams: {username: new UrlSegment(url[0].path.slice(1), {})}};
-  //     }
-
-  //     return null;
-  //   },
-  //   component: CategoryComponent
-  // },
+  {
+    path: ':type',
+    title: 'Велосипеди',
+    children: [
+      {
+        path: '',
+        component: CategoryComponent,
+      },
+      {
+        path: ':category',
+        component: CategoryComponent,
+      },
+    ],
+  },
   { path: '**', component: NotFoundComponent },
 ];
 
 export default routes;
+// {
+//   matcher: (url) =>{
+//     if (url.length === 1 && url[0].path.match(/^@[\w]+$/gm)) {
+//       return {consumed: url, posParams: {username: new UrlSegment(url[0].path.slice(1), {})}};
+//     }
+
+//     return null;
+//   },
+//   component: CategoryComponent
+// },

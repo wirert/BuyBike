@@ -101,5 +101,24 @@
             <param name="name">Category name</param>
             <returns>category identifier</returns>
         </member>
+        <member name="T:BuyBike.Core.Services.Contracts.IProductService">
+            <summary>
+            Product service
+            </summary>
+        </member>
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetAllAsync(BuyBike.Core.Models.GetAllQueryModel)">
+            <summary>
+            Get a set of products 
+            </summary>
+            <param name="query">Query parameters</param>        
+            <returns>Paged products object with total models count and Collection of Product model DTO</returns>
+        </member>
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetById(System.Guid)">
+            <summary>
+            Get Product by Id
+            </summary>
+            <param name="id">Part Identifier</param>
+            <returns>Product Data Transfer Object with details</returns>
+        </member>
     </members>
 </doc>

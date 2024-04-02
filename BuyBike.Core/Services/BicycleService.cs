@@ -13,6 +13,7 @@
     using BuyBike.Infrastructure.Data.Entities;
     using BuyBike.Core.Models.Bicycle;
     using Microsoft.AspNetCore.Mvc;
+    using BuyBike.Core.Constants;
 
     /// <summary>
     /// Product Service
@@ -20,7 +21,6 @@
     public class BicycleService : IBicycleService
     {
         private readonly IRepository repo;
-        private const string ImgBaseUrl = @"http://localhost:9000/buy-bike/";
 
         public BicycleService(IRepository _repo)
         {
@@ -34,8 +34,8 @@
                 {
                     Name = b.Name,
                     Make = b.Make.Name,
-                    MakeLogoUrl = ImgBaseUrl + b.Make.LogoUrl,
-                    ImageUrl = ImgBaseUrl + b.ImageUrl,
+                    MakeLogoUrl = AppConstants.MinIo_EndPoint + b.Make.LogoUrl,
+                    ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
                     Price = b.Price,
                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
                     Color = b.Color,
@@ -104,7 +104,7 @@
             var result = new PagedProductDto<ProductDto>()
             {
                 TotalProducts = totalCount,
-                CategoryImageUrl = ImgBaseUrl + categoryImageUrl!,
+                CategoryImageUrl = AppConstants.MinIo_EndPoint + categoryImageUrl!,
             };
 
             var data = repo.AllReadonly(filterExpr);
@@ -119,7 +119,7 @@
                     Id = b.Id,
                     Name = $"{b.Category.Name} велосипед {b.Name} {b.TyreSize}\" {b.Color}",
                     Make = b.Make.Name,
-                    ImageUrl = ImgBaseUrl + b.ImageUrl,
+                    ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
                     Price = b.Price,
                     Color = b.Color,
                     Category = b.Category.Name,

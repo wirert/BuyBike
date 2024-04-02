@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, ParamMap, Params, UrlSegment } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaginatorComponent } from '../../utility/paginator/paginator.component';
 import { CategoryBannerComponent } from './banner/banner.component';
@@ -9,6 +9,7 @@ import { AppConstants } from '../../core/constants/app-constants';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProductPage } from '../../core/models/products-page';
 import { ProductService } from '../../core/services/product.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-category',
@@ -23,17 +24,10 @@ import { ProductService } from '../../core/services/product.service';
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-
   private productService: ProductService = inject(ProductService);
-
-  constructor() {
-    console.log('category component constructor.');
-    this.activatedRoute.pathFromRoot[1].url.subscribe((val) => {
-      this.changeCategory(val);
-    });
-  }
+  private paramMapSubsc: Subscription | null = null;
 
   productsType: string = '';
   category: string | null = '';
@@ -43,9 +37,17 @@ export class CategoryComponent implements OnInit {
   totalItems: number = 0;
   orderBy: string = 'Price';
   isDescending: boolean = false;
-  bikeTypes = AppConstants.bikeTypes;
+  //bikeTypes = AppConstants.bikeTypes;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.paramMapSubsc = this.activatedRoute.paramMap.subscribe((paramMap) => {
+      this.changeCategory(paramMap);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.paramMapSubsc!.unsubscribe();
+  }
 
   onPageChange(page: number) {
     this.currentPage = page;
@@ -83,14 +85,13 @@ export class CategoryComponent implements OnInit {
       });
   }
 
-  private changeCategory(val: UrlSegment[]) {
-    console.log(val);
-    if (val.length > 1) {
-      const path = val[1].path.toLowerCase();
-      this.category = path;
+  private changeCategory(paramMap: ParamMap) {
+    if (paramMap.has('category')) {
+      this.category = paramMap.get('category');
     }
-    this.productsType = val[0].path.toLowerCase();
+    this.productsType = paramMap.get('type')!;
     this.currentPage = 1;
+
     this.fetchData();
   }
 }
