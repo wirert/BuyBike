@@ -45,6 +45,18 @@
                         Id = Guid.Parse("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                         Name = "Specialized",
                         LogoUrl = "brand-logos/specialized.png"
+                    },
+                    new Manufacturer()
+                    {
+                        Id = Guid.Parse("87ccf053-a35b-48f5-90d4-568a91fc053a"),
+                        Name = "SR Suntour",
+                        LogoUrl = "brand-logos/srsuntour-logo.png"
+                    },
+                    new Manufacturer()
+                    {
+                        Id = Guid.Parse("24be2dc6-7b7b-459a-a665-155b4e9e50dc"),
+                        Name = "Shimano",
+                        LogoUrl = "brand-logos/shimano-logo.png"
                     }
               ];
     }

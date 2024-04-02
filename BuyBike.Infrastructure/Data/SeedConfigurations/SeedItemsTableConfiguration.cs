@@ -124,6 +124,14 @@
                         Size = Size.Kids,
                         Sku = "ITM0000013"
                     },
+
+                     new Item()
+                    {
+                        Id = Guid.Parse("34b132b4-4cb8-4ce9-8478-31ce596c4d48"),
+                        ProductId = Guid.Parse("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
+                        InStock = 3,
+                        Sku = "ITM0000014"
+                    },
                 ]);
         }
     }

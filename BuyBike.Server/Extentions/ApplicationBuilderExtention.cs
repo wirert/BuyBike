@@ -92,6 +92,19 @@
                 await repo.AddAsync("buy-bike", "bicycles/road/Litening_Aero_28_Blue.jpg", file);
             }
 
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/parts/forks/SR-26-M3020-P.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "SR-26-M3020-P.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "parts/forks/SR-26-M3020-P.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/parts/shifters/SH-SL-M360-3-L.jpeg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "SH-SL-M360-3-L.jpeg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "shifters/SH-SL-M360-3-L.jpeg", file);
+            }
+
 
             using (FileStream fs = File.OpenRead(@"Data/Pictures/brand-logos/cross.jpg"))
             {
@@ -122,6 +135,18 @@
                 var file = new FormFile(fs, 0, fs.Length, "specialized.png", fs.Name);
 
                 await repo.AddAsync("buy-bike", "brand-logos/specialized.png", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/brand-logos/srsuntour-logo.png"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "srsuntour-logo.png", fs.Name);
+
+                await repo.AddAsync("buy-bike", "brand-logos/srsuntour-logo.png", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/brand-logos/shimano-logo.png"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "shimano-logo.png", fs.Name);
+
+                await repo.AddAsync("buy-bike", "brand-logos/shimano-logo.png", file);
             }
 
 
@@ -161,11 +186,30 @@
 
                 await repo.AddAsync("buy-bike", "categories/bicycle-unsplash.jpg", file);
             }
+
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/fork.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "fork.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/fork.jpg", file);
+            }
             using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/Parts-Explained.jpg"))
             {
                 var file = new FormFile(fs, 0, fs.Length, "Parts-Explained.jpg", fs.Name);
 
                 await repo.AddAsync("buy-bike", "categories/Parts-Explained.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/gear-shifter.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "gear-shifter.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/gear-shifter.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/chain.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "chain.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/chain.jpg", file);
             }
         }
     }

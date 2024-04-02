@@ -46,7 +46,9 @@
                 modelBuilder.ApplyConfiguration(new SeedManufacturersEntityConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedItemsTableConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedCategoriesTableConfiguration());
-                modelBuilder.ApplyConfiguration(new SeedBicyclesEntityConfiguration());    
+                modelBuilder.ApplyConfiguration(new SeedBicyclesEntityConfiguration());   
+                modelBuilder.ApplyConfiguration(new SeedPartsTableConfiguration());   
+                
             }
         }
     }

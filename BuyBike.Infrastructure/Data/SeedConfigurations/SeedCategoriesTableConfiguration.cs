@@ -64,7 +64,34 @@
                     Description = "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
                     ImageUrl = "categories/ebikes-unsplash.jpg"
                 },
+
+                new Category()
+                {
+                    Id = 8,
+                    Name = "Вилки",
+                    ParentCategoryId = 7,
+                    Description = "Lorem ipsum elit. Maiores ,  reici voluptatem quibusdam!",
+                    ImageUrl = "categories/fork.jpg"
+                },
+                 new Category()
+                {
+                    Id = 9,
+                    Name = "Команди",
+                    ParentCategoryId = 7,
+                    Description = "Lorem ipsum elit. Maiores ,  reici voluptatem quibusdam!",
+                    ImageUrl = "categories/gear-shifter.jpg"
+                },
+                new Category()
+                {
+                    Id = 10,
+                    Name = "Вериги",
+                    ParentCategoryId = 7,
+                    Description = "Lorem ipsum elit. Reici voluptatem quibusdam!",
+                    ImageUrl = "categories/chain.jpg"
+                },
+
                 ]);
+
         }
     }
 }
