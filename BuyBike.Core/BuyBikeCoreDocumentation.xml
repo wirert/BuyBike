@@ -69,13 +69,6 @@
             Bicycles service
             </summary>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicycleService.GetAllAsync(BuyBike.Core.Models.GetAllQueryModel)">
-            <summary>
-            Get a set of bicyle models by type 
-            </summary>
-            <param name="query">Query parameters</param>        
-            <returns>Paged bicycle object with total models count and Collection of Bicycle model DTO</returns>
-        </member>
         <member name="M:BuyBike.Core.Services.Contracts.IBicycleService.GetById(System.Guid)">
             <summary>
             Get Bicycle by Id
@@ -106,11 +99,12 @@
             Product service
             </summary>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetAllAsync(BuyBike.Core.Models.GetAllQueryModel)">
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetAllAsync(BuyBike.Core.Models.GetAllQueryModel,System.String)">
             <summary>
             Get a set of products 
             </summary>
             <param name="query">Query parameters</param>        
+            <param name="tableName">Product type</param>        
             <returns>Paged products object with total models count and Collection of Product model DTO</returns>
         </member>
         <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetById(System.Guid)">

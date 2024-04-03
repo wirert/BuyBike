@@ -20,6 +20,13 @@
         [MaxLength(DataConstants.Category.MaxNameLength)]
         public string Name { get; set; } = null!;
 
+        [Comment("Category product type id")]
+        [Required]
+        public int TypeId { get; set; }
+
+        [ForeignKey(nameof(TypeId))]
+        public ProductType CategoryType { get; set; } = null!;
+
         [Comment("Category description (optional")]
         [MaxLength(DataConstants.Category.MaxDescriptionLenght)]
         public string? Description { get; set; }

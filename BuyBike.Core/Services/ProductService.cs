@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Threading.Tasks;
 
     using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,6 @@
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
-    using System.Linq.Expressions;
-    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
     public class ProductService : IProductService
     {
@@ -57,95 +56,89 @@
             return result;
         }
 
-        public async Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query)
+        public async Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query, string productType)
         {
             int skipCount = (query.Page - 1) * query.ItemsPerPage;
 
-            Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy);
-
-            string? categoryImageUrl = string.Empty;
-
-            if (string.IsNullOrEmpty(query.Category) == false)
-            {
-                categoryImageUrl = await repo.AllReadonly<Category>(c => c.Name == query.Category).Take(1).Select(c => c.ImageUrl).FirstOrDefaultAsync();
-
-                if (categoryImageUrl == null)
+            Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy, out Func<Product, bool> filterFunc);
+           
+            var productsTypeInfo = repo.AllReadonly<ProductType>(p => p.Name == productType)
+                .Select(p => new 
                 {
-                    throw new ArgumentException("Невалидна категория.");
-                }
-            }
+                    p.Id,
+                    ImageUrl = p.ImageUrl ?? "",
+                }).FirstOrDefault();
 
-            int totalCount = await repo.AllReadonly(filterExpr).CountAsync();
+            var productCount = await repo.AllReadonly<Product>(p => p.TypeId == productsTypeInfo!.Id).CountAsync(filterExpr);
 
-            if (totalCount == 0)
+            if ( productCount == 0)
             {
                 throw new FileNotFoundException("Няма намерени продукти.");
             }
 
-            if (totalCount <= skipCount)
+            if (productCount <= skipCount)
             {
                 throw new ArgumentException("Невалиден номер на страница.");
             }
 
-            if (query.ItemsPerPage > totalCount)
+            if (query.ItemsPerPage > productCount)
             {
-                query.ItemsPerPage = totalCount;
+                query.ItemsPerPage = productCount;
             }
 
             var result = new PagedProductDto<ProductDto>()
             {
-                TotalProducts = totalCount
+                CategoryImageUrl = AppConstants.MinIo_EndPoint + productsTypeInfo.ImageUrl,
+                TotalProducts = productCount
             };
 
-            var data = repo.AllReadonly(filterExpr);
+
+            var data = repo.AllReadonly<Product>(p => p.TypeId == productsTypeInfo.Id).Where(filterExpr);
 
             data = SortData(data, query.OrderBy, query.Desc);
 
             result.Products = await data
-                .Skip(skipCount)
-                .Take(query.ItemsPerPage)
-                .Select(b => new ProductDto
-                {
-                    Id = b.Id,
-                    Name = $"{b.Category.Name} {b.Make.Name} {b.Name} {b.Color ?? string.Empty}",
-                    Make = b.Make.Name,
-                    ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
-                    Price = b.Price,
-                    Color = b.Color,
-                    Category = b.Category.Name,
-                    DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
-                }).ToListAsync();
-            
-            if (string.IsNullOrEmpty(categoryImageUrl) && result.Products.Any())
-            {
-                result.CategoryImageUrl = await repo
-                    .AllReadonly<Category>(c => c.Name == result.Products.First().Category!)
-                    .Take(1)
-                    .Select(c => c.ParentCategory!.ImageUrl)
-                    .FirstOrDefaultAsync() ?? "";
-            }
+                 .Skip(skipCount)
+                 .Take(query.ItemsPerPage)
+                 .Select(b => new ProductDto
+                 {
+                     Id = b.Id,
+                     Name = $"{b.Category.Name} {b.Make.Name} {b.Name} {b.Color ?? string.Empty}",
+                     Make = b.Make.Name,
+                     ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
+                     Price = b.Price,
+                     Color = b.Color,
+                     Category = b.Category.Name,
+                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
+                 }).ToListAsync();
 
             return result;
         }
 
-        private Expression<Func<Product, bool>> BuildFilterExpr(string? category, string orderBy)
+        private Expression<Func<Product, bool>> BuildFilterExpr(string? category, string orderBy, out Func<Product, bool> func)
         {
+
+            
             if (string.IsNullOrEmpty(category))
             {
                 if (orderBy == "Discount")
                 {
+                    func = p => p.IsActive && p.DiscountId != null;
                     return p => p.IsActive && p.DiscountId != null;
                 }
 
+                func = p => p.IsActive;
                 return p => p.IsActive;
             }
 
             if (orderBy == "Discount")
             {
-                return p => p.IsActive && p.Category.Name == category && p.DiscountId != null;
+                func = p => p.IsActive && p.Category.Name.ToLower() == category && p.DiscountId != null;
+                return p => p.IsActive && p.Category.Name.ToLower() == category && p.DiscountId != null;
             }
 
-            return p => p.IsActive && p.Category.Name == category;
+            func = p => p.IsActive && p.Category.Name.ToLower() == category;
+            return p => p.IsActive && p.Category.Name.ToLower() == category;
         }
 
         private IQueryable<Product> SortData(IQueryable<Product> data, string orderBy, bool isDesc)

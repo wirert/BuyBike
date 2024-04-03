@@ -211,6 +211,18 @@
 
                 await repo.AddAsync("buy-bike", "categories/chain.jpg", file);
             }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/accessory.jpg"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "accessory.jpg", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/accessory.jpg", file);
+            }
+            using (FileStream fs = File.OpenRead(@"Data/Pictures/categories/equpment.webp"))
+            {
+                var file = new FormFile(fs, 0, fs.Length, "equpment.webp", fs.Name);
+
+                await repo.AddAsync("buy-bike", "categories/equpment.webp", file);
+            }
         }
     }
 }

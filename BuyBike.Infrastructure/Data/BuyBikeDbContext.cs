@@ -24,6 +24,7 @@
         public virtual DbSet<Item> Items { get; set; } = null!;
         public virtual DbSet<Discount> Discounts { get; set; } = null!;
         public virtual DbSet<Category> Categories { get; set; } = null!;
+        public virtual DbSet<ProductType> ProductTypes { get; set; } = null!;
         public virtual DbSet<Bicycle> Bicycles { get; set; } = null!;
         public virtual DbSet<Manufacturer> Manufacturers { get; set; } = null!;
        public virtual DbSet<Product> Products { get; set; } = null!;
@@ -45,6 +46,7 @@
                 modelBuilder.ApplyConfiguration(new SeedDiscountsConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedManufacturersEntityConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedItemsTableConfiguration());
+                modelBuilder.ApplyConfiguration(new SeedTypesTableConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedCategoriesTableConfiguration());
                 modelBuilder.ApplyConfiguration(new SeedBicyclesEntityConfiguration());   
                 modelBuilder.ApplyConfiguration(new SeedPartsTableConfiguration());   

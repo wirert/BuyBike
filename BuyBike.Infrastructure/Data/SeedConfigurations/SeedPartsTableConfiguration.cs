@@ -18,6 +18,7 @@
                     DiscountId = 1,
                     MakeId = Guid.Parse("87ccf053-a35b-48f5-90d4-568a91fc053a"),
                     CategoryId = 8,
+                    TypeId = 2,
                     ImageUrl = "parts/forks/SR-26-M3020-P.jpg",
                     Color = "Black",                    
                     Specification = "[[\"Размер\", \"26 цола\"],[\"Ход\", \"75mm\"], [\"Стержен\", \"1 1/8 инча (28,6mm)\"], [\"Дължина на стержена\", \"255mm\"], [\"Материал\", \" въглеродна стомана, алуминий\"], [\"Тип ос\", \"9mm\"], [\"Тип спирачка\", \"V-образна\"]]",
@@ -26,6 +27,7 @@
                 new Part(){
                     Id = Guid.Parse("bae19e01-9923-4de7-bee3-38b713ea68f9"),
                     Price = 36,
+                    TypeId=2,
                     Name = "ACERA SL-M360 3L",
                     MakeId = Guid.Parse("24be2dc6-7b7b-459a-a665-155b4e9e50dc"),
                     CategoryId = 9,

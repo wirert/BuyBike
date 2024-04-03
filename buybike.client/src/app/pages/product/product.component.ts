@@ -47,7 +47,6 @@ export class ProductComponent implements OnInit {
     console.log(navState);
 
     if (navState) {
-      console.log(navState);
       this.productId = navState['id'];
       this.productType = navState['type'];
       this.productName = navState['name'];
@@ -70,6 +69,7 @@ export class ProductComponent implements OnInit {
         this.productImageStyleObj[
           'background-image'
         ] = `url(${this.product?.imageUrl})`;
+
         console.log(this.product);
       });
   }

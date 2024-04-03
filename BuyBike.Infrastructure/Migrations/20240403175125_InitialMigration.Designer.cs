@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     [DbContext(typeof(BuyBikeDbContext))]
-    [Migration("20240401090919_InitialMigration")]
+    [Migration("20240403175125_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -151,11 +151,19 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("parent_category_id")
                         .HasComment("Product parent category (If any) - self referencing foreign key");
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("type_id")
+                        .HasComment("Category product type id");
+
                     b.HasKey("Id")
                         .HasName("pk_categories");
 
                     b.HasIndex("ParentCategoryId")
                         .HasDatabaseName("ix_categories_parent_category_id");
+
+                    b.HasIndex("TypeId")
+                        .HasDatabaseName("ix_categories_type_id");
 
                     b.ToTable("categories", null, t =>
                         {
@@ -165,25 +173,11 @@ namespace BuyBike.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 6,
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            ImageUrl = "categories/bicycle-unsplash.jpg",
-                            Name = "Велосипеди"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
-                            ImageUrl = "categories/Parts-Explained.jpg",
-                            Name = "Части"
-                        },
-                        new
-                        {
                             Id = 1,
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
                             ImageUrl = "categories/mountain-unsplash.jpg",
                             Name = "Планински",
-                            ParentCategoryId = 6
+                            TypeId = 1
                         },
                         new
                         {
@@ -191,7 +185,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Description = "Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
                             ImageUrl = "categories/road-unsplash.jpg",
                             Name = "Шосейни",
-                            ParentCategoryId = 6
+                            TypeId = 1
                         },
                         new
                         {
@@ -199,7 +193,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi  quibusdam!",
                             ImageUrl = "categories/city-unsplash.jpg",
                             Name = "Градски",
-                            ParentCategoryId = 6
+                            TypeId = 1
                         },
                         new
                         {
@@ -207,7 +201,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
                             ImageUrl = "categories/kids-unsplash.jpg",
                             Name = "Детски",
-                            ParentCategoryId = 6
+                            TypeId = 1
                         },
                         new
                         {
@@ -215,7 +209,31 @@ namespace BuyBike.Infrastructure.Migrations
                             Description = "Lorem ipsum elit. Maiores , fugit atque quod quasi saepe sed nulla reici voluptatem quibusdam!",
                             ImageUrl = "categories/ebikes-unsplash.jpg",
                             Name = "Електрически",
-                            ParentCategoryId = 6
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Lorem ipsum elit. Maiores ,  reici voluptatem quibusdam!",
+                            ImageUrl = "categories/fork.jpg",
+                            Name = "Вилки",
+                            TypeId = 2
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Lorem ipsum elit. Maiores ,  reici voluptatem quibusdam!",
+                            ImageUrl = "categories/gear-shifter.jpg",
+                            Name = "Команди",
+                            TypeId = 2
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Lorem ipsum elit. Reici voluptatem quibusdam!",
+                            ImageUrl = "categories/chain.jpg",
+                            Name = "Вериги",
+                            TypeId = 2
                         });
                 });
 
@@ -447,6 +465,14 @@ namespace BuyBike.Infrastructure.Migrations
                             ProductId = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
                             Size = 5,
                             Sku = "ITM0000013"
+                        },
+                        new
+                        {
+                            Id = new Guid("34b132b4-4cb8-4ce9-8478-31ce596c4d48"),
+                            InStock = 3,
+                            IsActive = true,
+                            ProductId = new Guid("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
+                            Sku = "ITM0000014"
                         });
                 });
 
@@ -517,6 +543,20 @@ namespace BuyBike.Infrastructure.Migrations
                             IsActive = true,
                             LogoUrl = "brand-logos/specialized.png",
                             Name = "Specialized"
+                        },
+                        new
+                        {
+                            Id = new Guid("87ccf053-a35b-48f5-90d4-568a91fc053a"),
+                            IsActive = true,
+                            LogoUrl = "brand-logos/srsuntour-logo.png",
+                            Name = "SR Suntour"
+                        },
+                        new
+                        {
+                            Id = new Guid("24be2dc6-7b7b-459a-a665-155b4e9e50dc"),
+                            IsActive = true,
+                            LogoUrl = "brand-logos/shimano-logo.png",
+                            Name = "Shimano"
                         });
                 });
 
@@ -674,6 +714,11 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("specification")
                         .HasComment("Product specification");
 
+                    b.Property<int>("TypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("type_id")
+                        .HasComment("Product general type id");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId")
@@ -685,12 +730,79 @@ namespace BuyBike.Infrastructure.Migrations
                     b.HasIndex("MakeId")
                         .HasDatabaseName("ix_products_make_id");
 
+                    b.HasIndex("TypeId")
+                        .HasDatabaseName("ix_products_type_id");
+
                     b.ToTable("products", null, t =>
                         {
                             t.HasComment("Shop product model");
                         });
 
                     b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.ProductType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)")
+                        .HasColumnName("description")
+                        .HasComment("Product type description (optional");
+
+                    b.Property<string>("ImageUrl")
+                        .HasMaxLength(1024)
+                        .HasColumnType("character varying(1024)")
+                        .HasColumnName("image_url");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name")
+                        .HasComment("Product type name");
+
+                    b.HasKey("Id")
+                        .HasName("pk_product_types");
+
+                    b.ToTable("product_types", null, t =>
+                        {
+                            t.HasComment("Product general type");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima.",
+                            ImageUrl = "categories/bicycle-unsplash.jpg",
+                            Name = "Велосипеди"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima.",
+                            ImageUrl = "categories/Parts-Explained.jpg",
+                            Name = "Части"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ImageUrl = "categories/accessory.jpg",
+                            Name = "Аксесоари"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Culpa ullam repellat obcaecati consequuntur ut, quis quaerat recusandae tenetur magni illum. Eum et maxime aliquam assumenda tenetur, quis dicta nulla minima.",
+                            ImageUrl = "categories/equpment.webp",
+                            Name = "Екипировка"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -905,6 +1017,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Fathom 1",
                             Price = 3499m,
                             Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1,
                             Brakes = 0,
                             Material = 0,
                             Style = "Крос кънтри / XC",
@@ -922,6 +1035,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Fathom 1",
                             Price = 3499m,
                             Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1,
                             Brakes = 0,
                             Material = 0,
                             Style = "Крос кънтри / XC",
@@ -940,6 +1054,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
                             Name = "Epic Expert Morn",
                             Price = 13599m,
+                            TypeId = 1,
                             Brakes = 0,
                             Material = 1,
                             Style = "DOWNHILL",
@@ -959,6 +1074,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Touring Pro",
                             Price = 1699m,
                             Specification = "[[\"Рамка\", \"Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 760mm, 31.8mm\"]]",
+                            TypeId = 1,
                             Brakes = 1,
                             Material = 0,
                             Style = "City / Градски",
@@ -976,6 +1092,7 @@ namespace BuyBike.Infrastructure.Migrations
                             MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
                             Name = "Nulane Pro",
                             Price = 3899m,
+                            TypeId = 1,
                             Brakes = 1,
                             Material = 0,
                             Style = "Treking",
@@ -994,6 +1111,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Allez E5",
                             Price = 2399m,
                             Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1,
                             Brakes = 1,
                             Material = 0,
                             Style = "Gravel Bike",
@@ -1013,6 +1131,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Litening Aero",
                             Price = 14899m,
                             Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1,
                             Brakes = 0,
                             Material = 1,
                             Style = "Шосе",
@@ -1032,6 +1151,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Boxer",
                             Price = 299m,
                             Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
+                            TypeId = 1,
                             Brakes = 0,
                             Material = 0,
                             Suspention = "Амортисьорна вилка",
@@ -1050,6 +1170,7 @@ namespace BuyBike.Infrastructure.Migrations
                             Name = "Faro",
                             Price = 279m,
                             Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
+                            TypeId = 1,
                             Brakes = 1,
                             Material = 2,
                             Suspention = "Твърда вилка",
@@ -1065,6 +1186,37 @@ namespace BuyBike.Infrastructure.Migrations
                         {
                             t.HasComment("Bicycle parts");
                         });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
+                            CategoryId = 8,
+                            Color = "Black",
+                            Description = "Начален клас амортисьорна вилка SR SUNTOUR 26\" за планински велосипеди, съвместима с V-образни спирачки.",
+                            DiscountId = 1,
+                            ImageUrl = "parts/forks/SR-26-M3020-P.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("87ccf053-a35b-48f5-90d4-568a91fc053a"),
+                            Name = "26 M3020-P",
+                            Price = 121m,
+                            Specification = "[[\"Размер\", \"26 цола\"],[\"Ход\", \"75mm\"], [\"Стержен\", \"1 1/8 инча (28,6mm)\"], [\"Дължина на стержена\", \"255mm\"], [\"Материал\", \" въглеродна стомана, алуминий\"], [\"Тип ос\", \"9mm\"], [\"Тип спирачка\", \"V-образна\"]]",
+                            TypeId = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("bae19e01-9923-4de7-bee3-38b713ea68f9"),
+                            CategoryId = 9,
+                            Color = "Black",
+                            Description = "Лява команда, подходяща за планински велосипеди (МТВ). Гладко и леко превключване на скоростите. Вкомплекта е включено жило.",
+                            ImageUrl = "shifters/SH-SL-M360-3-L.jpeg",
+                            IsActive = true,
+                            MakeId = new Guid("24be2dc6-7b7b-459a-a665-155b4e9e50dc"),
+                            Name = "ACERA SL-M360 3L",
+                            Price = 36m,
+                            Specification = "[[\"Тип на лосчетата\", \"Rapidfire Plus\"],[\"Скорости\", \"3s\"], [\"Индикатор за коростта\", \"да\"], [\"Ергономичен дизайн на лосчето\", \"да\"], [\"Регулатор за жилото\", \"да\"]]",
+                            TypeId = 2
+                        });
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Category", b =>
@@ -1073,6 +1225,15 @@ namespace BuyBike.Infrastructure.Migrations
                         .WithMany("SubCategories")
                         .HasForeignKey("ParentCategoryId")
                         .HasConstraintName("fk_categories_categories_parent_category_id");
+
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.ProductType", "CategoryType")
+                        .WithMany("Categories")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_categories_product_types_type_id");
+
+                    b.Navigation("CategoryType");
 
                     b.Navigation("ParentCategory");
                 });
@@ -1143,11 +1304,20 @@ namespace BuyBike.Infrastructure.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_products_manufacturers_make_id");
 
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.ProductType", "Type")
+                        .WithMany("Products")
+                        .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_products_product_types_type_id");
+
                     b.Navigation("Category");
 
                     b.Navigation("Discount");
 
                     b.Navigation("Make");
+
+                    b.Navigation("Type");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -1262,6 +1432,13 @@ namespace BuyBike.Infrastructure.Migrations
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Product", b =>
                 {
                     b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.ProductType", b =>
+                {
+                    b.Navigation("Categories");
+
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

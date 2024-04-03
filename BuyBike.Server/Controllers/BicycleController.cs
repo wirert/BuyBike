@@ -17,10 +17,12 @@
     public class BicycleController : ControllerBase
     {
         private readonly IBicycleService bicyclesService;
+        private readonly IProductService productService;
 
-        public BicycleController(IBicycleService _bicyclesService)
+        public BicycleController(IBicycleService _bicyclesService, IProductService _productService)
         {
             bicyclesService = _bicyclesService;
+            productService = _productService;
         }
            
         /// <summary>
@@ -37,21 +39,9 @@
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
         {
-            if (query.Category != null)
-            {
-                bool isBikeType = Enum.TryParse(query.Category, ignoreCase: true, out BikeType result);
-
-                if (!isBikeType)
-                {
-                    return BadRequest("Invalid bicycle category.");
-                }
-
-                query.Category = result.ToString();
-            }
-
             try
             {
-                var pagedBicycles = await bicyclesService.GetAllAsync(query);
+                var pagedBicycles = await productService.GetAllAsync(query, AppConstants.ProductTypes.Bicycles);
 
                 return Ok(pagedBicycles);
             }

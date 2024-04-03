@@ -27,6 +27,14 @@
         [MaxLength(DataConstants.Product.MaxNameLength)]
         public string Name { get; set; } = null!;
 
+        [Comment("Product general type id")]
+        [Required]
+        public int TypeId { get; set; }
+
+        [ForeignKey(nameof(TypeId))]
+        public virtual ProductType Type { get; set; }
+
+        [Required]
         [Comment("Product category identifier")]
         public int CategoryId { get; set; }
 

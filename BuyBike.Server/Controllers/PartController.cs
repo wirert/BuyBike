@@ -1,11 +1,12 @@
 ﻿namespace BuyBike.Api.Controllers
 {
-    using BuyBike.Core.Models.Bicycle;
-    using BuyBike.Core.Models;
-    using BuyBike.Infrastructure.Data.Entities.Enumerations;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+
+    using BuyBike.Core.Models.Bicycle;
+    using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
+    using BuyBike.Core.Constants;
 
     [Route("api/[controller]")]
     [ApiController]
@@ -32,23 +33,11 @@
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
         {
-            if (query.Category != null)
-            {
-                bool isBikeType = Enum.TryParse(query.Category, ignoreCase: true, out BikeType result);
-
-                if (!isBikeType)
-                {
-                    return BadRequest("Invalid bicycle category.");
-                }
-
-                query.Category = result.ToString();
-            }
-
             try
             {
-                var pagedBicycles = await productService.GetAllAsync(query);
+                var pagedParts = await productService.GetAllAsync(query, AppConstants.ProductTypes.Parts);
 
-                return Ok(pagedBicycles);
+                return Ok(pagedParts);
             }
             catch (FileNotFoundException fnfe)
             {
