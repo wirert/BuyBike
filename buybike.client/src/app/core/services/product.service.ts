@@ -3,7 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { BicycleDetails } from '../models/bicycle/bicycle-details';
 import { API_URL, AppConstants } from '../constants/app-constants';
-import { ProductPage } from '../models/products-page';
+import { ProductPage } from '../models/product/products-page';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {

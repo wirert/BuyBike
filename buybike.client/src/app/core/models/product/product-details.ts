@@ -1,4 +1,4 @@
-import { Item as Item } from './item';
+import { Item as Item } from '../item';
 
 export interface ProductDetails {
   name: string;

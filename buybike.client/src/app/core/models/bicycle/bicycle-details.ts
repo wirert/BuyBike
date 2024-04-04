@@ -1,5 +1,5 @@
 import { Item } from '../item';
-import { ProductDetails } from '../product-details';
+import { ProductDetails } from '../product/product-details';
 
 export class BicycleDetails implements ProductDetails {
   constructor(

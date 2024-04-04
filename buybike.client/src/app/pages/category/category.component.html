@@ -1,3 +1,4 @@
+<app-snackbar *ngIf="errorMessage" [errorMessage]="errorMessage"></app-snackbar>
 <div class="category-container">
   <app-loader *ngIf="isloading"></app-loader>
   <category-sidebar></category-sidebar>

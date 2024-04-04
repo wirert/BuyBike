@@ -9,8 +9,8 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
-import { ProductDetails } from '../../core/models/product-details';
-import { CartProduct } from '../../core/models/cart-product';
+import { ProductDetails } from '../../core/models/product/product-details';
+import { CartProduct } from '../../core/models/product/cart-product';
 import { LoaderComponent } from '../../utility/loader/loader.component';
 
 @Component({

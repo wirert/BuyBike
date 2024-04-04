@@ -43,13 +43,13 @@
             {
                 return NotFound(fnfe.Message);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException ae)
             {
-                return StatusCode(StatusCodes.Status400BadRequest, e);
+                return StatusCode(StatusCodes.Status400BadRequest,ae.Message);
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
 
@@ -71,13 +71,13 @@
 
                 return Ok(bicycle);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException ae)
             {
-                return StatusCode(StatusCodes.Status404NotFound, e);
+                return StatusCode(StatusCodes.Status404NotFound, ae.Message);
             }
             catch (Exception e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, e);
+                return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
     }

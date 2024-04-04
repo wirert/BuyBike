@@ -1,17 +1,18 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params, UrlSegment } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaginatorComponent } from '../../utility/paginator/paginator.component';
 import { CategoryBannerComponent } from './banner/banner.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 
-import { AppConstants } from '../../core/constants/app-constants';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import { ProductPage } from '../../core/models/products-page';
+import { ProductPage } from '../../core/models/product/products-page';
 import { ProductService } from '../../core/services/product.service';
 import { Subscription } from 'rxjs';
 import { LoaderComponent } from '../../utility/loader/loader.component';
 import { HttpErrorResponse } from '@angular/common/http';
+import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
+import { MessageConstants } from '../../core/constants/message-constants';
 
 @Component({
   selector: 'app-category',
@@ -23,6 +24,7 @@ import { HttpErrorResponse } from '@angular/common/http';
     ProductCardComponent,
     SidebarComponent,
     LoaderComponent,
+    SnackbarComponent,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
@@ -45,8 +47,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
   errorMessage: string | null = null;
 
   ngOnInit(): void {
-    this.paramMapSubsc = this.activatedRoute.paramMap.subscribe((paramMap) => {
-      this.changeCategory(paramMap);
+    this.paramMapSubsc = this.activatedRoute.paramMap.subscribe({
+      next: (paramMap) => {
+        this.changeCategory(paramMap);
+      },
+      error: (err) => {
+        this.setErrorMessage(err);
+      },
     });
   }
 
@@ -106,10 +113,15 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   private setErrorMessage(err: HttpErrorResponse) {
-    this.errorMessage = err.message;
+    console.log(err);
+    if (err.statusText === 'OK') {
+      this.errorMessage = err.error;
+    } else {
+      this.errorMessage = MessageConstants.UnknownErrorMessage;
+    }
 
     setTimeout(() => {
       this.errorMessage = null;
-    }, 3000);
+    }, 5000);
   }
 }
