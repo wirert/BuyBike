@@ -10,6 +10,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProductPage } from '../../core/models/products-page';
 import { ProductService } from '../../core/services/product.service';
 import { Subscription } from 'rxjs';
+import { LoaderComponent } from '../../utility/loader/loader.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-category',
@@ -20,6 +22,7 @@ import { Subscription } from 'rxjs';
     PaginatorComponent,
     ProductCardComponent,
     SidebarComponent,
+    LoaderComponent,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
@@ -37,7 +40,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
   totalItems: number = 0;
   orderBy: string = 'Price';
   isDescending: boolean = false;
-  //bikeTypes = AppConstants.bikeTypes;
+
+  isloading = true;
+  errorMessage: string | null = null;
 
   ngOnInit(): void {
     this.paramMapSubsc = this.activatedRoute.paramMap.subscribe((paramMap) => {
@@ -67,6 +72,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   }
 
   private fetchData(): void {
+    this.isloading = true;
     this.productService
       .getPagedProducts(
         this.currentPage,
@@ -78,10 +84,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data) => {
+          this.isloading = false;
           this.productPage = data;
           console.log(data);
         },
-        error: (err) => console.log(err),
+        error: (err) => {
+          this.setErrorMessage(err);
+          this.isloading = false;
+        },
       });
   }
 
@@ -93,5 +103,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.currentPage = 1;
 
     this.fetchData();
+  }
+
+  private setErrorMessage(err: HttpErrorResponse) {
+    this.errorMessage = err.message;
+
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 3000);
   }
 }

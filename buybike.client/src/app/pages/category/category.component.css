@@ -1,5 +1,6 @@
 .category-container {
   display: flex;
+  position: relative;
 }
 
 .category-content {

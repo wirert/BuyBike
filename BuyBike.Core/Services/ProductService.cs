@@ -58,9 +58,7 @@
 
         public async Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query, string productType)
         {
-            int skipCount = (query.Page - 1) * query.ItemsPerPage;
-
-            Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy, out Func<Product, bool> filterFunc);
+            Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy);
            
             var productsTypeInfo = repo.AllReadonly<ProductType>(p => p.Name == productType)
                 .Select(p => new 
@@ -70,8 +68,9 @@
                 }).FirstOrDefault();
 
             var productCount = await repo.AllReadonly<Product>(p => p.TypeId == productsTypeInfo!.Id).CountAsync(filterExpr);
+            int skipCount = (query.Page - 1) * query.ItemsPerPage;
 
-            if ( productCount == 0)
+            if (productsTypeInfo == null || productCount == 0)
             {
                 throw new FileNotFoundException("Няма намерени продукти.");
             }
@@ -115,29 +114,23 @@
             return result;
         }
 
-        private Expression<Func<Product, bool>> BuildFilterExpr(string? category, string orderBy, out Func<Product, bool> func)
+        private Expression<Func<Product, bool>> BuildFilterExpr(string? category, string orderBy)
         {
-
-            
             if (string.IsNullOrEmpty(category))
             {
                 if (orderBy == "Discount")
                 {
-                    func = p => p.IsActive && p.DiscountId != null;
                     return p => p.IsActive && p.DiscountId != null;
                 }
 
-                func = p => p.IsActive;
                 return p => p.IsActive;
             }
 
             if (orderBy == "Discount")
             {
-                func = p => p.IsActive && p.Category.Name.ToLower() == category && p.DiscountId != null;
                 return p => p.IsActive && p.Category.Name.ToLower() == category && p.DiscountId != null;
             }
 
-            func = p => p.IsActive && p.Category.Name.ToLower() == category;
             return p => p.IsActive && p.Category.Name.ToLower() == category;
         }
 

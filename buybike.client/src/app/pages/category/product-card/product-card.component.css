@@ -12,7 +12,7 @@
 .product-card:hover:before {
   display: inline-block;
   position: absolute;
-  z-index: 100;
+  z-index: 6;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -26,7 +26,7 @@
 .product-card:hover:after {
   display: inline-block;
   position: absolute;
-  z-index: 99;
+  z-index: 5;
   left: 0;
   top: 0;
   right: 0;

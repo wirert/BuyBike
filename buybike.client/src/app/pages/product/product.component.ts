@@ -9,14 +9,14 @@ import {
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
-import { BicycleDetails } from '../../core/models/bicycle/bicycle-details';
 import { ProductDetails } from '../../core/models/product-details';
 import { CartProduct } from '../../core/models/cart-product';
+import { LoaderComponent } from '../../utility/loader/loader.component';
 
 @Component({
   selector: 'product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LoaderComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css',
 })
@@ -30,13 +30,14 @@ export class ProductComponent implements OnInit {
   productScu: string = '';
   haveSize: boolean = false;
   product: ProductDetails | null = null;
-  bicycle: BicycleDetails | null = null;
   productImageStyleObj = {
     'background-image': '',
     'background-position': 'center',
     'background-repeat': 'no-repeat',
     'background-size': 'contain',
   };
+
+  isLoading = true;
 
   @ViewChild('imageDiv') imageDiv!: ElementRef;
   selectedItemIndex: string = '';
@@ -56,21 +57,25 @@ export class ProductComponent implements OnInit {
   ngOnInit(): void {
     this.productService
       .getProductDetails(this.productId, this.productType)
-      .subscribe((data) => {
-        this.product = data;
-        if ('tyreSize' in data) {
-          this.bicycle = data;
-        }
-        if (data.items[0].size) {
-          this.haveSize = true;
-        } else {
-          this.selectedItemIndex = data.items[0].sku;
-        }
-        this.productImageStyleObj[
-          'background-image'
-        ] = `url(${this.product?.imageUrl})`;
+      .subscribe({
+        next: (data) => {
+          this.product = data;
 
-        console.log(this.product);
+          if (data.items[0].size) {
+            this.haveSize = true;
+          } else {
+            this.selectedItemIndex = data.items[0].sku;
+          }
+          this.productImageStyleObj[
+            'background-image'
+          ] = `url(${this.product?.imageUrl})`;
+
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.log(err);
+          this.isLoading = false;
+        },
       });
   }
 
@@ -88,6 +93,10 @@ export class ProductComponent implements OnInit {
   }
 
   onBuyButtonClick() {
+    this.addItemToCart();
+  }
+
+  private addItemToCart() {
     if (!this.product || !this.selectedItemIndex) {
       return;
     }
