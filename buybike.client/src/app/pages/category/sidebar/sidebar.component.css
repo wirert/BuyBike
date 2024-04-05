@@ -1,0 +1,45 @@
+.sidebar {
+  min-width: 15em;
+  margin: 1em;
+  margin-left: 0;
+  padding: 0.5em 1em;
+  box-shadow: 0 0 5px 1px rgb(173, 172, 172);
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+h2 {
+  margin-top: 0.5em;
+  text-transform: capitalize;
+}
+
+.category-name-group {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.4em;
+}
+
+ul {
+  padding-left: 0.5em;
+  padding-top: 0.5em;
+}
+
+li {
+  padding-bottom: 0.2em;
+  padding-left: 0.2em;
+}
+
+i {
+  display: block;
+}
+
+button {
+  border-radius: 50%;
+  display: inline-block;
+  border: none;
+  background-color: transparent;
+}
+
+li.hide ul {
+  display: none;
+}

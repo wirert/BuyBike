@@ -4,7 +4,11 @@
 }
 
 .category-content {
-  flex-basis: 40em;
+  flex: 1 1 40em;
+}
+
+category-sidebar {
+  flex-basis: 20em;
 }
 
 .products-wrapper {
@@ -13,7 +17,7 @@
 }
 
 product-card {
-  flex: 0 1 20em;
+  flex: 0 1 19em;
 }
 
 @media (max-width: 900px) {

@@ -1,6 +1,6 @@
 .category-banner {
-  width: 60em;
-  aspect-ratio: 3/1;
+  max-width: 60em;
+  aspect-ratio: 4/1;
 }
 
 .category-banner img {

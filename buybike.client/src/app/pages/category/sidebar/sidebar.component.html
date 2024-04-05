@@ -1,19 +1,49 @@
-<div class="accordion">
-  <ul class="type-cat">
-    <li *ngFor="let type of categories">
-      <a href="">{{ type.name }}</a>
-      <button></button>
-      <ul>
-        <li *ngFor="let category of type.subCategories">
-          <a href="">{{ category.name }}</a>
-          <ul>
-            <li *ngFor="let subCategory of category.subCategories">
-              <a href="">{{ subCategory.name }}</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </li>
-  </ul>
+<div class="sidebar">
+  <div class="accordion">
+    <h2>Категории</h2>
+    <ul class="type-cat">
+      <li
+        class="hide"
+        *ngFor="let type of categories; index as i"
+        id="type{{ i }}"
+      >
+        <div class="category-name-group">
+          <a href="">{{ type.name }}</a>
+          <button
+            *ngIf="type.subCategories.length > 0"
+            (click)="toggle('type' + i)"
+          >
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+
+        <ul>
+          <li
+            class="hide"
+            *ngFor="let category of type.subCategories; index as j"
+            id="cat{{ j }}"
+          >
+            <div class="category-name-group">
+              <a href="">{{ category.name }}</a>
+              <button
+                *ngIf="category.subCategories.length > 0"
+                (click)="toggle('cat' + j)"
+              >
+                <i class="fa-solid fa-plus"></i>
+              </button>
+            </div>
+            <ul>
+              <li *ngFor="let subCategory of category.subCategories">
+                <a href="">{{ subCategory.name }}</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <div class="filter">
+    <h2>Филтър</h2>
+  </div>
 </div>
-<p>sidebar works!</p>

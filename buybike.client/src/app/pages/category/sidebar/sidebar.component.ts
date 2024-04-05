@@ -21,4 +21,18 @@ export class SidebarComponent implements OnInit {
       console.log(this.categories);
     });
   }
+
+  toggle(liId: string) {
+    const li = document.getElementById(liId);
+    const iEl = li!.querySelector('i');
+    if (li?.classList.contains('hide')) {
+      li.classList.remove('hide');
+      iEl?.classList.remove('fa-plus');
+      iEl?.classList.add('fa-minus');
+    } else {
+      li?.classList.add('hide');
+      iEl?.classList.remove('fa-minus');
+      iEl?.classList.add('fa-plus');
+    }
+  }
 }
