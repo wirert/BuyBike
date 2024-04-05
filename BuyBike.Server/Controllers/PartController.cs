@@ -20,7 +20,7 @@
         }
 
         /// <summary>
-        /// Get bicycles 
+        /// Get Parts 
         /// </summary>
         /// <param name="query">Query params model</param>
         /// <returns></returns>
@@ -54,22 +54,22 @@
         }
 
         /// <summary>
-        /// Get Bicycle details by Id
+        /// Get Part details by Id
         /// </summary>
         /// <param name="id">Bicycle identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BicycleDetailsDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var bicycle = await productService.GetById(id);
+                var part = await productService.GetById(id);
 
-                return Ok(bicycle);
+                return Ok(part);
             }
             catch (ArgumentException ae)
             {

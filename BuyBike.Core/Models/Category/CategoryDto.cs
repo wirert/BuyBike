@@ -8,6 +8,6 @@
 
         public string Name { get; set; } = null!;
 
-        public IEnumerable<CategoryDto> SubCategories { get; set; } = new List<CategoryDto>();
+        public IEnumerable<CategoryDto> SubCategories { get; set; } = Enumerable.Empty<CategoryDto>();
     }
 }

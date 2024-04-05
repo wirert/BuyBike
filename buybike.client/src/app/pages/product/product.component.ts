@@ -45,8 +45,6 @@ export class ProductComponent implements OnInit {
   constructor() {
     const navState = this.router.getCurrentNavigation()?.extras.state;
 
-    console.log(navState);
-
     if (navState) {
       this.productId = navState['id'];
       this.productType = navState['type'];
@@ -64,7 +62,7 @@ export class ProductComponent implements OnInit {
           if (data.items[0].size) {
             this.haveSize = true;
           } else {
-            this.selectedItemIndex = data.items[0].sku;
+            this.selectedItemIndex = '0';
           }
           this.productImageStyleObj[
             'background-image'

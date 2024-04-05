@@ -39,14 +39,14 @@
         </member>
         <member name="M:BuyBike.Api.Controllers.PartController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
             <summary>
-            Get bicycles 
+            Get Parts 
             </summary>
             <param name="query">Query params model</param>
             <returns></returns>
         </member>
         <member name="M:BuyBike.Api.Controllers.PartController.GetById(System.Guid)">
             <summary>
-            Get Bicycle details by Id
+            Get Part details by Id
             </summary>
             <param name="id">Bicycle identifier</param>
             <returns></returns>

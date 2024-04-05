@@ -20,17 +20,22 @@
             repo = _repo;
         }
 
-        public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
+        public async Task<ICollection<CategoryDto>> GetCategoriesAsync()
         {
-            var result = await repo.AllReadonly<Category>(c => c.ParentCategory == null)
-                .Select(c => new CategoryDto()
+            var result = await repo.AllReadonly<ProductType>()
+                .Select(t => new CategoryDto()
                 {
-                    Id = c.Id,
-                    Name = c.Name,
-                    SubCategories = c.SubCategories.Select(sc => new CategoryDto()
+                    Id = t.Id,
+                    Name = t.Name,
+                    SubCategories = t.Categories.Select(c => new CategoryDto()
                     {
-                        Id = sc.Id,
-                        Name = sc.Name,
+                        Id = c.Id,
+                        Name = c.Name,
+                        SubCategories = c.SubCategories.Select(sc => new CategoryDto()
+                        {
+                            Id = sc.Id,
+                            Name = sc.Name,
+                        })
                     })
                 }).ToListAsync();
 

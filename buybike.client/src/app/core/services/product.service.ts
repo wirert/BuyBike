@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { BicycleDetails } from '../models/bicycle/bicycle-details';
 import { API_URL, AppConstants } from '../constants/app-constants';
 import { ProductPage } from '../models/product/products-page';
+import { ProductDetails } from '../models/product/product-details';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -11,23 +11,13 @@ export class ProductService {
   private http: HttpClient = inject(HttpClient);
 
   getProductDetails(id: string, type: string): Observable<any> {
-    switch (type) {
-      case 'велосипеди':
-        return this.http.get<any>(`${this.url}/Bicycle/${id}`).pipe(
-          map<any, BicycleDetails>((res, idx) => {
-            res.specification = JSON.parse(res.specification);
-            console.log(res.specification);
-            return res;
-          })
-        );
-      default:
-        return this.http.get<any>(`${this.url}/Part/${id}`).pipe(
-          map<any, BicycleDetails>((res, idx) => {
-            res.specification = JSON.parse(res.specification);
-            return res;
-          })
-        );
-    }
+    const controller = AppConstants.productTypes[type];
+    return this.http.get<any>(`${this.url}/${controller}/${id}`).pipe(
+      map<any, ProductDetails>((res, idx) => {
+        res.specification = JSON.parse(res.specification);
+        return res;
+      })
+    );
   }
 
   getPagedProducts(
@@ -39,10 +29,6 @@ export class ProductService {
     type: string
   ): Observable<any> {
     let params = new HttpParams();
-    let controller = AppConstants.productTypes[type];
-
-    console.log(type);
-
     params = params.append('page', page);
     params = params.append('itemsPerPage', itemsPerPage);
     params = params.append('orderBy', orderBy);
@@ -51,6 +37,8 @@ export class ProductService {
     if (category !== null) {
       params = params.append('category', category);
     }
+
+    const controller = AppConstants.productTypes[type];
 
     if (!controller) {
       throw new Error('Грешен тип продукт.');

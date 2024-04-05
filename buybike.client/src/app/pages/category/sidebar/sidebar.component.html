@@ -1,10 +1,19 @@
 <div class="accordion">
-  <div>Category 1</div>
-  <div>Category 1</div>
-  <div>Category 1</div>
-  <div>Category 1</div>
-  <div>Category 1</div>
-  <div>Category 1</div>
-  <div>Category 1</div>
+  <ul class="type-cat">
+    <li *ngFor="let type of categories">
+      <a href="">{{ type.name }}</a>
+      <button></button>
+      <ul>
+        <li *ngFor="let category of type.subCategories">
+          <a href="">{{ category.name }}</a>
+          <ul>
+            <li *ngFor="let subCategory of category.subCategories">
+              <a href="">{{ subCategory.name }}</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+  </ul>
 </div>
 <p>sidebar works!</p>

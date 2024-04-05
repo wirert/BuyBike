@@ -132,6 +132,13 @@
                         InStock = 3,
                         Sku = "ITM0000014"
                     },
+                    new Item()
+                    {
+                        Id = Guid.Parse("d8035895-c7e3-468f-ae2c-cb080c4b5a08"),
+                        ProductId = Guid.Parse("bae19e01-9923-4de7-bee3-38b713ea68f9"),
+                        InStock = 9,
+                        Sku = "ITM0000015"
+                    },
                 ]);
         }
     }

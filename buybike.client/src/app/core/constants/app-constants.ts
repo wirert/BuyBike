@@ -5,13 +5,13 @@ interface StringIndex {
 }
 
 export abstract class AppConstants {
-  public static bikeTypes: StringIndex = {
-    Mountain: 'Планински',
-    Kids: 'Детски',
-    Road: 'Шосеен',
-    City: 'Градски',
-    Electric: 'Електрически',
-  };
+  //   public static bikeTypes: StringIndex = {
+  //     Mountain: 'Планински',
+  //     Kids: 'Детски',
+  //     Road: 'Шосеен',
+  //     City: 'Градски',
+  //     Electric: 'Електрически',
+  //   };
 
   public static productTypes: StringIndex = {
     велосипеди: 'Bicycle',

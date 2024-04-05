@@ -13,7 +13,7 @@
         /// Get all categories with subcategories
         /// </summary>
         /// <returns></returns>
-        Task<IEnumerable<CategoryDto>> GetCategoriesAsync();
+        Task<ICollection<CategoryDto>> GetCategoriesAsync();
 
         /// <summary>
         /// Get Category id by name
