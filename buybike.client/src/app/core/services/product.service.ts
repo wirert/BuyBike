@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { API_URL, AppConstants } from '../constants/app-constants';
 import { ProductPage } from '../models/product/products-page';
 import { ProductDetails } from '../models/product/product-details';
+import { PaginatorState } from '../models/paginator-state';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -21,18 +22,15 @@ export class ProductService {
   }
 
   getPagedProducts(
-    page: number,
-    itemsPerPage: number,
-    orderBy: string,
-    desc: boolean,
+    paginatorState: PaginatorState,
     category: string | null,
     type: string
   ): Observable<any> {
     let params = new HttpParams();
-    params = params.append('page', page);
-    params = params.append('itemsPerPage', itemsPerPage);
-    params = params.append('orderBy', orderBy);
-    params = params.append('desc', desc);
+    params = params.append('page', paginatorState.pageNumber);
+    params = params.append('itemsPerPage', paginatorState.itemsPerPage);
+    params = params.append('orderBy', paginatorState.orderBy);
+    params = params.append('desc', paginatorState.desc);
 
     if (category !== null) {
       params = params.append('category', category);

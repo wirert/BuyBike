@@ -13,6 +13,7 @@ import { LoaderComponent } from '../../utility/loader/loader.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
 import { MessageConstants } from '../../core/constants/message-constants';
+import { PaginatorState } from '../../core/models/paginator-state';
 
 @Component({
   selector: 'app-category',
@@ -36,12 +37,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   productsType: string = '';
   category: string | null = '';
-  productPage: ProductPage | undefined;
-  currentPage: number = 1;
-  itemsPerPage: number = 12;
-  totalItems: number = 0;
-  orderBy: string = 'Price';
-  isDescending: boolean = false;
+  productsPage: ProductPage | undefined;
+  paginatorState: PaginatorState = new PaginatorState();
 
   isloading = true;
   errorMessage: string | null = null;
@@ -61,38 +58,19 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.paramMapSubsc!.unsubscribe();
   }
 
-  onPageChange(page: number) {
-    this.currentPage = page;
-    this.fetchData();
-  }
-
-  onItemsPerPageChange(items: number) {
-    this.itemsPerPage = items;
-    this.currentPage = 1;
-    this.fetchData();
-  }
-
-  onSortingChange(sortInfo: { orderBy: string; desc: boolean }) {
-    this.orderBy = sortInfo.orderBy;
-    this.isDescending = sortInfo.desc;
+  onPaginatorStateChange(paginatorState: PaginatorState) {
+    this.paginatorState = paginatorState;
     this.fetchData();
   }
 
   private fetchData(): void {
     this.isloading = true;
     this.productService
-      .getPagedProducts(
-        this.currentPage,
-        this.itemsPerPage,
-        this.orderBy,
-        this.isDescending,
-        this.category,
-        this.productsType
-      )
+      .getPagedProducts(this.paginatorState, this.category, this.productsType)
       .subscribe({
         next: (data) => {
           this.isloading = false;
-          this.productPage = data;
+          this.productsPage = data;
           console.log(data);
         },
         error: (err) => {
@@ -107,7 +85,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
       this.category = paramMap.get('category');
     }
     this.productsType = paramMap.get('type')!;
-    this.currentPage = 1;
+    this.paginatorState.pageNumber = 1;
 
     this.fetchData();
   }

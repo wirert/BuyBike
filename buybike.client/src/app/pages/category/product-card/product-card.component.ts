@@ -1,6 +1,7 @@
 import { NgIf, NgStyle } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Product } from '../../../core/models/product/product';
 
 @Component({
   selector: 'product-card',
@@ -10,18 +11,13 @@ import { RouterModule } from '@angular/router';
   styleUrl: './product-card.component.css',
 })
 export class ProductCardComponent implements OnInit {
-  @Input() make: string = '';
-  @Input() name: string = '';
-  @Input() price: number = 0;
-  @Input() imgUrl: string = '';
-  @Input() category: string = '';
-  @Input() id: string = '';
   @Input() itemType: string = '';
-  @Input() discountPercent: number | null = null;
+  @Input() product: Product | null = null;
 
   nameForUrl: string = '';
 
   ngOnInit(): void {
-    this.nameForUrl = this.name.split(' ').join('-').toLowerCase();
+    this.nameForUrl =
+      this.product?.name.split(' ').join('-').toLowerCase() ?? '';
   }
 }

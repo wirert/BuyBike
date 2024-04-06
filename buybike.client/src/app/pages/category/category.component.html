@@ -4,29 +4,19 @@
   <category-sidebar></category-sidebar>
   <div classideba="category-content">
     <category-banner
-      [imageSrc]="productPage ? productPage.categoryImageUrl : ''"
+      [imageSrc]="productsPage ? productsPage.categoryImageUrl : ''"
     ></category-banner>
 
     <app-paginator
-      [currentPage]="currentPage"
-      [itemsPerPage]="itemsPerPage"
-      [totalItems]="totalItems"
-      (pageChanged)="onPageChange($event)"
-      (itemPerPageChanged)="onItemsPerPageChange($event)"
-      (sortingChanged)="onSortingChange($event)"
+      (paginatorStateChanged)="onPaginatorStateChange($event)"
+      [totalItems]="productsPage?.totalProducts ?? 0"
     ></app-paginator>
 
     <div class="products-wrapper">
-      <ng-container *ngFor="let product of productPage?.products">
+      <ng-container *ngFor="let product of productsPage?.products">
         <product-card
-          [id]="product.id"
+          [product]="product"
           [itemType]="productsType"
-          [category]="product.category"
-          [make]="product.make"
-          [price]="product.price"
-          [name]="product.name"
-          [imgUrl]="product.imageUrl"
-          [discountPercent]="product.discountPercent"
         ></product-card>
       </ng-container>
     </div>

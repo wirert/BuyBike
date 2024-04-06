@@ -1,13 +1,6 @@
 import { CommonModule } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { PaginatorState } from '../../core/models/paginator-state';
 
 @Component({
   selector: 'app-paginator',
@@ -16,57 +9,45 @@ import {
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.css',
 })
-export class PaginatorComponent implements AfterViewInit, OnInit {
+export class PaginatorComponent {
   @Input() totalItems: number = 0;
-  @Input() itemsPerPage: number = 12;
-  @Input() currentPage: number = 1;
-  @Output() pageChanged: EventEmitter<number> = new EventEmitter();
-  @Output() itemPerPageChanged: EventEmitter<number> = new EventEmitter();
-  @Output() sortingChanged: EventEmitter<{ orderBy: string; desc: boolean }> =
+  @Output() paginatorStateChanged: EventEmitter<PaginatorState> =
     new EventEmitter();
 
-  orderBy: string = 'Price';
-  isDescending: boolean = false;
-
-  ngOnInit(): void {}
-
-  ngAfterViewInit(): void {}
+  paginatorState: PaginatorState = new PaginatorState();
 
   get totalPages(): number {
-    return Math.ceil(this.totalItems / this.itemsPerPage);
+    return Math.ceil(this.totalItems / this.paginatorState.itemsPerPage);
   }
 
   changePage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
-      this.pageChanged.emit(page);
+      this.paginatorState.pageNumber = page;
+      this.paginatorStateChanged.emit(this.paginatorState);
     }
   }
 
   changeItemPerPage(event: any) {
     const itemsCountPerPage: number = event.target.value;
 
-    if (this.itemsPerPage !== itemsCountPerPage) {
-      this.itemsPerPage = itemsCountPerPage;
-      this.itemPerPageChanged.emit(itemsCountPerPage);
+    if (this.paginatorState.itemsPerPage !== itemsCountPerPage) {
+      this.paginatorState.itemsPerPage = itemsCountPerPage;
+      this.paginatorState.pageNumber = 1;
+      this.paginatorStateChanged.emit(this.paginatorState);
     }
   }
 
   changeSorting(event: any) {
     const orderBy: string = event.target.value;
 
-    if (this.orderBy !== orderBy) {
-      this.orderBy = orderBy;
-      this.sortingChanged.emit({ orderBy, desc: this.isDescending });
+    if (this.paginatorState.orderBy !== orderBy) {
+      this.paginatorState.orderBy = orderBy;
+      this.paginatorStateChanged.emit(this.paginatorState);
     }
   }
 
   reverseSorting() {
-    this.isDescending = !this.isDescending;
-
-    this.sortingChanged.emit({
-      orderBy: this.orderBy,
-      desc: this.isDescending,
-    });
+    this.paginatorState.desc = !this.paginatorState.desc;
+    this.paginatorStateChanged.emit(this.paginatorState);
   }
 }
