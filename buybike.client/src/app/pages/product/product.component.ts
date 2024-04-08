@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { ProductService } from '../../core/services/product.service';
 import { ProductDetails } from '../../core/models/product/product-details';
 import { CartProduct } from '../../core/models/product/cart-product';
-import { LoaderComponent } from '../../utility/loader/loader.component';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 
 @Component({
   selector: 'product-details',

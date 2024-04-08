@@ -12,6 +12,7 @@
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
+    using BuyBike.Core.Models.Manufacturer;
 
     public class ProductService : IProductService
     {
@@ -103,7 +104,11 @@
                  {
                      Id = b.Id,
                      Name = $"{b.Category.Name} {b.Make.Name} {b.Name} {b.Color ?? string.Empty}",
-                     Make = b.Make.Name,
+                     Make = new ManufacutrerDto()
+                     {
+                         Name = b.Make.Name,
+                         ImageUrl = AppConstants.MinIo_EndPoint + b.Make.LogoUrl,
+                     },
                      ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
                      Price = b.Price,
                      Color = b.Color,

@@ -3,6 +3,8 @@ import { Category } from '../../../core/models/category';
 import { CategoryService } from '../../../core/services/category.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Manufacturer } from '../../../core/models/manufacturer';
+import { Product } from '../../../core/models/product/product';
 
 @Component({
   selector: 'category-sidebar',
@@ -16,15 +18,24 @@ export class SidebarComponent implements OnInit {
 
   @Input() selectedCategoryName: string = '';
   @Input() selectedTypeName: string = '';
+  @Input() products?: Product[] = [];
+
   categories: Category[] | null = null;
   selectedCategoryTree: Category[] = [];
 
+  manufacturers?: Manufacturer[];
+
   ngOnInit(): void {
+    this.manufacturers = this.products?.reduce<Manufacturer[]>((acc, curr) => {
+      if (acc.find((m) => m.name === curr.make.name) === undefined) {
+        acc.push(curr.make);
+      }
+      return acc;
+    }, []);
+
     this.categoryService.getAll().subscribe((data) => {
       this.categories = data;
       this.findSelectedCategoryTree(data, []);
-      console.log(this.selectedCategoryTree);
-      console.log(this.selectedTypeName);
     });
   }
 

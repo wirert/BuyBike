@@ -1,5 +1,6 @@
 ﻿namespace BuyBike.Core.Models
 {
+    using BuyBike.Core.Models.Manufacturer;
     using System;
 
     public class ProductDto
@@ -8,7 +9,7 @@
 
         public string Name { get; set; } = null!;
 
-        public string Make { get; set; } = null!;
+        public ManufacutrerDto Make { get; set; } = null!;
 
         public string ImageUrl { get; set; } = null!;
 

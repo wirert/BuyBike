@@ -90,13 +90,12 @@
   <div class="filter">
     <h2>Филтър</h2>
 
-    <ul class="makes">
-      <li class="make">
-        <a href="">
-          <img src="" alt="" />
-          <h4>name</h4>
-        </a>
-      </li>
-    </ul>
+    <div class="makes">
+      <div class="make" *ngFor="let make of manufacturers; index as i">
+        <input type="checkbox" [name]="i" />
+
+        <label for="{{ i }}">{{ make.name }}</label>
+      </div>
+    </div>
   </div>
 </div>

@@ -3,8 +3,10 @@
   <app-loader *ngIf="isloading"></app-loader>
 
   <category-sidebar
+    *ngIf="productsPage"
     [selectedTypeName]="productsType"
     [selectedCategoryName]="category ? category : ''"
+    [products]="productsPage.products"
   ></category-sidebar>
 
   <div class="category-content">

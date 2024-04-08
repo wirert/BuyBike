@@ -1,20 +1,28 @@
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { PaginatorComponent } from '../../utility/paginator/paginator.component';
+import { PaginatorComponent } from '../../shared/paginator/paginator.component';
 import { CategoryBannerComponent } from './banner/banner.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProductPage } from '../../core/models/product/products-page';
 import { ProductService } from '../../core/services/product.service';
-import { Subscription } from 'rxjs';
-import { LoaderComponent } from '../../utility/loader/loader.component';
+import { Observable, Subscription, of, scheduled } from 'rxjs';
+import { LoaderComponent } from '../../shared/loader/loader.component';
 import { HttpErrorResponse } from '@angular/common/http';
-import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
+import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { MessageConstants } from '../../core/constants/message-constants';
 import { PaginatorState } from '../../core/models/paginator-state';
 import { Title } from '@angular/platform-browser';
+import { Product } from '../../core/models/product/product';
 
 @Component({
   selector: 'app-category',
@@ -34,8 +42,9 @@ import { Title } from '@angular/platform-browser';
 export class CategoryComponent implements OnInit, OnDestroy {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private productService: ProductService = inject(ProductService);
-  private paramMapSubsc: Subscription | null = null;
   private titleService: Title = inject(Title);
+  private paramMapSubsc?: Subscription;
+  private productsSubscription?: Subscription;
 
   productsType: string = '';
   category: string | null = '';
@@ -58,6 +67,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.paramMapSubsc!.unsubscribe();
+    this.productsSubscription?.unsubscribe();
   }
 
   onPaginatorStateChange(paginatorState: PaginatorState) {
@@ -67,7 +77,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   private fetchData(): void {
     this.isloading = true;
-    this.productService
+    this.productsSubscription = this.productService
       .getPagedProducts(this.paginatorState, this.category, this.productsType)
       .subscribe({
         next: (data) => {
