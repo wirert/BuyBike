@@ -1,5 +1,4 @@
 .sidebar {
-  min-width: 15em;
   margin: 1em;
   margin-left: 0;
   padding: 0.5em 1em;
@@ -20,7 +19,7 @@ h2 {
 }
 
 ul {
-  padding-left: 0.5em;
+  padding-left: 1em;
   padding-top: 0.5em;
 }
 

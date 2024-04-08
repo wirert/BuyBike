@@ -3,38 +3,82 @@
     <h2>Категории</h2>
     <ul class="type-cat">
       <li
-        class="hide"
+        [ngClass]="{ hide: type.name.toLowerCase() !== selectedTypeName }"
         *ngFor="let type of categories; index as i"
         id="type{{ i }}"
       >
         <div class="category-name-group">
-          <a href="">{{ type.name }}</a>
+          <a
+            [routerLink]="'/' + type.name.toLowerCase()"
+            [ngStyle]="{
+              color:
+                type.name.toLowerCase() === selectedTypeName ? 'red' : 'black'
+            }"
+            href=""
+            >{{ type.name }}</a
+          >
           <button
             *ngIf="type.subCategories.length > 0"
             (click)="toggle('type' + i)"
           >
-            <i class="fa-solid fa-plus"></i>
+            <i
+              [ngClass]="{
+                'fa-plus': type.name.toLowerCase() !== selectedTypeName,
+                'fa-minus': type.name.toLowerCase() === selectedTypeName
+              }"
+              class="fa-solid"
+            ></i>
           </button>
         </div>
 
         <ul>
           <li
-            class="hide"
+            [ngClass]="{ hide: !selectedCategoryTree.includes(category) }"
             *ngFor="let category of type.subCategories; index as j"
             id="cat{{ j }}"
           >
             <div class="category-name-group">
-              <a href="">{{ category.name }}</a>
+              <a
+                [routerLink]="
+                  '/' +
+                  type.name.toLowerCase() +
+                  '/' +
+                  category.name.toLowerCase()
+                "
+                [ngStyle]="{
+                  color:
+                    category.name.toLowerCase() === selectedCategoryName
+                      ? 'red'
+                      : 'black'
+                }"
+                href=""
+                >{{ category.name }}</a
+              >
               <button
                 *ngIf="category.subCategories.length > 0"
                 (click)="toggle('cat' + j)"
               >
-                <i class="fa-solid fa-plus"></i>
+                <i
+                  [ngClass]="{
+                    'fa-plus': !selectedCategoryTree.includes(category),
+                    'fa-minus': selectedCategoryTree.includes(category)
+                  }"
+                  class="fa-solid"
+                ></i>
               </button>
             </div>
             <ul>
               <li *ngFor="let subCategory of category.subCategories">
-                <a href="">{{ subCategory.name }}</a>
+                <a
+                  [ngStyle]="{
+                    color:
+                      subCategory.name.toLowerCase() === selectedCategoryName
+                        ? 'red'
+                        : 'black'
+                  }"
+                  href=""
+                  >{{ subCategory.name }}</a
+                >
               </li>
             </ul>
           </li>
@@ -45,5 +89,14 @@
 
   <div class="filter">
     <h2>Филтър</h2>
+
+    <ul class="makes">
+      <li class="make">
+        <a href="">
+          <img src="" alt="" />
+          <h4>name</h4>
+        </a>
+      </li>
+    </ul>
   </div>
 </div>

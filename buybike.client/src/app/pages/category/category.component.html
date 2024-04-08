@@ -1,8 +1,13 @@
 <app-snackbar *ngIf="errorMessage" [errorMessage]="errorMessage"></app-snackbar>
 <div class="category-container">
   <app-loader *ngIf="isloading"></app-loader>
-  <category-sidebar></category-sidebar>
-  <div classideba="category-content">
+
+  <category-sidebar
+    [selectedTypeName]="productsType"
+    [selectedCategoryName]="category ? category : ''"
+  ></category-sidebar>
+
+  <div class="category-content">
     <category-banner
       [imageSrc]="productsPage ? productsPage.categoryImageUrl : ''"
     ></category-banner>

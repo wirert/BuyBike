@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { SnackbarComponent } from '../../utility/snackbar/snackbar.component';
 import { MessageConstants } from '../../core/constants/message-constants';
 import { PaginatorState } from '../../core/models/paginator-state';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-category',
@@ -34,6 +35,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
   private productService: ProductService = inject(ProductService);
   private paramMapSubsc: Subscription | null = null;
+  private titleService: Title = inject(Title);
 
   productsType: string = '';
   category: string | null = '';
@@ -86,6 +88,8 @@ export class CategoryComponent implements OnInit, OnDestroy {
     }
     this.productsType = paramMap.get('type')!;
     this.paginatorState.pageNumber = 1;
+
+    this.titleService.setTitle(`${this.category} ${this.productsType}`);
 
     this.fetchData();
   }

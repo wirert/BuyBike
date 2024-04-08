@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: ':type',
-    title: 'Велосипеди',
+    title: 'Продукти',
     children: [
       {
         path: '',

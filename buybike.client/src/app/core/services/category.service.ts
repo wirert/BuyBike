@@ -2,7 +2,7 @@ import { Injectable, OnInit, inject } from '@angular/core';
 import { Category } from '../models/category';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../constants/app-constants';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {
