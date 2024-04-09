@@ -9,4 +9,5 @@ export interface Product {
   color: string | null;
   category: string;
   discountPercent: number | null;
+  isInStock: boolean;
 }

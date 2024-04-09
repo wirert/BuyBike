@@ -18,6 +18,7 @@
             >{{ type.name }}</a
           >
           <button
+            class="category-toggle-btn toggle-btn"
             *ngIf="type.subCategories.length > 0"
             (click)="toggle('type' + i)"
           >
@@ -55,6 +56,7 @@
                 >{{ category.name }}</a
               >
               <button
+                class="category-toggle-btn toggle-btn"
                 *ngIf="category.subCategories.length > 0"
                 (click)="toggle('cat' + j)"
               >
@@ -90,12 +92,68 @@
   <div class="filter">
     <h2>Филтър</h2>
 
-    <div class="makes">
-      <div class="make" *ngFor="let make of manufacturers; index as i">
-        <input type="checkbox" [name]="i" />
+    <div id="filter-price">
+      <button
+        class="filter-toggle-btn toggle-btn"
+        (click)="toggle('filter-price')"
+      >
+        <span class="filter-title">Цена</span>
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <ul>
+        <ngx-slider
+          [(value)]="value"
+          [(highValue)]="highValue"
+          [options]="options"
+          (userChangeStart)="onUserChangeStart($event)"
+          (userChange)="onUserChange($event)"
+          (userChangeEnd)="onUserChangeEnd($event)"
+          (valueChange)="onValueChange($event)"
+          (highValueChange)="onHighValueChange($event)"
+          [manualRefresh]="manualRefresh"
+        >
+          >
+          <div>от: {{ value }}</div>
+          <div>до: {{ highValue }}</div>
+        </ngx-slider>
+      </ul>
+    </div>
 
-        <label for="{{ i }}">{{ make.name }}</label>
-      </div>
+    <div id="filter-makes">
+      <button
+        class="filter-toggle-btn toggle-btn"
+        (click)="toggle('filter-makes')"
+      >
+        <span class="filter-title">Производител</span>
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <ul>
+        <li class="make" *ngFor="let make of manufacturers; index as i">
+          <input type="checkbox" [name]="i" />
+
+          <label for="{{ i }}">{{ make.name }}</label>
+        </li>
+      </ul>
+    </div>
+
+    <div id="filter-in-stock">
+      <button
+        class="filter-toggle-btn toggle-btn"
+        (click)="toggle('filter-in-stock')"
+      >
+        <span class="filter-title">Наличност</span>
+        <i class="fa-solid fa-minus"></i>
+      </button>
+      <ul>
+        <li>
+          <input type="checkbox" name="inStock" id="" />
+          <label for="inStock">Налични</label>
+        </li>
+        <li>
+          <input type="checkbox" name="outOfStock" id="" />
+          <label for="outOfStock">Неналични</label>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

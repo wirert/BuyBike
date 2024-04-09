@@ -114,6 +114,7 @@
                      Color = b.Color,
                      Category = b.Category.Name,
                      DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
+                     IsInStock = b.Items.Any(i => i.InStock > 0)
                  }).ToListAsync();
 
             return result;

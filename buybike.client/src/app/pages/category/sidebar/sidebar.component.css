@@ -12,7 +12,8 @@ h2 {
   text-transform: capitalize;
 }
 
-.category-name-group {
+.category-name-group,
+.filter-toggle-btn {
   display: flex;
   justify-content: space-between;
   padding-bottom: 0.4em;
@@ -29,16 +30,23 @@ li {
 }
 
 i {
-  display: block;
+  display: inline-block;
 }
 
-button {
-  border-radius: 50%;
-  display: inline-block;
+.toggle-btn {
   border: none;
   background-color: transparent;
 }
 
-li.hide ul {
+.category-toggle-btn {
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.filter-toggle-btn {
+  width: 100%;
+}
+
+.hide ul {
   display: none;
 }

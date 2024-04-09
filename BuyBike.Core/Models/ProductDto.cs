@@ -20,5 +20,7 @@
         public string Category { get; set; } = null!;
 
         public int? DiscountPercent { get; set; }
+
+        public bool IsInStock { get; set; }
     }
 }
