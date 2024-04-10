@@ -1,14 +1,11 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { Category } from '../../../core/models/category';
 import { CategoryService } from '../../../core/services/category.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -19,6 +16,7 @@ import {
   NgxSliderModule,
   Options,
 } from '@angular-slider/ngx-slider';
+import { ProductType } from '../../../core/models/product-type';
 
 @Component({
   selector: 'category-sidebar',
@@ -34,8 +32,9 @@ export class SidebarComponent implements OnInit, OnChanges {
   @Input() selectedTypeName: string = '';
   @Input() products?: Product[] = [];
 
-  categories: Category[] | null = null;
-  selectedCategoryTree: Category[] = [];
+  productTypes: ProductType[] | null = null;
+  selectedType?: ProductType;
+  selectedCategories: string[] = [];
 
   manufacturers?: Manufacturer[];
 
@@ -59,8 +58,9 @@ export class SidebarComponent implements OnInit, OnChanges {
     }, []);
 
     this.categoryService.getAll().subscribe((data) => {
-      this.categories = data;
-      this.findSelectedCategoryTree(data, []);
+      this.productTypes = data;
+
+      this.findSelectedTypeAndCategories();
     });
   }
 
@@ -84,38 +84,38 @@ export class SidebarComponent implements OnInit, OnChanges {
   onValueChange(value: number) {}
   onHighValueChange(highValue: number) {}
 
-  private setPriceFilter() {
-    const sorted = [...this.products!].sort((a, b) => a.price - b.price);
+  private setPriceFilter(): void {
+    const sorted = [...this.products!].sort((a, b) => a.newPrice - b.newPrice);
     this.options = {
-      floor: sorted[0].price,
-      ceil: sorted[sorted.length - 1].price,
+      floor: Math.floor(sorted[0].newPrice),
+      ceil: Math.ceil(sorted[sorted.length - 1].newPrice),
     };
     this.value = this.options.floor!;
     this.highValue = this.options.ceil!;
   }
 
-  private findSelectedCategoryTree(
-    currCats: Category[],
-    result: Category[],
-    found: boolean = false
-  ) {
-    currCats.forEach((c) => {
-      if (found) {
-        return;
-      }
-      result.push(c);
+  private findSelectedTypeAndCategories(): void {
+    this.selectedType = this.productTypes?.find(
+      (t) => t.name.toLowerCase() === this.selectedTypeName.toLowerCase()
+    );
 
-      if (c.name.toLowerCase() === this.selectedCategoryName) {
-        this.selectedCategoryTree = [...result];
-        found = true;
-        return;
-      }
-      this.findSelectedCategoryTree(c.subCategories, result, found);
+    if (!this.selectedType || !this.selectedCategoryName) {
+      return;
+    }
 
-      if (found) {
+    this.selectedType.categories.forEach((category) => {
+      if (category.name.toLowerCase() === this.selectedCategoryName) {
+        this.selectedCategories.push(category.name);
         return;
       }
-      result.pop();
+
+      category.subCategories.forEach((subCategory) => {
+        if (subCategory.name.toLowerCase() === this.selectedCategoryName) {
+          this.selectedCategories.push(category.name);
+          this.selectedCategories.push(subCategory.name);
+          return;
+        }
+      });
     });
   }
 }

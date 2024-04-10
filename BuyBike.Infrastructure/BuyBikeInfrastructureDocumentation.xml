@@ -547,5 +547,17 @@
         <member name="M:BuyBike.Infrastructure.Migrations.InitialMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:BuyBike.Infrastructure.Migrations.test">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.test.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.test.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:BuyBike.Infrastructure.Migrations.test.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>

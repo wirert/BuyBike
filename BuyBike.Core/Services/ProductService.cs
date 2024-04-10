@@ -47,6 +47,11 @@
                         IsInStock = i.InStock > 0
                     }),
                     Specification = b.Specification,
+                    Attributes = b.AttributeValues.Select(av => new ProductAttributeDto()
+                    {
+                        Name = av.Attribute.Name,
+                        Value = av.Value,
+                    })
                 }).FirstOrDefaultAsync();
 
             if (result == null)
@@ -60,9 +65,9 @@
         public async Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query, string productType)
         {
             Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy);
-           
+
             var productsTypeInfo = repo.AllReadonly<ProductType>(p => p.Name.ToLower() == productType.ToLower())
-                .Select(p => new 
+                .Select(p => new
                 {
                     p.Id,
                     ImageUrl = p.ImageUrl ?? "",
@@ -98,6 +103,7 @@
             data = SortData(data, query.OrderBy, query.Desc);
 
             result.Products = await data
+                .Include(p => p.Discount)
                  .Skip(skipCount)
                  .Take(query.ItemsPerPage)
                  .Select(b => new ProductDto
@@ -149,7 +155,7 @@
                     "Discount" => data.OrderByDescending(p => p.Discount!.DiscountPercent),
                     "Name" => data.OrderByDescending(p => p.Name),
                     "Make" => data.OrderByDescending(p => p.Make.Name),
-                    _ => data.OrderByDescending(p => p.Price),
+                    _ => data.OrderByDescending(p => p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100)),
                 };
             }
             else
@@ -159,7 +165,7 @@
                     "Discount" => data.OrderBy(p => p.Discount!.DiscountPercent),
                     "Name" => data.OrderBy(p => p.Name),
                     "Make" => data.OrderBy(p => p.Make.Name),
-                    _ => data.OrderBy(p => p.Price),
+                    _ => data.OrderBy(p => p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100)),
                 };
             }
         }

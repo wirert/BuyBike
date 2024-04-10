@@ -12,9 +12,8 @@ export class ProductService {
   private url: string = inject(API_URL);
   private http: HttpClient = inject(HttpClient);
 
-  getProductDetails(id: string, type: string): Observable<any> {
-    const controller = AppConstants.productTypes[type];
-    return this.http.get<any>(`${this.url}/${controller}/${id}`).pipe(
+  getProductDetails(id: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/Product/${id}`).pipe(
       map<any, ProductDetails>((res, idx) => {
         res.specification = JSON.parse(res.specification);
         return res;
@@ -27,7 +26,14 @@ export class ProductService {
     category: string | null,
     type: string
   ): Observable<any> {
+    const productType = AppConstants.productTypes[type];
+
+    if (!productType) {
+      throw new Error('Грешен тип продукт.');
+    }
+
     let params = new HttpParams();
+    params = params.append('productType', productType);
     params = params.append('page', paginatorState.pageNumber);
     params = params.append('itemsPerPage', paginatorState.itemsPerPage);
     params = params.append('orderBy', paginatorState.orderBy);
@@ -37,14 +43,8 @@ export class ProductService {
       params = params.append('category', category);
     }
 
-    const controller = AppConstants.productTypes[type];
-
-    if (!controller) {
-      throw new Error('Грешен тип продукт.');
-    }
-
     return this.http
-      .get<ProductPage>(`${this.url}/${controller}`, {
+      .get<ProductPage>(`${this.url}/Product`, {
         params: params,
         responseType: 'json',
       })

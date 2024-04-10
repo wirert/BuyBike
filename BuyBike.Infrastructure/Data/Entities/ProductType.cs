@@ -25,5 +25,7 @@
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
         public virtual ICollection<Category> Categories { get; set;} = new List<Category>();
+
+        public virtual ICollection<Attribute> Properties { get; set; } = new List<Attribute>();
     }
 }

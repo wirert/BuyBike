@@ -14,7 +14,7 @@
     {
         public Product()
         {
-            Id = Guid.NewGuid();            
+            Id = Guid.NewGuid();
             Items = new List<Item>();
             AttributeValues = new List<ProductAttributeValue>();
         }
@@ -85,5 +85,6 @@
         public virtual ICollection<Item> Items { get; set; }
 
         public virtual ICollection<ProductAttributeValue> AttributeValues { get; set; }
+
     }
 }

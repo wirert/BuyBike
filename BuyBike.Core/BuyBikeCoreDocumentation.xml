@@ -59,24 +59,6 @@
             Product item model
             </summary>
         </member>
-        <member name="T:BuyBike.Core.Services.Contracts.ICategoryService">
-            <summary>
-            Category service
-            </summary>
-        </member>
-        <member name="M:BuyBike.Core.Services.Contracts.ICategoryService.GetCategoriesAsync">
-            <summary>
-            Get all categories with subcategories
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:BuyBike.Core.Services.Contracts.ICategoryService.GetIdByName(System.String)">
-            <summary>
-            Get Category id by name
-            </summary>
-            <param name="name">Category name</param>
-            <returns>category identifier</returns>
-        </member>
         <member name="T:BuyBike.Core.Services.Contracts.IProductService">
             <summary>
             Product service
@@ -96,6 +78,17 @@
             </summary>
             <param name="id">Part Identifier</param>
             <returns>Product Data Transfer Object with details</returns>
+        </member>
+        <member name="T:BuyBike.Core.Services.Contracts.IProductTypeService">
+            <summary>
+            Product type service
+            </summary>
+        </member>
+        <member name="M:BuyBike.Core.Services.Contracts.IProductTypeService.GetAllAsync">
+            <summary>
+            Get all product types with product categories and subcategories
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

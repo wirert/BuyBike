@@ -45,7 +45,7 @@
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductTypeService, ProductTypeService>();
 
             return services;
         }       

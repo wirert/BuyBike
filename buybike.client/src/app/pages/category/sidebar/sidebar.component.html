@@ -4,7 +4,7 @@
     <ul class="type-cat">
       <li
         [ngClass]="{ hide: type.name.toLowerCase() !== selectedTypeName }"
-        *ngFor="let type of categories; index as i"
+        *ngFor="let type of productTypes; index as i"
         id="type{{ i }}"
       >
         <div class="category-name-group">
@@ -19,7 +19,7 @@
           >
           <button
             class="category-toggle-btn toggle-btn"
-            *ngIf="type.subCategories.length > 0"
+            *ngIf="type.categories.length > 0"
             (click)="toggle('type' + i)"
           >
             <i
@@ -34,8 +34,8 @@
 
         <ul>
           <li
-            [ngClass]="{ hide: !selectedCategoryTree.includes(category) }"
-            *ngFor="let category of type.subCategories; index as j"
+            [ngClass]="{ hide: !selectedCategories.includes(category.name) }"
+            *ngFor="let category of type.categories; index as j"
             id="cat{{ j }}"
           >
             <div class="category-name-group">
@@ -62,8 +62,8 @@
               >
                 <i
                   [ngClass]="{
-                    'fa-plus': !selectedCategoryTree.includes(category),
-                    'fa-minus': selectedCategoryTree.includes(category)
+                    'fa-plus': !selectedCategories.includes(category.name),
+                    'fa-minus': selectedCategories.includes(category.name)
                   }"
                   class="fa-solid"
                 ></i>

@@ -18,19 +18,10 @@
             <param name="model">User register form data</param>
             <returns></returns>
         </member>
-        <member name="M:BuyBike.Api.Controllers.PartController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
+        <member name="T:BuyBike.Api.Controllers.ProductController">
             <summary>
-            Get Parts 
+            API product controller
             </summary>
-            <param name="query">Query params model</param>
-            <returns></returns>
-        </member>
-        <member name="M:BuyBike.Api.Controllers.PartController.GetById(System.Guid)">
-            <summary>
-            Get Part details by Id
-            </summary>
-            <param name="id">Bicycle identifier</param>
-            <returns></returns>
         </member>
         <member name="M:BuyBike.Api.Controllers.ProductController.GetAll(System.String,BuyBike.Core.Models.GetAllQueryModel)">
             <summary>

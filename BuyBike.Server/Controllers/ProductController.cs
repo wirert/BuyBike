@@ -1,12 +1,14 @@
 ﻿namespace BuyBike.Api.Controllers
 {
-    using BuyBike.Core.Constants;
-    using BuyBike.Core.Models;
-    using BuyBike.Core.Services;
-    using BuyBike.Core.Services.Contracts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
+    using BuyBike.Core.Models;
+    using BuyBike.Core.Services.Contracts;
+
+    /// <summary>
+    /// API product controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase

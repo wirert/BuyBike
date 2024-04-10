@@ -19,7 +19,7 @@
           >{{ product.price.toFixed(2) }} лв.</span
         >
         <span *ngIf="product.discountPercent" class="new-price"
-          >{{ product.newPrice }} лв.</span
+          >{{ product.newPrice.toFixed(2) }} лв.</span
         >
       </div>
     </div>

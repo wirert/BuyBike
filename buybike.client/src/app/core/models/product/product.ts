@@ -14,9 +14,9 @@ export class Product {
     Object.assign(this, obj);
   }
 
-  get newPrice(): number | null {
+  get newPrice(): number {
     if (!this.discountPercent) {
-      return null;
+      return this.price;
     }
 
     return (this.price * (100 - this.discountPercent)) / 100;
