@@ -154,5 +154,14 @@
         </li>
       </ul>
     </div>
+
+    <div class="additional-filter" *ngIf="selectedType">
+      <div *ngFor="let prop of productPage?.attributes">
+        <ng-container ng *ngIf="prop.values.length > 0">
+          <div>{{ prop.name }}:</div>
+          <div *ngFor="let val of prop.values">{{ val }}</div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

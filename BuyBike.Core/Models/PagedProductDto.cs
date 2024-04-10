@@ -2,12 +2,16 @@
 {
     using System.Collections.Generic;
 
-    public class PagedProductDto<T> where T : class
+    public class PagedProductDto
     {
+        public int ProductTypeId { get; set; }
+
         public int TotalProducts { get; set; }
 
-        public string CategoryImageUrl { get; set; } = null!;
+        public string CategoryImageUrl { get; set; } = string.Empty;
 
-        public ICollection<T> Products { get; set; } = new List<T>();
+        public ICollection<AttributeValuesDto> Attributes { get; set; } = new List<AttributeValuesDto>();
+
+        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

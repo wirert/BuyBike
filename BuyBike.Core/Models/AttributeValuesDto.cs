@@ -9,6 +9,6 @@
 
         public string Name { get; set; } = string.Empty;
 
-        public IEnumerable<string> Values { get; set; } = Enumerable.Empty<string>();
+        public ICollection<string> Values { get; set; } = new HashSet<string>();
     }
 }

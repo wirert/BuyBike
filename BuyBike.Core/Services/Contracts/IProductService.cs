@@ -13,7 +13,7 @@
         /// <param name="query">Query parameters</param>        
         /// <param name="tableName">Product type</param>        
         /// <returns>Paged products object with total models count and Collection of Product model DTO</returns>
-        Task<PagedProductDto<ProductDto>> GetAllAsync(GetAllQueryModel query, string tableName);
+        Task<PagedProductDto> GetAllAsync(GetAllQueryModel query, string tableName);
 
         /// <summary>
         /// Get Product by Id

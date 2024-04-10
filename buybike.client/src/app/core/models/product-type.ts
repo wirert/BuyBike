@@ -5,7 +5,7 @@ export class ProductType {
   constructor(
     public id: number,
     public name: string,
-    public productProps: PropertyValues[],
+    public productsProperties: PropertyValues[],
     public categories: Category[]
   ) {}
 }

@@ -22,5 +22,7 @@
         public int? DiscountPercent { get; set; }
 
         public bool IsInStock { get; set; }
+
+        public IEnumerable<ProductAttributeDto> Properties { get; set; } = new List<ProductAttributeDto>();
     }
 }

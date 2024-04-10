@@ -53,9 +53,11 @@ export class ProductService {
         map(
           (productPage) =>
             new ProductPage(
+              productPage.productTypeId,
               productPage.totalProducts,
               productPage.categoryImageUrl,
-              productPage.products.map((p) => new Product(p))
+              productPage.products.map((p) => new Product(p)),
+              productPage.attributes
             )
         )
       );

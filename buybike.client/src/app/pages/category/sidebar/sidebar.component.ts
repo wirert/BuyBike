@@ -10,13 +10,13 @@ import { CategoryService } from '../../../core/services/category.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Manufacturer } from '../../../core/models/manufacturer';
-import { Product } from '../../../core/models/product/product';
 import {
   ChangeContext,
   NgxSliderModule,
   Options,
 } from '@angular-slider/ngx-slider';
 import { ProductType } from '../../../core/models/product-type';
+import { ProductPage } from '../../../core/models/product/products-page';
 
 @Component({
   selector: 'category-sidebar',
@@ -30,7 +30,7 @@ export class SidebarComponent implements OnInit, OnChanges {
 
   @Input() selectedCategoryName: string = '';
   @Input() selectedTypeName: string = '';
-  @Input() products?: Product[] = [];
+  @Input() productPage?: ProductPage;
 
   productTypes: ProductType[] | null = null;
   selectedType?: ProductType;
@@ -50,12 +50,15 @@ export class SidebarComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.manufacturers = this.products!.reduce<Manufacturer[]>((acc, curr) => {
-      if (acc.find((m) => m.name === curr.make!.name) === undefined) {
-        acc.push(curr.make!);
-      }
-      return acc;
-    }, []);
+    this.manufacturers = this.productPage!.products.reduce<Manufacturer[]>(
+      (acc, curr) => {
+        if (acc.find((m) => m.name === curr.make!.name) === undefined) {
+          acc.push(curr.make!);
+        }
+        return acc;
+      },
+      []
+    );
 
     this.categoryService.getAll().subscribe((data) => {
       this.productTypes = data;
@@ -85,7 +88,9 @@ export class SidebarComponent implements OnInit, OnChanges {
   onHighValueChange(highValue: number) {}
 
   private setPriceFilter(): void {
-    const sorted = [...this.products!].sort((a, b) => a.newPrice - b.newPrice);
+    const sorted = [...this.productPage!.products].sort(
+      (a, b) => a.newPrice - b.newPrice
+    );
     this.options = {
       floor: Math.floor(sorted[0].newPrice),
       ceil: Math.ceil(sorted[sorted.length - 1].newPrice),
@@ -98,6 +103,8 @@ export class SidebarComponent implements OnInit, OnChanges {
     this.selectedType = this.productTypes?.find(
       (t) => t.name.toLowerCase() === this.selectedTypeName.toLowerCase()
     );
+
+    console.log(this.selectedType);
 
     if (!this.selectedType || !this.selectedCategoryName) {
       return;

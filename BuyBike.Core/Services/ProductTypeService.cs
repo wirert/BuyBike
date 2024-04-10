@@ -32,7 +32,7 @@
                     {
                         Id = p.Id,
                         Name = p.Name,
-                        Values = p.AttributeValues.Select(v => v.Value).Distinct()
+                        Values = p.AttributeValues.Select(v => v.Value).Distinct().ToList()
                     }),
                     Categories = t.Categories.Select(c => new CategoryDto()
                     {
