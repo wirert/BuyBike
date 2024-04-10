@@ -18,25 +18,6 @@
             <param name="model">User register form data</param>
             <returns></returns>
         </member>
-        <member name="T:BuyBike.Api.Controllers.BicycleController">
-            <summary>
-            Bicycles controller
-            </summary>
-        </member>
-        <member name="M:BuyBike.Api.Controllers.BicycleController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
-            <summary>
-            Get bicycles 
-            </summary>
-            <param name="query">Query params model</param>
-            <returns></returns>
-        </member>
-        <member name="M:BuyBike.Api.Controllers.BicycleController.GetById(System.Guid)">
-            <summary>
-            Get Bicycle details by Id
-            </summary>
-            <param name="id">Bicycle identifier</param>
-            <returns></returns>
-        </member>
         <member name="M:BuyBike.Api.Controllers.PartController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
             <summary>
             Get Parts 
@@ -49,6 +30,21 @@
             Get Part details by Id
             </summary>
             <param name="id">Bicycle identifier</param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetAll(System.String,BuyBike.Core.Models.GetAllQueryModel)">
+            <summary>
+            Get products 
+            </summary>
+            <param name="productType">Product type</param>
+            <param name="query">Query params model</param>
+            <returns></returns>
+        </member>
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetById(System.Guid)">
+            <summary>
+            Get Product by Id
+            </summary>
+            <param name="id">Product identifier</param>
             <returns></returns>
         </member>
         <member name="M:BuyBike.Api.Extentions.ApplicationBuilderExtention.SeedPictures(Microsoft.AspNetCore.Builder.IApplicationBuilder)">

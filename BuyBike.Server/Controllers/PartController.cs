@@ -3,7 +3,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    using BuyBike.Core.Models.Bicycle;
     using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Core.Constants;

@@ -59,23 +59,6 @@
             Product item model
             </summary>
         </member>
-        <member name="T:BuyBike.Core.Services.BicycleService">
-            <summary>
-            Product Service
-            </summary>
-        </member>
-        <member name="T:BuyBike.Core.Services.Contracts.IBicycleService">
-            <summary>
-            Bicycles service
-            </summary>
-        </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IBicycleService.GetById(System.Guid)">
-            <summary>
-            Get Bicycle by Id
-            </summary>
-            <param name="id">Bicycle Identifier</param>
-            <returns>Bicycle Data Transfer Object with details</returns>
-        </member>
         <member name="T:BuyBike.Core.Services.Contracts.ICategoryService">
             <summary>
             Category service

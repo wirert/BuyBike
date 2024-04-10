@@ -44,6 +44,31 @@
             Item SCU lenght
             </summary>
         </member>
+        <member name="T:BuyBike.Infrastructure.Constants.DataConstants.ProductAttribute">
+            <summary>
+            Product attribute constants
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductAttribute.MaxNameLength">
+            <summary>
+            Product attribute name maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductAttribute.MinNameLength">
+            <summary>
+            Product attribute name minimum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductAttribute.MaxValueLength">
+            <summary>
+            Product attribute value maximum length
+            </summary>
+        </member>
+        <member name="F:BuyBike.Infrastructure.Constants.DataConstants.ProductAttribute.MaxDataTypeLength">
+            <summary>
+            Product attribute data type maximum length
+            </summary>
+        </member>
         <member name="T:BuyBike.Infrastructure.Constants.DataConstants.Bicycle">
             <summary>
             Bicycle entity constants 

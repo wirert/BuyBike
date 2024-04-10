@@ -16,6 +16,7 @@
         {
             Id = Guid.NewGuid();            
             Items = new List<Item>();
+            AttributeValues = new List<ProductAttributeValue>();
         }
 
         [Key]
@@ -32,7 +33,7 @@
         public int TypeId { get; set; }
 
         [ForeignKey(nameof(TypeId))]
-        public virtual ProductType Type { get; set; }
+        public virtual ProductType Type { get; set; } = null!;
 
         [Required]
         [Comment("Product category identifier")]
@@ -82,5 +83,7 @@
         public bool IsActive { get; set; } = true;
 
         public virtual ICollection<Item> Items { get; set; }
+
+        public virtual ICollection<ProductAttributeValue> AttributeValues { get; set; }
     }
 }

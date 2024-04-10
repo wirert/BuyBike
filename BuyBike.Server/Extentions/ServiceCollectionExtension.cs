@@ -44,7 +44,6 @@
             services.AddScoped<IMinIoRepository, MinIoRepository>();
 
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IBicycleService, BicycleService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
 

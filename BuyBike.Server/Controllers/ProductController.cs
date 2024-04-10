@@ -1,32 +1,27 @@
 ﻿namespace BuyBike.Api.Controllers
 {
+    using BuyBike.Core.Constants;
+    using BuyBike.Core.Models;
+    using BuyBike.Core.Services;
+    using BuyBike.Core.Services.Contracts;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    using BuyBike.Core.Models;
-    using BuyBike.Core.Models.Bicycle;
-    using BuyBike.Core.Services.Contracts;
-    using BuyBike.Core.Constants;
-
-    /// <summary>
-    /// Bicycles controller
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class BicycleController : ControllerBase
+    public class ProductController : ControllerBase
     {
-        private readonly IBicycleService bicyclesService;
         private readonly IProductService productService;
 
-        public BicycleController(IBicycleService _bicyclesService, IProductService _productService)
+        public ProductController(IProductService _productService)
         {
-            bicyclesService = _bicyclesService;
             productService = _productService;
         }
-           
+
         /// <summary>
-        /// Get bicycles 
+        /// Get products 
         /// </summary>
+        /// <param name="productType">Product type</param>
         /// <param name="query">Query params model</param>
         /// <returns></returns>
         [HttpGet]
@@ -36,13 +31,13 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
+        public async Task<IActionResult> GetAll(string productType, [FromQuery] GetAllQueryModel query)
         {
             try
             {
-                var pagedBicycles = await productService.GetAllAsync(query, AppConstants.ProductTypes.Bicycles);
+                var productPage = await productService.GetAllAsync(query, productType);
 
-                return Ok(pagedBicycles);
+                return Ok(productPage);
             }
             catch (FileNotFoundException fnfe)
             {
@@ -59,24 +54,24 @@
         }
 
         /// <summary>
-        /// Get Bicycle details by Id
+        /// Get Product by Id
         /// </summary>
-        /// <param name="id">Bicycle identifier</param>
+        /// <param name="id">Product identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BicycleDetailsDto))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ProductDetailsDto))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> GetById(Guid id)
         {
             try
             {
-                var bicycle = await bicyclesService.GetById(id);
+                var bicycle = await productService.GetById(id);
 
                 return Ok(bicycle);
             }
-            catch(ArgumentException ae)
+            catch (ArgumentException ae)
             {
                 return StatusCode(StatusCodes.Status404NotFound, ae.Message);
             }
@@ -85,6 +80,6 @@
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
-    
+
     }
 }

@@ -33,5 +33,7 @@
         public string? Specification { get; set; }
 
         public IEnumerable<ItemDto> Items { get; set; } = new List<ItemDto>();
+
+        public ICollection<ProductAttributeDto> Attributes { get; set; } = new List<ProductAttributeDto>();
     }
 }

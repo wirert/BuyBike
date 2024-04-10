@@ -61,7 +61,7 @@
         {
             Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy);
            
-            var productsTypeInfo = repo.AllReadonly<ProductType>(p => p.Name == productType)
+            var productsTypeInfo = repo.AllReadonly<ProductType>(p => p.Name.ToLower() == productType.ToLower())
                 .Select(p => new 
                 {
                     p.Id,
