@@ -9,7 +9,7 @@
       <img [src]="product.imageUrl" alt="product picture" />
     </div>
     <div class="product-info">
-      <h4>{{ product.make.name }}</h4>
+      <h4>{{ product.make!.name }}</h4>
       <h3>{{ product.name }}</h3>
       <div class="price">
         <span
@@ -19,10 +19,7 @@
           >{{ product.price.toFixed(2) }} лв.</span
         >
         <span *ngIf="product.discountPercent" class="new-price"
-          >{{
-            ((product.price * (100 - product.discountPercent)) / 100).toFixed(2)
-          }}
-          лв.</span
+          >{{ product.newPrice }} лв.</span
         >
       </div>
     </div>

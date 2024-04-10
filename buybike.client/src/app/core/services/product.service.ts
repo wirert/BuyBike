@@ -1,10 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, map, retry } from 'rxjs';
 import { API_URL, AppConstants } from '../constants/app-constants';
 import { ProductPage } from '../models/product/products-page';
 import { ProductDetails } from '../models/product/product-details';
 import { PaginatorState } from '../models/paginator-state';
+import { Product } from '../models/product/product';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -42,9 +43,21 @@ export class ProductService {
       throw new Error('Грешен тип продукт.');
     }
 
-    return this.http.get<ProductPage>(`${this.url}/${controller}`, {
-      params: params,
-      responseType: 'json',
-    });
+    return this.http
+      .get<ProductPage>(`${this.url}/${controller}`, {
+        params: params,
+        responseType: 'json',
+      })
+      .pipe(
+        retry(),
+        map(
+          (productPage) =>
+            new ProductPage(
+              productPage.totalProducts,
+              productPage.categoryImageUrl,
+              productPage.products.map((p) => new Product(p))
+            )
+        )
+      );
   }
 }

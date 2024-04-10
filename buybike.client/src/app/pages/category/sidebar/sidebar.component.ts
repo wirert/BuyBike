@@ -45,17 +45,15 @@ export class SidebarComponent implements OnInit, OnChanges {
     floor: 0,
     ceil: 1500,
   };
-  manualRefresh: EventEmitter<void> = new EventEmitter<void>();
 
   ngOnChanges(changes: SimpleChanges): void {
     this.setPriceFilter();
-    this.manualRefresh.emit;
   }
 
   ngOnInit(): void {
     this.manufacturers = this.products!.reduce<Manufacturer[]>((acc, curr) => {
-      if (acc.find((m) => m.name === curr.make.name) === undefined) {
-        acc.push(curr.make);
+      if (acc.find((m) => m.name === curr.make!.name) === undefined) {
+        acc.push(curr.make!);
       }
       return acc;
     }, []);
@@ -81,24 +79,19 @@ export class SidebarComponent implements OnInit, OnChanges {
   }
 
   onUserChangeStart(event: ChangeContext) {}
-  onUserChange(event: ChangeContext) {
-    console.log('user changed');
-  }
+  onUserChange(event: ChangeContext) {}
   onUserChangeEnd(event: ChangeContext) {}
   onValueChange(value: number) {}
-  onHighValueChange(highValue: number) {
-    console.log('user changed end');
-  }
+  onHighValueChange(highValue: number) {}
 
   private setPriceFilter() {
     const sorted = [...this.products!].sort((a, b) => a.price - b.price);
-    this.options.floor = sorted[0].price;
-    this.value = this.options.floor;
-    this.options.ceil = sorted[sorted.length - 1].price;
-    this.highValue = this.options.ceil;
-    console.log(this.options);
-    console.log(this.value);
-    console.log(this.highValue);
+    this.options = {
+      floor: sorted[0].price,
+      ceil: sorted[sorted.length - 1].price,
+    };
+    this.value = this.options.floor!;
+    this.highValue = this.options.ceil!;
   }
 
   private findSelectedCategoryTree(
