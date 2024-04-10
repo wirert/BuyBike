@@ -155,11 +155,25 @@
       </ul>
     </div>
 
-    <div class="additional-filter" *ngIf="selectedType">
-      <div *ngFor="let prop of productPage?.attributes">
+    <div class="additional-filters" *ngIf="selectedType">
+      <div
+        *ngFor="let prop of productPage?.attributes; index as i"
+        [id]="'additional-filter' + i"
+      >
         <ng-container ng *ngIf="prop.values.length > 0">
-          <div>{{ prop.name }}:</div>
-          <div *ngFor="let val of prop.values">{{ val }}</div>
+          <button
+            class="filter-toggle-btn toggle-btn"
+            (click)="toggle('additional-filter' + i)"
+          >
+            <span class="filter-title">{{ prop.name }}</span>
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <ul>
+            <li *ngFor="let val of prop.values">
+              <input type="checkbox" name="inStock" id="" />
+              <label for="inStock">{{ val }}</label>
+            </li>
+          </ul>
         </ng-container>
       </div>
     </div>
