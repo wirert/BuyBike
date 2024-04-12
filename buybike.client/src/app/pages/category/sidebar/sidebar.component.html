@@ -102,18 +102,15 @@
       </button>
       <ul>
         <ngx-slider
-          [(value)]="value"
-          [(highValue)]="highValue"
-          [options]="options"
-          (userChangeStart)="onUserChangeStart($event)"
-          (userChange)="onUserChange($event)"
-          (userChangeEnd)="onUserChangeEnd($event)"
-          (valueChange)="onValueChange($event)"
-          (highValueChange)="onHighValueChange($event)"
+          [(value)]="minPrice"
+          [(highValue)]="maxPrice"
+          [options]="priceBarOptions"
+          (valueChange)="onMinPriceChange($event)"
+          (highValueChange)="onMaxPriceChange($event)"
         >
           >
-          <div>от: {{ value }}</div>
-          <div>до: {{ highValue }}</div>
+          <div>от: {{ minPrice }}</div>
+          <div>до: {{ maxPrice }}</div>
         </ngx-slider>
       </ul>
     </div>
@@ -128,7 +125,13 @@
       </button>
       <ul>
         <li class="make" *ngFor="let make of manufacturers; index as i">
-          <input type="checkbox" [name]="i" />
+          <input
+            type="checkbox"
+            [name]="i.toString()"
+            value="true"
+            [(ngModel)]="filter.makeIds[make.id]"
+            (ngModelChange)="onFilterChanged()"
+          />
 
           <label for="{{ i }}">{{ make.name }}</label>
         </li>
@@ -145,11 +148,23 @@
       </button>
       <ul>
         <li>
-          <input type="checkbox" name="inStock" id="" />
+          <input
+            type="checkbox"
+            name="inStock"
+            value="true"
+            [(ngModel)]="filter.inStock"
+            (ngModelChange)="onFilterChanged()"
+          />
           <label for="inStock">Налични</label>
         </li>
         <li>
-          <input type="checkbox" name="outOfStock" id="" />
+          <input
+            type="checkbox"
+            name="outOfStock"
+            value="true"
+            [(ngModel)]="filter.outOfStock"
+            (ngModelChange)="onFilterChanged()"
+          />
           <label for="outOfStock">Неналични</label>
         </li>
       </ul>
@@ -170,8 +185,14 @@
           </button>
           <ul>
             <li *ngFor="let val of prop.values">
-              <input type="checkbox" name="inStock" id="" />
-              <label for="inStock">{{ val }}</label>
+              <input
+                type="checkbox"
+                name="prop"
+                value="true"
+                [(ngModel)]="filter.additionalFilters.get(prop.id)![val]"
+                (ngModelChange)="onFilterChanged()"
+              />
+              <label for="prop">{{ val }}</label>
             </li>
           </ul>
         </ng-container>

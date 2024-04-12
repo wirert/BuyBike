@@ -6,6 +6,7 @@ import { ProductPage } from '../models/product/products-page';
 import { ProductDetails } from '../models/product/product-details';
 import { PaginatorState } from '../models/paginator-state';
 import { Product } from '../models/product/product';
+import { ProductQueryFilter } from '../models/product-query-filter';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -24,7 +25,8 @@ export class ProductService {
   getPagedProducts(
     paginatorState: PaginatorState,
     category: string | null,
-    type: string
+    type: string,
+    filter?: ProductQueryFilter
   ): Observable<any> {
     const productType = AppConstants.productTypes[type];
 
@@ -43,23 +45,30 @@ export class ProductService {
       params = params.append('category', category);
     }
 
-    return this.http
-      .get<ProductPage>(`${this.url}/Product`, {
-        params: params,
-        responseType: 'json',
-      })
-      .pipe(
-        retry(),
-        map(
-          (productPage) =>
-            new ProductPage(
-              productPage.productTypeId,
-              productPage.totalProducts,
-              productPage.categoryImageUrl,
-              productPage.products.map((p) => new Product(p)),
-              productPage.attributes
-            )
-        )
-      );
+    if (filter) {
+      Object.entries(filter).forEach(([p, v]) => {
+        if (v) {
+          if (p === 'additionalFilters') {
+            params = params.append(
+              'attributes',
+              JSON.stringify(
+                Array.from((v as Map<number, string[]>).values()).flat()
+              )
+            );
+          } else if (p === 'makes') {
+            params = params.append(p, JSON.stringify(v));
+          } else {
+            params = params.append(p, v);
+          }
+        }
+      });
+    }
+
+    console.log(params);
+
+    return this.http.get<ProductPage>(`${this.url}/Product`, {
+      params: params,
+      responseType: 'json',
+    });
   }
 }

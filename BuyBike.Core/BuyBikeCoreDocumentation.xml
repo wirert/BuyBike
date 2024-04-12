@@ -64,12 +64,13 @@
             Product service
             </summary>
         </member>
-        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetAllAsync(BuyBike.Core.Models.GetAllQueryModel,System.String)">
+        <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetAllAsync(BuyBike.Core.Models.GetAllQueryModel,System.String,BuyBike.Core.Models.QueryFilterModel)">
             <summary>
             Get a set of products 
             </summary>
             <param name="query">Query parameters</param>        
-            <param name="tableName">Product type</param>        
+            <param name="tableName">Product type</param>    
+            <param name="filter">Products filter terms</param> 
             <returns>Paged products object with total models count and Collection of Product model DTO</returns>
         </member>
         <member name="M:BuyBike.Core.Services.Contracts.IProductService.GetById(System.Guid)">

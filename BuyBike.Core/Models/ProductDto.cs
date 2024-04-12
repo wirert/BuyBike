@@ -15,6 +15,8 @@
 
         public decimal Price { get; set; }
 
+        public decimal NewPrice { get; set; }
+
         public string? Color { get; set; }
 
         public string Category { get; set; } = null!;

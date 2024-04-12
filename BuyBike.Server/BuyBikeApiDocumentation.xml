@@ -23,7 +23,7 @@
             API product controller
             </summary>
         </member>
-        <member name="M:BuyBike.Api.Controllers.ProductController.GetAll(System.String,BuyBike.Core.Models.GetAllQueryModel)">
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetAll(System.String,BuyBike.Core.Models.GetAllQueryModel,BuyBike.Core.Models.QueryFilterModel)">
             <summary>
             Get products 
             </summary>

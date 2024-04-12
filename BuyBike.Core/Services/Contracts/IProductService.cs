@@ -11,9 +11,10 @@
         /// Get a set of products 
         /// </summary>
         /// <param name="query">Query parameters</param>        
-        /// <param name="tableName">Product type</param>        
+        /// <param name="tableName">Product type</param>    
+        /// <param name="filter">Products filter terms</param> 
         /// <returns>Paged products object with total models count and Collection of Product model DTO</returns>
-        Task<PagedProductDto> GetAllAsync(GetAllQueryModel query, string tableName);
+        Task<PagedProductDto> GetAllAsync(GetAllQueryModel query, string tableName, QueryFilterModel? filter);
 
         /// <summary>
         /// Get Product by Id

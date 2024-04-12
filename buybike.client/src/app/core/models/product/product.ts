@@ -5,6 +5,7 @@ export class Product {
   public name: string = '';
   public make?: Manufacturer;
   public price: number = 0;
+  public newPrice: number = 0;
   public imageUrl: string = '';
   public color: string | null = null;
   public category: string = '';
@@ -12,13 +13,5 @@ export class Product {
   public isInStock: boolean = false;
   constructor(obj: Object | Product) {
     Object.assign(this, obj);
-  }
-
-  get newPrice(): number {
-    if (!this.discountPercent) {
-      return this.price;
-    }
-
-    return (this.price * (100 - this.discountPercent)) / 100;
   }
 }

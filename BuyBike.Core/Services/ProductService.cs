@@ -61,18 +61,18 @@
             return result;
         }
 
-        public async Task<PagedProductDto> GetAllAsync(GetAllQueryModel query, string productType)
+        public async Task<PagedProductDto> GetAllAsync(GetAllQueryModel query, string productType, QueryFilterModel? filter)
         {
             Expression<Func<Product, bool>> filterExpr = BuildFilterExpr(query.Category, query.OrderBy);
 
             var productPage = await CreateAndValidateProductPage(query, productType, filterExpr);
 
-            await FetchAndFilterProducts(query, filterExpr, productPage);
+            await FetchAndFilterProducts(query, filterExpr, productPage, filter);
 
             return productPage;
         }
 
-       
+
 
         private Expression<Func<Product, bool>> BuildFilterExpr(string? category, string orderBy)
         {
@@ -96,19 +96,19 @@
 
         private async Task<PagedProductDto> CreateAndValidateProductPage(GetAllQueryModel query, string productType, Expression<Func<Product, bool>> filterExpr)
         {
-           var productPage = await repo
-                .AllReadonly<ProductType>(p => p.Name.ToLower() == productType.ToLower())
-                .Select(t => new PagedProductDto()
-                {
-                    ProductTypeId = t.Id,
-                    CategoryImageUrl = t.ImageUrl == null ? "" : AppConstants.MinIo_EndPoint + t.ImageUrl,
-                    Attributes = t.Properties.Select(p => new AttributeValuesDto()
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Values = new HashSet<string>()
-                    }).ToList()
-                }).FirstOrDefaultAsync();
+            var productPage = await repo
+                 .AllReadonly<ProductType>(p => p.Name.ToLower() == productType.ToLower())
+                 .Select(t => new PagedProductDto()
+                 {
+                     ProductTypeId = t.Id,
+                     CategoryImageUrl = t.ImageUrl == null ? "" : AppConstants.MinIo_EndPoint + t.ImageUrl,
+                     Attributes = t.Properties.Select(p => new AttributeValuesDto()
+                     {
+                         Id = p.Id,
+                         Name = p.Name,
+                         Values = new HashSet<string>()
+                     }).ToList()
+                 }).FirstOrDefaultAsync();
 
             var productCount = await repo.AllReadonly<Product>(p => p.TypeId == productPage!.ProductTypeId).CountAsync(filterExpr);
             int skipCount = (query.Page - 1) * query.ItemsPerPage;
@@ -133,35 +133,69 @@
             return productPage;
         }
 
-        private async Task FetchAndFilterProducts(GetAllQueryModel query, Expression<Func<Product, bool>> filterExpr, PagedProductDto productPage)
+        private async Task FetchAndFilterProducts(GetAllQueryModel query, Expression<Func<Product, bool>> filterExpr, PagedProductDto productPage, QueryFilterModel filterArgs)
         {
             var products = repo.AllReadonly<Product>(p => p.TypeId == productPage.ProductTypeId).Where(filterExpr);
 
             products = SortData(products, query.OrderBy, query.Desc);
 
-            productPage.Products = await products
+            var productDtos = products
                  .Include(p => p.Discount)
-                 .Select(b => new ProductDto
+                 .Select(p => new ProductDto
                  {
-                     Id = b.Id,
-                     Name = $"{b.Category.Name} {b.Make.Name} {b.Name} {b.Color ?? string.Empty}",
+                     Id = p.Id,
+                     Name = $"{p.Category.Name} {p.Make.Name} {p.Name} {p.Color ?? string.Empty}",
                      Make = new ManufacutrerDto()
                      {
-                         Name = b.Make.Name,
-                         ImageUrl = AppConstants.MinIo_EndPoint + b.Make.LogoUrl,
+                         Id = p.Make.Id,
+                         Name = p.Make.Name,
+                         ImageUrl = AppConstants.MinIo_EndPoint + p.Make.LogoUrl,
                      },
-                     ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
-                     Price = b.Price,
-                     Color = b.Color,
-                     Category = b.Category.Name,
-                     DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
-                     IsInStock = b.Items.Any(i => i.InStock > 0),
-                     Properties = b.AttributeValues.Select(av => new ProductAttributeDto()
+                     ImageUrl = AppConstants.MinIo_EndPoint + p.ImageUrl,
+                     Price = p.Price,
+                     Color = p.Color,
+                     Category = p.Category.Name,
+                     DiscountPercent = p.Discount != null ? p.Discount.DiscountPercent : null,
+                     IsInStock = p.Items.Any(i => i.InStock > 0),
+                     NewPrice = p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100),
+                     Properties = p.AttributeValues.Select(av => new ProductAttributeDto()
                      {
                          Name = av.Attribute.Name,
                          Value = av.Value,
                      })
-                 }).ToListAsync();
+                 });
+
+            if (filterArgs.InStock != null)
+            {
+                productDtos = productDtos.Where(p => filterArgs.InStock == true ? p.IsInStock : p.IsInStock == false);
+            }
+
+            if (filterArgs.Makes != null)
+            {
+                productDtos = productDtos.Where(p => filterArgs.Makes.Contains(p.Make.Name));
+            }
+
+            if (filterArgs.MinPrice != null || filterArgs.MaxPrice != null)
+            {
+                if (filterArgs.MaxPrice != null)
+                {
+                    productDtos = productDtos.Where(p => p.NewPrice >= (filterArgs.MinPrice != null ? filterArgs.MinPrice : 0) && p.NewPrice <= filterArgs.MaxPrice);
+                }
+                else
+                {
+                    productDtos = productDtos.Where(p => p.NewPrice >= (filterArgs.MinPrice != null ? filterArgs.MinPrice : 0));
+                }
+            }
+
+            if (filterArgs.Attributes != null)
+            {
+                productDtos = productDtos.Where(p => p.Properties.Any(pr => filterArgs.Attributes.Contains(pr.Value)));
+            }
+
+            int skipCount = (query.Page - 1) * query.ItemsPerPage;
+
+            productPage.Products = await productDtos.Skip(skipCount)
+                    .Take(query.ItemsPerPage).ToListAsync();
 
             var allAttrValues = productPage.Products.SelectMany(p => p.Properties).ToList();
 
@@ -172,14 +206,7 @@
                 {
                     attr.Values.Add(productAttr.Value);
                 }
-            }
-
-            int skipCount = (query.Page - 1) * query.ItemsPerPage;
-
-            productPage.Products = productPage.Products
-                    .Skip(skipCount)
-                    .Take(query.ItemsPerPage)
-                    .ToList();
+            }            
         }
 
         private IQueryable<Product> SortData(IQueryable<Product> data, string orderBy, bool isDesc)

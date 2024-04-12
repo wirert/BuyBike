@@ -7,6 +7,7 @@
     [selectedTypeName]="productsType"
     [selectedCategoryName]="category ? category : ''"
     [productPage]="productsPage"
+    (queryFilterChanged)="onFilterChange($event)"
   ></category-sidebar>
 
   <div class="category-content">

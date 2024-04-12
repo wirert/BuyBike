@@ -5,6 +5,7 @@
 
     using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// API product controller
@@ -33,11 +34,11 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(string productType, [FromQuery] GetAllQueryModel query)
+        public async Task<IActionResult> GetAll(string productType, [FromQuery] GetAllQueryModel query, [FromQuery] QueryFilterModel? filter = null)
         {
             try
             {
-                var productPage = await productService.GetAllAsync(query, productType);
+                var productPage = await productService.GetAllAsync(query, productType, filter);
 
                 return Ok(productPage);
             }
