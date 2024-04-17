@@ -13,6 +13,9 @@
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
     using BuyBike.Core.Models.Manufacturer;
+    using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
     public class ProductService : IProductService
     {
@@ -138,9 +141,13 @@
             var products = repo.AllReadonly<Product>(p => p.TypeId == productPage.ProductTypeId).Where(filterExpr);
 
             products = SortData(products, query.OrderBy, query.Desc);
+            int skipCount = (query.Page - 1) * query.ItemsPerPage;
 
-            var productDtos = products
-                 .Include(p => p.Discount)
+            productPage.Products = await products
+                .Include(p => p.Discount)
+                 .Where(BuildExpr(filterArgs))
+                 .Skip(skipCount)
+                 .Take(query.ItemsPerPage)
                  .Select(p => new ProductDto
                  {
                      Id = p.Id,
@@ -156,46 +163,15 @@
                      Color = p.Color,
                      Category = p.Category.Name,
                      DiscountPercent = p.Discount != null ? p.Discount.DiscountPercent : null,
-                     IsInStock = p.Items.Any(i => i.InStock > 0),
-                     NewPrice = p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100),
+                     IsInStock = p.IsInStock,
+                     NewPrice = p.DiscountedPrice,
                      Properties = p.AttributeValues.Select(av => new ProductAttributeDto()
                      {
                          Name = av.Attribute.Name,
                          Value = av.Value,
                      })
-                 });
-
-            if (filterArgs.InStock != null)
-            {
-                productDtos = productDtos.Where(p => filterArgs.InStock == true ? p.IsInStock : p.IsInStock == false);
-            }
-
-            if (filterArgs.Makes != null)
-            {
-                productDtos = productDtos.Where(p => filterArgs.Makes.Contains(p.Make.Name));
-            }
-
-            if (filterArgs.MinPrice != null || filterArgs.MaxPrice != null)
-            {
-                if (filterArgs.MaxPrice != null)
-                {
-                    productDtos = productDtos.Where(p => p.NewPrice >= (filterArgs.MinPrice != null ? filterArgs.MinPrice : 0) && p.NewPrice <= filterArgs.MaxPrice);
-                }
-                else
-                {
-                    productDtos = productDtos.Where(p => p.NewPrice >= (filterArgs.MinPrice != null ? filterArgs.MinPrice : 0));
-                }
-            }
-
-            if (filterArgs.Attributes != null)
-            {
-                productDtos = productDtos.Where(p => p.Properties.Any(pr => filterArgs.Attributes.Contains(pr.Value)));
-            }
-
-            int skipCount = (query.Page - 1) * query.ItemsPerPage;
-
-            productPage.Products = await productDtos.Skip(skipCount)
-                    .Take(query.ItemsPerPage).ToListAsync();
+                 })
+                 .ToListAsync();
 
             var allAttrValues = productPage.Products.SelectMany(p => p.Properties).ToList();
 
@@ -206,7 +182,7 @@
                 {
                     attr.Values.Add(productAttr.Value);
                 }
-            }            
+            }
         }
 
         private IQueryable<Product> SortData(IQueryable<Product> data, string orderBy, bool isDesc)
@@ -224,7 +200,7 @@
             else
             {
                 return orderBy switch
-                {
+                {                   
                     "Discount" => data.OrderBy(p => p.Discount!.DiscountPercent),
                     "Name" => data.OrderBy(p => p.Name),
                     "Make" => data.OrderBy(p => p.Make.Name),
@@ -232,6 +208,102 @@
                 };
             }
         }
+
+        private Expression<Func<Product, bool>> BuildExpr(QueryFilterModel filterArgs)
+        {
+            var param = Expression.Parameter(typeof(Product), "p");
+
+            BinaryExpression? exprBody = null;
+
+            if (filterArgs.InStock != null) //p => p.Items.Any(i => i.InStock > 0);
+            {
+                var prop = Expression.Property(param, nameof(Product.Items));
+                var anyMethod = typeof(Enumerable).GetMethods()
+                               .Single(m => m.Name == "Any" && m.GetParameters().Length == 2)
+                               .MakeGenericMethod(typeof(Item));
+
+                var itemParam = Expression.Parameter(typeof(Item), "i");
+                var itemProp = Expression.Property(itemParam, nameof(Item.InStock));
+                var itemConst = Expression.Constant(0);
+                var itemExpr = Expression.GreaterThan(itemProp, itemConst);
+                var itemLambda = Expression.Lambda<Func<Item, bool>>(itemExpr, itemParam);
+
+                var anyCall = Expression.Call(anyMethod, prop, itemLambda);
+
+               // var body = Expression.Lambda<Func<Product, bool>>(anyCall, param);
+                
+                var value = Expression.Constant(filterArgs.InStock);
+
+
+                exprBody = Expression.Equal(anyCall, value);
+            }
+
+            if (filterArgs.Makes != null)
+            {
+                var splitMakes = filterArgs.Makes.Split(", ");
+                var prop = Expression.Property(param, nameof(Product.MakeId));
+
+                BinaryExpression? makesExpr = null;
+
+                for (var i = 0; i < splitMakes.Length; i++)
+                {
+                    var value = Expression.Constant(Guid.Parse(splitMakes[i]));
+                    var expr = Expression.Equal(prop, value);
+
+                    if (i == 0)
+                    {
+                        makesExpr = expr;
+                        continue;
+                    }
+
+                    makesExpr = Expression.OrElse(makesExpr!, expr);
+                }
+
+                exprBody = exprBody == null ? makesExpr : Expression.AndAlso(exprBody, makesExpr!);
+            }
+
+            if (filterArgs.MinPrice != null || filterArgs.MaxPrice != null)
+            {
+                var prop = Expression.Property(param, nameof(Product.Price));
+                var minPrice = filterArgs.MinPrice == null ? Expression.Constant(0, typeof(decimal)) : Expression.Constant(filterArgs.MinPrice);
+                var maxPrice = filterArgs.MaxPrice == null ? Expression.Constant(decimal.MaxValue) : Expression.Constant(filterArgs.MaxPrice);
+
+                BinaryExpression priceExpr = Expression.AndAlso(Expression.GreaterThanOrEqual(prop, minPrice), Expression.LessThanOrEqual(prop, maxPrice));
+
+                exprBody = exprBody == null ? priceExpr : Expression.AndAlso(exprBody, priceExpr);
+            }
+
+            if (filterArgs.Attributes != null) //p => p.AttributeValues.Any(av => attrValuesArr.Contains(av.Value))
+            {
+                var attrValuesArr = filterArgs.Attributes.Split(", ").AsQueryable();
+                var prop = Expression.Property(param, nameof(Product.AttributeValues));
+                var anyMethod = typeof(Queryable).GetMethods()
+                               .Single(m => m.Name == "Any" && m.GetParameters().Length == 2)
+                               .MakeGenericMethod(typeof(ProductAttributeValue));
+
+                var attrParam = Expression.Parameter(typeof(ProductAttributeValue), "pa");
+                var attrProp = Expression.Property(attrParam, nameof(ProductAttributeValue.Value));
+                var attrConst = Expression.Constant(attrValuesArr);
+                var containsMethod = typeof(IQueryable<string>).GetMethod("Contains", new[] { typeof(string) });
+
+                var containsCall = Expression.Call(attrConst, containsMethod!, attrProp);
+                var containLambda = Expression.Lambda<Func<ProductAttributeValue, bool>>(containsCall, attrParam);
+
+                var anyCall = Expression.Call(anyMethod, prop, containLambda);
+
+                if (exprBody == null)
+                {
+                    return Expression.Lambda<Func<Product, bool>>(anyCall, param);
+                }
+
+                exprBody = Expression.AndAlso(exprBody, anyCall);
+            }
+
+            return exprBody == null 
+                ? Expression.Lambda<Func<Product, bool>>(Expression.Constant(true), param) 
+                : Expression.Lambda<Func<Product, bool>>(exprBody, param);
+        }
+
 
     }
 }

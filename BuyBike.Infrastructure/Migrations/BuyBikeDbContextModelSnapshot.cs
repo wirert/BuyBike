@@ -1551,7 +1551,7 @@ namespace BuyBike.Infrastructure.Migrations
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Attribute", b =>
                 {
                     b.HasOne("BuyBike.Infrastructure.Data.Entities.ProductType", "ProductType")
-                        .WithMany("Properties")
+                        .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -1788,8 +1788,6 @@ namespace BuyBike.Infrastructure.Migrations
                     b.Navigation("Categories");
 
                     b.Navigation("Products");
-
-                    b.Navigation("Properties");
                 });
 #pragma warning restore 612, 618
         }

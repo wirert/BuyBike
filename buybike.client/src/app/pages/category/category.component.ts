@@ -66,7 +66,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   onFilterChange(filter: ProductQueryFilter) {
     this.filter = filter;
-    console.log(this.filter);
+    console.log('filter in category component:', this.filter);
     this.fetchData();
   }
 
@@ -86,7 +86,13 @@ export class CategoryComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data) => {
+          if (data.products.length === 0) {
+            this.setErrorMessage(
+              new HttpErrorResponse({ error: 'Няма намерени продукти' })
+            );
+          }
           this.isloading = false;
+
           this.productsPage = data;
           console.log(data);
         },

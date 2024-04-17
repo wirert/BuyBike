@@ -11,7 +11,7 @@
 
     [Comment("Shop product model")]
     public class Product
-    {
+    {    
         public Product()
         {
             Id = Guid.NewGuid();
@@ -44,7 +44,7 @@
 
         [Comment("Product price")]
         [Required]
-        public decimal Price { get; set; }
+        public decimal Price { get; set; }    
 
         [Comment("Product discount id")]
         public int? DiscountId { get; set; }
@@ -82,9 +82,31 @@
         [Comment("Soft delete boolean property")]
         public bool IsActive { get; set; } = true;
 
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual IEnumerable<Item> Items { get; set; }
 
-        public virtual ICollection<ProductAttributeValue> AttributeValues { get; set; }
+        public virtual IEnumerable<ProductAttributeValue> AttributeValues { get; set; }
 
+        public decimal DiscountedPrice
+        {
+            get
+            {
+                if (Discount != null)
+                {
+                    return Price * (1 - Discount.DiscountPercent / 100);
+                }
+                else
+                {
+                    return Price;
+                }
+            }
+        }
+
+        public bool IsInStock
+        {
+            get
+            {
+                return Items.Any(i => i.InStock > 0);
+            }
+        }
     }
 }

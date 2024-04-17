@@ -46,15 +46,22 @@ export class SidebarComponent implements OnInit, OnChanges {
 
   minPrice: number = 0;
   maxPrice: number = 0;
+  private filterChanged = false;
   priceBarOptions: Options = {
     floor: 0,
     ceil: 0,
+    translate: (value: number): string => {
+      return value + 'лв';
+    },
   };
   filter: ProductFilter = new ProductFilter();
   queryFilter: ProductQueryFilter = new ProductQueryFilter();
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setPriceFilter();
+    if (this.filterChanged) {
+      this.setPriceFilter();
+      this.filterChanged = false;
+    }
   }
 
   ngOnInit(): void {
@@ -64,6 +71,7 @@ export class SidebarComponent implements OnInit, OnChanges {
       this.productTypes = data;
       this.findSelectedTypeAndCategories();
       this.setProductFilterProps();
+      this.setPriceFilter();
     });
   }
 
@@ -82,17 +90,26 @@ export class SidebarComponent implements OnInit, OnChanges {
   }
 
   onFilterChanged() {
+    this.filterChanged = true;
     this.setQueryFilter();
     this.queryFilterChanged.emit(this.queryFilter);
   }
 
-  onMinPriceChange(value: number) {
-    this.filter.minPrice = value;
-    this.onFilterChanged();
-  }
-  onMaxPriceChange(highValue: number) {
-    this.filter.maxPrice = highValue;
-    this.onFilterChanged();
+  priceSliderEvent(changeContext: ChangeContext) {
+    if (
+      !this.queryFilter.minPrice ||
+      changeContext.value !== this.queryFilter.minPrice
+    ) {
+      this.queryFilter.minPrice = changeContext.value;
+    }
+    if (
+      !this.queryFilter.maxPrice ||
+      changeContext.highValue !== this.queryFilter.maxPrice
+    ) {
+      this.queryFilter.maxPrice = changeContext.highValue;
+    }
+
+    this.queryFilterChanged.emit(this.queryFilter);
   }
 
   private setManufacturersArray(): Manufacturer[] {
@@ -108,9 +125,13 @@ export class SidebarComponent implements OnInit, OnChanges {
     const sorted = [...this.productPage!.products].sort(
       (a, b) => a.newPrice - b.newPrice
     );
+
     this.priceBarOptions = {
       floor: Math.floor(sorted[0].newPrice),
       ceil: Math.ceil(sorted[sorted.length - 1].newPrice),
+      translate: (value: number): string => {
+        return value + 'лв';
+      },
     };
     this.minPrice = this.priceBarOptions.floor!;
     this.maxPrice = this.priceBarOptions.ceil!;
@@ -155,14 +176,6 @@ export class SidebarComponent implements OnInit, OnChanges {
     } else {
       this.queryFilter.inStock = undefined;
     }
-
-    this.queryFilter.minPrice = this.filter.minPrice
-      ? this.filter.minPrice
-      : undefined;
-
-    this.queryFilter.maxPrice = this.filter.maxPrice
-      ? this.filter.maxPrice
-      : undefined;
   }
 
   private findSelectedTypeAndCategories(): void {

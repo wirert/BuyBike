@@ -5,9 +5,9 @@
 
     public class QueryFilterModel
     {
-        public string[]? Makes { get; set; }
+        public string? Makes { get; set; }
 
-        public string[]? Attributes { get; set; } = null;
+        public string? Attributes { get; set; } = null;
 
         public decimal? MinPrice { get; set; }
 

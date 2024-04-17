@@ -105,8 +105,7 @@
           [(value)]="minPrice"
           [(highValue)]="maxPrice"
           [options]="priceBarOptions"
-          (valueChange)="onMinPriceChange($event)"
-          (highValueChange)="onMaxPriceChange($event)"
+          (userChangeEnd)="priceSliderEvent($event)"
         >
           >
           <div>от: {{ minPrice }}</div>

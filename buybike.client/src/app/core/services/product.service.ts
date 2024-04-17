@@ -47,16 +47,16 @@ export class ProductService {
 
     if (filter) {
       Object.entries(filter).forEach(([p, v]) => {
-        if (v) {
+        if (v !== undefined) {
           if (p === 'additionalFilters') {
             params = params.append(
               'attributes',
-              JSON.stringify(
-                Array.from((v as Map<number, string[]>).values()).flat()
-              )
+              Array.from((v as Map<number, string[]>).values())
+                .flat()
+                .join(', ')
             );
           } else if (p === 'makes') {
-            params = params.append(p, JSON.stringify(v));
+            params = params.append(p, (v as string[]).join(', '));
           } else {
             params = params.append(p, v);
           }
