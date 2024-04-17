@@ -16,6 +16,7 @@
     using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
     using Microsoft.Extensions.Hosting;
     using Microsoft.EntityFrameworkCore.Metadata.Internal;
+    using Microsoft.EntityFrameworkCore.Metadata;
 
     public class ProductService : IProductService
     {
@@ -228,12 +229,8 @@
                 var itemExpr = Expression.GreaterThan(itemProp, itemConst);
                 var itemLambda = Expression.Lambda<Func<Item, bool>>(itemExpr, itemParam);
 
-                var anyCall = Expression.Call(anyMethod, prop, itemLambda);
-
-               // var body = Expression.Lambda<Func<Product, bool>>(anyCall, param);
-                
+                var anyCall = Expression.Call(anyMethod, prop, itemLambda);                
                 var value = Expression.Constant(filterArgs.InStock);
-
 
                 exprBody = Expression.Equal(anyCall, value);
             }
@@ -277,16 +274,19 @@
             {
                 var attrValuesArr = filterArgs.Attributes.Split(", ").AsQueryable();
                 var prop = Expression.Property(param, nameof(Product.AttributeValues));
-                var anyMethod = typeof(Queryable).GetMethods()
+                var anyMethod = typeof(Enumerable).GetMethods()
                                .Single(m => m.Name == "Any" && m.GetParameters().Length == 2)
                                .MakeGenericMethod(typeof(ProductAttributeValue));
 
                 var attrParam = Expression.Parameter(typeof(ProductAttributeValue), "pa");
                 var attrProp = Expression.Property(attrParam, nameof(ProductAttributeValue.Value));
                 var attrConst = Expression.Constant(attrValuesArr);
-                var containsMethod = typeof(IQueryable<string>).GetMethod("Contains", new[] { typeof(string) });
+                var containsMethod = typeof(Enumerable).GetMethods()
+                    .Where(m => m.Name == "Contains" && m.GetParameters().Length == 2)
+                    .Single()
+                    .MakeGenericMethod(typeof(string));
 
-                var containsCall = Expression.Call(attrConst, containsMethod!, attrProp);
+                var containsCall = Expression.Call(containsMethod!, attrConst, attrProp);
                 var containLambda = Expression.Lambda<Func<ProductAttributeValue, bool>>(containsCall, attrParam);
 
                 var anyCall = Expression.Call(anyMethod, prop, containLambda);
