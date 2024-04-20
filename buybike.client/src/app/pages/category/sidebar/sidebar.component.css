@@ -7,6 +7,10 @@
   font-size: 0.8em;
 }
 
+.filter {
+  border-top: solid 1px grey;
+}
+
 h2 {
   margin-top: 0.5em;
   text-transform: capitalize;
@@ -38,6 +42,10 @@ i {
   background-color: transparent;
 }
 
+.filter-title {
+  text-transform: uppercase;
+}
+
 .category-toggle-btn {
   border-radius: 50%;
   display: inline-block;
@@ -49,4 +57,8 @@ i {
 
 .hide ul {
   display: none;
+}
+
+label {
+  padding-left: 0.4em;
 }

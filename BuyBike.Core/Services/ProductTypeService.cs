@@ -6,28 +6,35 @@
     
     using Microsoft.EntityFrameworkCore;
 
+    using Core.Models;
     using Core.Models.Category;
     using Core.Services.Contracts;
     using Infrastructure.Contracts;
     using Infrastructure.Data.Entities;
 
-    public class CategoryService : ICategoryService
+    public class ProductTypeService : IProductTypeService
     {
         private readonly IRepository repo;
 
-        public CategoryService(IRepository _repo)
+        public ProductTypeService(IRepository _repo)
         {
             repo = _repo;
         }
 
-        public async Task<ICollection<CategoryDto>> GetCategoriesAsync()
+        public async Task<ICollection<ProductTypeDto>> GetAllAsync()
         {
             var result = await repo.AllReadonly<ProductType>()
-                .Select(t => new CategoryDto()
+                .Select(t => new ProductTypeDto()
                 {
                     Id = t.Id,
                     Name = t.Name,
-                    SubCategories = t.Categories.Select(c => new CategoryDto()
+                    ProductsProperties = t.Properties.Select(p => new AttributeValuesDto()
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Values = p.AttributeValues.Select(v => v.Value).Distinct().ToList()
+                    }),
+                    Categories = t.Categories.Select(c => new CategoryDto()
                     {
                         Id = c.Id,
                         Name = c.Name,
@@ -45,18 +52,6 @@
             }
 
             return result;
-        }
-               
-        public async Task<int> GetIdByName(string name)
-        {
-            var result = await repo.AllReadonly<Category>(c => c.Name.ToLower() == name.ToLower()).Select(c => c.Id).FirstOrDefaultAsync();
-
-            if(result == default)
-            {
-                throw new ArgumentException("Не съществува такава категория.");
-            }
-
-            return result;
-        }
+        }        
     }
 }

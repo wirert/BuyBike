@@ -4,28 +4,29 @@
     using Microsoft.AspNetCore.Mvc;
     using BuyBike.Core.Models.Category;
     using BuyBike.Core.Services.Contracts;
+    using BuyBike.Core.Models;
 
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoryController : ControllerBase
+    public class ProductTypeController : ControllerBase
     {
-        private readonly ICategoryService categoryService;
+        private readonly IProductTypeService categoryService;
 
-        public CategoryController(ICategoryService _categoryService)
+        public ProductTypeController(IProductTypeService _categoryService)
         {
             categoryService = _categoryService;
         }
 
         [HttpGet]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<CategoryDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ICollection<ProductTypeDto>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Get()
         {
             try
             {
-                var categories = await categoryService.GetCategoriesAsync();
+                var categories = await categoryService.GetAllAsync();
 
                 return Ok(categories);
             }

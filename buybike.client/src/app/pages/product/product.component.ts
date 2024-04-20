@@ -53,28 +53,26 @@ export class ProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productService
-      .getProductDetails(this.productId, this.productType)
-      .subscribe({
-        next: (data) => {
-          this.product = data;
+    this.productService.getProductDetails(this.productId).subscribe({
+      next: (data) => {
+        this.product = data;
 
-          if (data.items[0].size) {
-            this.haveSize = true;
-          } else {
-            this.selectedItemIndex = '0';
-          }
-          this.productImageStyleObj[
-            'background-image'
-          ] = `url(${this.product?.imageUrl})`;
+        if (data.items[0].size) {
+          this.haveSize = true;
+        } else {
+          this.selectedItemIndex = '0';
+        }
+        this.productImageStyleObj[
+          'background-image'
+        ] = `url(${this.product?.imageUrl})`;
 
-          this.isLoading = false;
-        },
-        error: (err) => {
-          console.log(err);
-          this.isLoading = false;
-        },
-      });
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.log(err);
+        this.isLoading = false;
+      },
+    });
   }
 
   onMouseMoveOverPicture(event: any) {

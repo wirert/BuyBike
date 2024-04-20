@@ -39,7 +39,35 @@
             /// <summary>
             /// Item SCU lenght
             /// </summary>
-            public const int ScuLenght = 10;            
+            public const int ScuLenght = 10;
+
+            public const string MinPrice = "0";
+            public const string MaxPrice = "500000";
+        }
+
+        /// <summary>
+        /// Product attribute constants
+        /// </summary>
+        public static class ProductAttribute
+        {
+            /// <summary>
+            /// Product attribute name maximum length
+            /// </summary>
+            public const int MaxNameLength = 60;
+            /// <summary>
+            /// Product attribute name minimum length
+            /// </summary>
+            public const int MinNameLength = 1;
+
+            /// <summary>
+            /// Product attribute value maximum length
+            /// </summary>
+            public const int MaxValueLength = 40;
+
+            /// <summary>
+            /// Product attribute data type maximum length
+            /// </summary>
+            public const int MaxDataTypeLength = 8;
         }
 
         /// <summary>

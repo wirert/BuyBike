@@ -6,15 +6,15 @@ import { ProductPage } from '../models/product/products-page';
 import { ProductDetails } from '../models/product/product-details';
 import { PaginatorState } from '../models/paginator-state';
 import { Product } from '../models/product/product';
+import { ProductQueryFilter } from '../models/product-query-filter';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
   private url: string = inject(API_URL);
   private http: HttpClient = inject(HttpClient);
 
-  getProductDetails(id: string, type: string): Observable<any> {
-    const controller = AppConstants.productTypes[type];
-    return this.http.get<any>(`${this.url}/${controller}/${id}`).pipe(
+  getProductDetails(id: string): Observable<any> {
+    return this.http.get<any>(`${this.url}/Product/${id}`).pipe(
       map<any, ProductDetails>((res, idx) => {
         res.specification = JSON.parse(res.specification);
         return res;
@@ -25,9 +25,17 @@ export class ProductService {
   getPagedProducts(
     paginatorState: PaginatorState,
     category: string | null,
-    type: string
+    type: string,
+    filter?: ProductQueryFilter
   ): Observable<any> {
+    const productType = AppConstants.productTypes[type];
+
+    if (!productType) {
+      throw new Error('Грешен тип продукт.');
+    }
+
     let params = new HttpParams();
+    params = params.append('productType', productType);
     params = params.append('page', paginatorState.pageNumber);
     params = params.append('itemsPerPage', paginatorState.itemsPerPage);
     params = params.append('orderBy', paginatorState.orderBy);
@@ -37,27 +45,30 @@ export class ProductService {
       params = params.append('category', category);
     }
 
-    const controller = AppConstants.productTypes[type];
-
-    if (!controller) {
-      throw new Error('Грешен тип продукт.');
+    if (filter) {
+      Object.entries(filter).forEach(([p, v]) => {
+        if (v !== undefined) {
+          if (p === 'additionalFilters') {
+            params = params.append(
+              'attributes',
+              Array.from((v as Map<number, string[]>).values())
+                .flat()
+                .join(', ')
+            );
+          } else if (p === 'makes') {
+            params = params.append(p, (v as string[]).join(', '));
+          } else {
+            params = params.append(p, v);
+          }
+        }
+      });
     }
 
-    return this.http
-      .get<ProductPage>(`${this.url}/${controller}`, {
-        params: params,
-        responseType: 'json',
-      })
-      .pipe(
-        retry(),
-        map(
-          (productPage) =>
-            new ProductPage(
-              productPage.totalProducts,
-              productPage.categoryImageUrl,
-              productPage.products.map((p) => new Product(p))
-            )
-        )
-      );
+    console.log(params);
+
+    return this.http.get<ProductPage>(`${this.url}/Product`, {
+      params: params,
+      responseType: 'json',
+    });
   }
 }

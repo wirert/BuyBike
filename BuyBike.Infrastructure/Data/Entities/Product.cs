@@ -8,14 +8,16 @@
 
     using BuyBike.Infrastructure.Constants;
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
+    using System.Linq.Expressions;
 
     [Comment("Shop product model")]
-    public class Product
-    {
+    public partial class Product
+    {    
         public Product()
         {
-            Id = Guid.NewGuid();            
+            Id = Guid.NewGuid();
             Items = new List<Item>();
+            AttributeValues = new List<ProductAttributeValue>();
         }
 
         [Key]
@@ -32,7 +34,7 @@
         public int TypeId { get; set; }
 
         [ForeignKey(nameof(TypeId))]
-        public virtual ProductType Type { get; set; }
+        public virtual ProductType Type { get; set; } = null!;
 
         [Required]
         [Comment("Product category identifier")]
@@ -43,7 +45,7 @@
 
         [Comment("Product price")]
         [Required]
-        public decimal Price { get; set; }
+        public decimal Price { get; set; }    
 
         [Comment("Product discount id")]
         public int? DiscountId { get; set; }
@@ -81,6 +83,8 @@
         [Comment("Soft delete boolean property")]
         public bool IsActive { get; set; } = true;
 
-        public virtual ICollection<Item> Items { get; set; }
+        public virtual IEnumerable<Item> Items { get; set; }
+
+        public virtual IEnumerable<ProductAttributeValue> AttributeValues { get; set; }       
     }
 }

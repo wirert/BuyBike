@@ -18,37 +18,24 @@
             <param name="model">User register form data</param>
             <returns></returns>
         </member>
-        <member name="T:BuyBike.Api.Controllers.BicycleController">
+        <member name="T:BuyBike.Api.Controllers.ProductController">
             <summary>
-            Bicycles controller
+            API product controller
             </summary>
         </member>
-        <member name="M:BuyBike.Api.Controllers.BicycleController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetAll(BuyBike.Core.Models.AllProductQueryModel)">
             <summary>
-            Get bicycles 
+            Get products 
             </summary>
+            <param name="productType">Product type</param>
             <param name="query">Query params model</param>
             <returns></returns>
         </member>
-        <member name="M:BuyBike.Api.Controllers.BicycleController.GetById(System.Guid)">
+        <member name="M:BuyBike.Api.Controllers.ProductController.GetById(System.Guid)">
             <summary>
-            Get Bicycle details by Id
+            Get Product by Id
             </summary>
-            <param name="id">Bicycle identifier</param>
-            <returns></returns>
-        </member>
-        <member name="M:BuyBike.Api.Controllers.PartController.GetAll(BuyBike.Core.Models.GetAllQueryModel)">
-            <summary>
-            Get Parts 
-            </summary>
-            <param name="query">Query params model</param>
-            <returns></returns>
-        </member>
-        <member name="M:BuyBike.Api.Controllers.PartController.GetById(System.Guid)">
-            <summary>
-            Get Part details by Id
-            </summary>
-            <param name="id">Bicycle identifier</param>
+            <param name="id">Product identifier</param>
             <returns></returns>
         </member>
         <member name="M:BuyBike.Api.Extentions.ApplicationBuilderExtention.SeedPictures(Microsoft.AspNetCore.Builder.IApplicationBuilder)">

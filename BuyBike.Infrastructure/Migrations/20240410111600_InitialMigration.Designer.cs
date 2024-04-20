@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BuyBike.Infrastructure.Migrations
 {
     [DbContext(typeof(BuyBikeDbContext))]
-    [Migration("20240403175125_InitialMigration")]
+    [Migration("20240410111600_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -116,6 +116,83 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Attribute", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasComment("Attribute id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DataType")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("data_type")
+                        .HasComment("Attribute real data type");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("character varying(60)")
+                        .HasColumnName("name")
+                        .HasComment("Attribute name");
+
+                    b.Property<int>("ProductTypeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("product_type_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_attributes");
+
+                    b.HasIndex("ProductTypeId")
+                        .HasDatabaseName("ix_attributes_product_type_id");
+
+                    b.ToTable("attributes", null, t =>
+                        {
+                            t.HasComment("Properties for different types of products");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DataType = "double",
+                            Name = "TyreSize",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DataType = "string",
+                            Name = "Material",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            DataType = "string",
+                            Name = "Brakes",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DataType = "string",
+                            Name = "Suspention",
+                            ProductTypeId = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DataType = "string",
+                            Name = "Style",
+                            ProductTypeId = 1
+                        });
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Category", b =>
@@ -473,6 +550,14 @@ namespace BuyBike.Infrastructure.Migrations
                             IsActive = true,
                             ProductId = new Guid("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
                             Sku = "ITM0000014"
+                        },
+                        new
+                        {
+                            Id = new Guid("d8035895-c7e3-468f-ae2c-cb080c4b5a08"),
+                            InStock = 9,
+                            IsActive = true,
+                            ProductId = new Guid("bae19e01-9923-4de7-bee3-38b713ea68f9"),
+                            Sku = "ITM0000015"
                         });
                 });
 
@@ -719,7 +804,8 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasColumnName("type_id")
                         .HasComment("Product general type id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_products");
 
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_products_category_id");
@@ -738,7 +824,505 @@ namespace BuyBike.Infrastructure.Migrations
                             t.HasComment("Shop product model");
                         });
 
-                    b.UseTptMappingStrategy();
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
+                            CategoryId = 1,
+                            Color = "Black",
+                            DiscountId = 1,
+                            ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
+                            Name = "Fathom 1",
+                            Price = 3499m,
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
+                            CategoryId = 1,
+                            Color = "White",
+                            ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
+                            Name = "Fathom 1",
+                            Price = 3499m,
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
+                            CategoryId = 1,
+                            Color = "White",
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 2,
+                            ImageUrl = "bicycles/mountain/Epic_Expert_Morn_White.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
+                            Name = "Epic Expert Morn",
+                            Price = 13599m,
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
+                            CategoryId = 3,
+                            Color = "Silver",
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            Gender = 0,
+                            ImageUrl = "bicycles/city/Touring_Pro_28_Silver.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
+                            Name = "Touring Pro",
+                            Price = 1699m,
+                            Specification = "[[\"Рамка\", \"Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 760mm, 31.8mm\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
+                            CategoryId = 3,
+                            Color = "Grey",
+                            Gender = 1,
+                            ImageUrl = "bicycles/city/Nulane_Pro_28_Grey.png",
+                            IsActive = true,
+                            MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
+                            Name = "Nulane Pro",
+                            Price = 3899m,
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
+                            CategoryId = 2,
+                            Color = "Red",
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            ImageUrl = "bicycles/road/Allez_E5_28_red.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
+                            Name = "Allez E5",
+                            Price = 2399m,
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
+                            CategoryId = 2,
+                            Color = "Blue",
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 3,
+                            ImageUrl = "bicycles/road/Litening_Aero_28_Blue.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
+                            Name = "Litening Aero",
+                            Price = 14899m,
+                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
+                            CategoryId = 4,
+                            Color = "Blue",
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 2,
+                            ImageUrl = "bicycles/kids/Boxer_12_blue.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
+                            Name = "Boxer",
+                            Price = 299m,
+                            Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
+                            CategoryId = 4,
+                            Color = "Black",
+                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
+                            DiscountId = 1,
+                            ImageUrl = "bicycles/kids/Faro_12_black.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"),
+                            Name = "Faro",
+                            Price = 279m,
+                            Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
+                            TypeId = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
+                            CategoryId = 8,
+                            Color = "Black",
+                            Description = "Начален клас амортисьорна вилка SR SUNTOUR 26\" за планински велосипеди, съвместима с V-образни спирачки.",
+                            DiscountId = 1,
+                            ImageUrl = "parts/forks/SR-26-M3020-P.jpg",
+                            IsActive = true,
+                            MakeId = new Guid("87ccf053-a35b-48f5-90d4-568a91fc053a"),
+                            Name = "26 M3020-P",
+                            Price = 121m,
+                            Specification = "[[\"Размер\", \"26 цола\"],[\"Ход\", \"75mm\"], [\"Стержен\", \"1 1/8 инча (28,6mm)\"], [\"Дължина на стержена\", \"255mm\"], [\"Материал\", \" въглеродна стомана, алуминий\"], [\"Тип ос\", \"9mm\"], [\"Тип спирачка\", \"V-образна\"]]",
+                            TypeId = 2
+                        },
+                        new
+                        {
+                            Id = new Guid("bae19e01-9923-4de7-bee3-38b713ea68f9"),
+                            CategoryId = 9,
+                            Color = "Black",
+                            Description = "Лява команда, подходяща за планински велосипеди (МТВ). Гладко и леко превключване на скоростите. Вкомплекта е включено жило.",
+                            ImageUrl = "shifters/SH-SL-M360-3-L.jpeg",
+                            IsActive = true,
+                            MakeId = new Guid("24be2dc6-7b7b-459a-a665-155b4e9e50dc"),
+                            Name = "ACERA SL-M360 3L",
+                            Price = 36m,
+                            Specification = "[[\"Тип на лосчетата\", \"Rapidfire Plus\"],[\"Скорости\", \"3s\"], [\"Индикатор за коростта\", \"да\"], [\"Ергономичен дизайн на лосчето\", \"да\"], [\"Регулатор за жилото\", \"да\"]]",
+                            TypeId = 2
+                        });
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.ProductAttributeValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("integer")
+                        .HasColumnName("attribute_id");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("product_id");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("value");
+
+                    b.HasKey("Id")
+                        .HasName("pk_attribute_values");
+
+                    b.HasIndex("AttributeId")
+                        .HasDatabaseName("ix_attribute_values_attribute_id");
+
+                    b.HasIndex("ProductId")
+                        .HasDatabaseName("ix_attribute_values_product_id");
+
+                    b.ToTable("attribute_values", null, t =>
+                        {
+                            t.HasComment("Product property value table");
+                        });
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AttributeId = 1,
+                            ProductId = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
+                            Value = "29"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AttributeId = 1,
+                            ProductId = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
+                            Value = "29"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            AttributeId = 1,
+                            ProductId = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
+                            Value = "29"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            AttributeId = 1,
+                            ProductId = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
+                            Value = "28"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            AttributeId = 1,
+                            ProductId = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
+                            Value = "28"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            AttributeId = 1,
+                            ProductId = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
+                            Value = "28"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            AttributeId = 1,
+                            ProductId = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
+                            Value = "28"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            AttributeId = 1,
+                            ProductId = new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
+                            Value = "12"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            AttributeId = 1,
+                            ProductId = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
+                            Value = "12"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            AttributeId = 2,
+                            ProductId = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
+                            Value = "Aлуминий"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            AttributeId = 2,
+                            ProductId = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
+                            Value = "Aлуминий"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            AttributeId = 2,
+                            ProductId = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
+                            Value = "Kарбон"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            AttributeId = 2,
+                            ProductId = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
+                            Value = "Aлуминий"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            AttributeId = 2,
+                            ProductId = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
+                            Value = "Aлуминий"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            AttributeId = 2,
+                            ProductId = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
+                            Value = "Aлуминий"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            AttributeId = 2,
+                            ProductId = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
+                            Value = "Kарбон"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            AttributeId = 2,
+                            ProductId = new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
+                            Value = "Aлуминий"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            AttributeId = 2,
+                            ProductId = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
+                            Value = "Стомана"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            AttributeId = 3,
+                            ProductId = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
+                            Value = "Дискови"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            AttributeId = 3,
+                            ProductId = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
+                            Value = "Дискови"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            AttributeId = 3,
+                            ProductId = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
+                            Value = "Дискови"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            AttributeId = 3,
+                            ProductId = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
+                            Value = "V-Brake"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            AttributeId = 3,
+                            ProductId = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
+                            Value = "V-Brake"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            AttributeId = 3,
+                            ProductId = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
+                            Value = "V-Brake"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            AttributeId = 3,
+                            ProductId = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
+                            Value = "Дискови"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            AttributeId = 3,
+                            ProductId = new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
+                            Value = "Дискови"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            AttributeId = 3,
+                            ProductId = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
+                            Value = "V-Brake"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            AttributeId = 4,
+                            ProductId = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
+                            Value = "Амортисьорна вилка"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            AttributeId = 4,
+                            ProductId = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
+                            Value = "Амортисьорна вилка"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            AttributeId = 4,
+                            ProductId = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
+                            Value = "Пълно окачване"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            AttributeId = 4,
+                            ProductId = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
+                            Value = "Твърда вилка"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            AttributeId = 4,
+                            ProductId = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
+                            Value = "Твърда вилка"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            AttributeId = 4,
+                            ProductId = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
+                            Value = "Амортисьорна вилка"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            AttributeId = 4,
+                            ProductId = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
+                            Value = "Амортисьорна вилка"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            AttributeId = 4,
+                            ProductId = new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
+                            Value = "Амортисьорна вилка"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            AttributeId = 4,
+                            ProductId = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
+                            Value = "Твърда вилка"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            AttributeId = 5,
+                            ProductId = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
+                            Value = "Крос кънтри / XC"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            AttributeId = 5,
+                            ProductId = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
+                            Value = "Крос кънтри / XC"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            AttributeId = 5,
+                            ProductId = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
+                            Value = "DOWNHILL"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            AttributeId = 5,
+                            ProductId = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
+                            Value = "City / Градски"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            AttributeId = 5,
+                            ProductId = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
+                            Value = "Treking"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            AttributeId = 5,
+                            ProductId = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
+                            Value = "Gravel Bike"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            AttributeId = 5,
+                            ProductId = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
+                            Value = "Шосе"
+                        });
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.ProductType", b =>
@@ -967,256 +1551,16 @@ namespace BuyBike.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Bicycle", b =>
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Attribute", b =>
                 {
-                    b.HasBaseType("BuyBike.Infrastructure.Data.Entities.Product");
-
-                    b.Property<int>("Brakes")
-                        .HasColumnType("integer")
-                        .HasColumnName("brakes")
-                        .HasComment("Brakes type");
-
-                    b.Property<int>("Material")
-                        .HasColumnType("integer")
-                        .HasColumnName("material")
-                        .HasComment("Frame's material");
-
-                    b.Property<string>("Style")
-                        .HasMaxLength(25)
-                        .HasColumnType("character varying(25)")
-                        .HasColumnName("style")
-                        .HasComment("Bicycle riding style");
-
-                    b.Property<string>("Suspention")
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.ProductType", "ProductType")
+                        .WithMany()
+                        .HasForeignKey("ProductTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
-                        .HasColumnName("suspention")
-                        .HasComment("Suspention type");
+                        .HasConstraintName("fk_attributes_product_types_product_type_id");
 
-                    b.Property<double>("TyreSize")
-                        .HasColumnType("double precision")
-                        .HasColumnName("tyre_size")
-                        .HasComment("Tyre size");
-
-                    b.ToTable("bicycles", null, t =>
-                        {
-                            t.HasComment("Bicycle");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("78804049-030f-4373-be3c-dfb4df261846"),
-                            CategoryId = 1,
-                            Color = "Black",
-                            DiscountId = 1,
-                            ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
-                            Name = "Fathom 1",
-                            Price = 3499m,
-                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
-                            TypeId = 1,
-                            Brakes = 0,
-                            Material = 0,
-                            Style = "Крос кънтри / XC",
-                            Suspention = "Амортисьорна вилка",
-                            TyreSize = 29.0
-                        },
-                        new
-                        {
-                            Id = new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"),
-                            CategoryId = 1,
-                            Color = "White",
-                            ImageUrl = "bicycles/mountain/FATHOM_1_29_ColorBBlack_Charcoal.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("69ec3905-081e-433b-a8ec-5baef5cbf0e9"),
-                            Name = "Fathom 1",
-                            Price = 3499m,
-                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
-                            TypeId = 1,
-                            Brakes = 0,
-                            Material = 0,
-                            Style = "Крос кънтри / XC",
-                            Suspention = "Амортисьорна вилка",
-                            TyreSize = 29.0
-                        },
-                        new
-                        {
-                            Id = new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"),
-                            CategoryId = 1,
-                            Color = "White",
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            DiscountId = 2,
-                            ImageUrl = "bicycles/mountain/Epic_Expert_Morn_White.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
-                            Name = "Epic Expert Morn",
-                            Price = 13599m,
-                            TypeId = 1,
-                            Brakes = 0,
-                            Material = 1,
-                            Style = "DOWNHILL",
-                            Suspention = "Пълно окачване",
-                            TyreSize = 29.0
-                        },
-                        new
-                        {
-                            Id = new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"),
-                            CategoryId = 3,
-                            Color = "Silver",
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            Gender = 0,
-                            ImageUrl = "bicycles/city/Touring_Pro_28_Silver.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
-                            Name = "Touring Pro",
-                            Price = 1699m,
-                            Specification = "[[\"Рамка\", \"Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 760mm, 31.8mm\"]]",
-                            TypeId = 1,
-                            Brakes = 1,
-                            Material = 0,
-                            Style = "City / Градски",
-                            Suspention = "Твърда вилка",
-                            TyreSize = 28.0
-                        },
-                        new
-                        {
-                            Id = new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"),
-                            CategoryId = 3,
-                            Color = "Grey",
-                            Gender = 1,
-                            ImageUrl = "bicycles/city/Nulane_Pro_28_Grey.png",
-                            IsActive = true,
-                            MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
-                            Name = "Nulane Pro",
-                            Price = 3899m,
-                            TypeId = 1,
-                            Brakes = 1,
-                            Material = 0,
-                            Style = "Treking",
-                            Suspention = "Твърда вилка",
-                            TyreSize = 28.0
-                        },
-                        new
-                        {
-                            Id = new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"),
-                            CategoryId = 2,
-                            Color = "Red",
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            ImageUrl = "bicycles/road/Allez_E5_28_red.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("2a63178e-c137-4f76-8bb0-fb2a741c540b"),
-                            Name = "Allez E5",
-                            Price = 2399m,
-                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
-                            TypeId = 1,
-                            Brakes = 1,
-                            Material = 0,
-                            Style = "Gravel Bike",
-                            Suspention = "Амортисьорна вилка",
-                            TyreSize = 28.0
-                        },
-                        new
-                        {
-                            Id = new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"),
-                            CategoryId = 2,
-                            Color = "Blue",
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            DiscountId = 3,
-                            ImageUrl = "bicycles/road/Litening_Aero_28_Blue.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("62bc8c33-2658-4720-ad78-2bb6ba71ee87"),
-                            Name = "Litening Aero",
-                            Price = 14899m,
-                            Specification = "[[\"Рамка\", \"S-Works FACT 12m Carbon, Progressive XC Race Geometry, Rider-First Engineered™, threaded BB, 12x148mm rear spacing, internal cable routing, 100mm of travel\"], [\"Вилка\", \"RockShox SID SL ULTIMATE BRAIN, Top-Adjust Brain damper, Debon Air, 15x110mm, 44mm offset, 100mm Travel\"], [\"Заден дерайльор\", \"SRAM XX1 Eagle AXS\"], [\"Команди\", \"SRAM Eagle AXS Rocker Paddle\"], [\"Касета\", \"Sram XG-1299, 12-Speed, 10-52t\"], [\"Курбели\", \"Quarq XX1 Powermeter, DUB, 170/175mm, 34t\"], [\"Кормило\", \"S-Works Carbon XC Mini Rise, 6-degree upsweep, 8-degree backsweep, 10mm rise, 760mm, 31.8mm\"]]",
-                            TypeId = 1,
-                            Brakes = 0,
-                            Material = 1,
-                            Style = "Шосе",
-                            Suspention = "Амортисьорна вилка",
-                            TyreSize = 28.0
-                        },
-                        new
-                        {
-                            Id = new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"),
-                            CategoryId = 4,
-                            Color = "Blue",
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            DiscountId = 2,
-                            ImageUrl = "bicycles/kids/Boxer_12_blue.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("d40d9dfe-8f24-4bce-8414-b1dbdd3a2df5"),
-                            Name = "Boxer",
-                            Price = 299m,
-                            Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
-                            TypeId = 1,
-                            Brakes = 0,
-                            Material = 0,
-                            Suspention = "Амортисьорна вилка",
-                            TyreSize = 12.0
-                        },
-                        new
-                        {
-                            Id = new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"),
-                            CategoryId = 4,
-                            Color = "Black",
-                            Description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Illum deserunt voluptas, voluptate laborum quo ipsa ut accusantium beatae autem libero nam nobis maiores adipisci incidunt ad veniam tempora asperiores iure!",
-                            DiscountId = 1,
-                            ImageUrl = "bicycles/kids/Faro_12_black.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("fb2ef438-d045-4e5c-8022-d979204b4f29"),
-                            Name = "Faro",
-                            Price = 279m,
-                            Specification = "[[\"Рамка\", \"лека алуминиева\"], [\"Седалка\", \"регулируема седалка от 350 мм до 400 мм\"], [\"Кормило\", \"регулируемо във височина от 490мм до 540мм, дължина - 400мм, диаметър - 22,2мм\"], [\"Спирачка\", \"V\"], [\"Тегло\", \"4.4 кг\"]]",
-                            TypeId = 1,
-                            Brakes = 1,
-                            Material = 2,
-                            Suspention = "Твърда вилка",
-                            TyreSize = 12.0
-                        });
-                });
-
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Part", b =>
-                {
-                    b.HasBaseType("BuyBike.Infrastructure.Data.Entities.Product");
-
-                    b.ToTable("parts", null, t =>
-                        {
-                            t.HasComment("Bicycle parts");
-                        });
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
-                            CategoryId = 8,
-                            Color = "Black",
-                            Description = "Начален клас амортисьорна вилка SR SUNTOUR 26\" за планински велосипеди, съвместима с V-образни спирачки.",
-                            DiscountId = 1,
-                            ImageUrl = "parts/forks/SR-26-M3020-P.jpg",
-                            IsActive = true,
-                            MakeId = new Guid("87ccf053-a35b-48f5-90d4-568a91fc053a"),
-                            Name = "26 M3020-P",
-                            Price = 121m,
-                            Specification = "[[\"Размер\", \"26 цола\"],[\"Ход\", \"75mm\"], [\"Стержен\", \"1 1/8 инча (28,6mm)\"], [\"Дължина на стержена\", \"255mm\"], [\"Материал\", \" въглеродна стомана, алуминий\"], [\"Тип ос\", \"9mm\"], [\"Тип спирачка\", \"V-образна\"]]",
-                            TypeId = 2
-                        },
-                        new
-                        {
-                            Id = new Guid("bae19e01-9923-4de7-bee3-38b713ea68f9"),
-                            CategoryId = 9,
-                            Color = "Black",
-                            Description = "Лява команда, подходяща за планински велосипеди (МТВ). Гладко и леко превключване на скоростите. Вкомплекта е включено жило.",
-                            ImageUrl = "shifters/SH-SL-M360-3-L.jpeg",
-                            IsActive = true,
-                            MakeId = new Guid("24be2dc6-7b7b-459a-a665-155b4e9e50dc"),
-                            Name = "ACERA SL-M360 3L",
-                            Price = 36m,
-                            Specification = "[[\"Тип на лосчетата\", \"Rapidfire Plus\"],[\"Скорости\", \"3s\"], [\"Индикатор за коростта\", \"да\"], [\"Ергономичен дизайн на лосчето\", \"да\"], [\"Регулатор за жилото\", \"да\"]]",
-                            TypeId = 2
-                        });
+                    b.Navigation("ProductType");
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Category", b =>
@@ -1320,6 +1664,27 @@ namespace BuyBike.Infrastructure.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.ProductAttributeValue", b =>
+                {
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Attribute", "Attribute")
+                        .WithMany("AttributeValues")
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_attribute_values_attributes_attribute_id");
+
+                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", "Product")
+                        .WithMany("AttributeValues")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_attribute_values_products_product_id");
+
+                    b.Navigation("Attribute");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
@@ -1377,29 +1742,14 @@ namespace BuyBike.Infrastructure.Migrations
                         .HasConstraintName("fk_asp_net_user_tokens_asp_net_users_user_id");
                 });
 
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Bicycle", b =>
-                {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", null)
-                        .WithOne()
-                        .HasForeignKey("BuyBike.Infrastructure.Data.Entities.Bicycle", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_bicycles_products_id");
-                });
-
-            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Part", b =>
-                {
-                    b.HasOne("BuyBike.Infrastructure.Data.Entities.Product", null)
-                        .WithOne()
-                        .HasForeignKey("BuyBike.Infrastructure.Data.Entities.Part", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_parts_products_id");
-                });
-
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.AppUser", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Attribute", b =>
+                {
+                    b.Navigation("AttributeValues");
                 });
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Category", b =>
@@ -1431,6 +1781,8 @@ namespace BuyBike.Infrastructure.Migrations
 
             modelBuilder.Entity("BuyBike.Infrastructure.Data.Entities.Product", b =>
                 {
+                    b.Navigation("AttributeValues");
+
                     b.Navigation("Items");
                 });
 

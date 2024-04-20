@@ -8,22 +8,25 @@ import {
   SimpleChanges,
   inject,
 } from '@angular/core';
-import { Category } from '../../../core/models/category';
 import { CategoryService } from '../../../core/services/category.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Manufacturer } from '../../../core/models/manufacturer';
-import { Product } from '../../../core/models/product/product';
 import {
   ChangeContext,
   NgxSliderModule,
   Options,
 } from '@angular-slider/ngx-slider';
+import { ProductType } from '../../../core/models/product-type';
+import { ProductPage } from '../../../core/models/product/products-page';
+import { ProductFilter } from '../../../core/models/product-filter';
+import { FormsModule } from '@angular/forms';
+import { ProductQueryFilter } from '../../../core/models/product-query-filter';
 
 @Component({
   selector: 'category-sidebar',
   standalone: true,
-  imports: [CommonModule, RouterLink, NgxSliderModule],
+  imports: [CommonModule, RouterLink, NgxSliderModule, FormsModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',
 })
@@ -32,35 +35,43 @@ export class SidebarComponent implements OnInit, OnChanges {
 
   @Input() selectedCategoryName: string = '';
   @Input() selectedTypeName: string = '';
-  @Input() products?: Product[] = [];
+  @Input() productPage?: ProductPage;
+  @Output() queryFilterChanged: EventEmitter<ProductQueryFilter> =
+    new EventEmitter<ProductQueryFilter>();
 
-  categories: Category[] | null = null;
-  selectedCategoryTree: Category[] = [];
-
+  productTypes: ProductType[] | null = null;
+  selectedType?: ProductType;
+  selectedCategories: string[] = [];
   manufacturers?: Manufacturer[];
 
-  value: number = 0;
-  highValue: number = 1000;
-  options: Options = {
+  minPrice: number = 0;
+  maxPrice: number = 0;
+  private filterChanged = false;
+  priceBarOptions: Options = {
     floor: 0,
-    ceil: 1500,
+    ceil: 0,
+    translate: (value: number): string => {
+      return value + 'лв';
+    },
   };
+  filter: ProductFilter = new ProductFilter();
+  queryFilter: ProductQueryFilter = new ProductQueryFilter();
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.setPriceFilter();
+    if (this.filterChanged) {
+      this.setPriceFilter();
+      this.filterChanged = false;
+    }
   }
 
   ngOnInit(): void {
-    this.manufacturers = this.products!.reduce<Manufacturer[]>((acc, curr) => {
-      if (acc.find((m) => m.name === curr.make!.name) === undefined) {
-        acc.push(curr.make!);
-      }
-      return acc;
-    }, []);
+    this.manufacturers = this.setManufacturersArray();
 
     this.categoryService.getAll().subscribe((data) => {
-      this.categories = data;
-      this.findSelectedCategoryTree(data, []);
+      this.productTypes = data;
+      this.findSelectedTypeAndCategories();
+      this.setProductFilterProps();
+      this.setPriceFilter();
     });
   }
 
@@ -78,44 +89,133 @@ export class SidebarComponent implements OnInit, OnChanges {
     }
   }
 
-  onUserChangeStart(event: ChangeContext) {}
-  onUserChange(event: ChangeContext) {}
-  onUserChangeEnd(event: ChangeContext) {}
-  onValueChange(value: number) {}
-  onHighValueChange(highValue: number) {}
-
-  private setPriceFilter() {
-    const sorted = [...this.products!].sort((a, b) => a.price - b.price);
-    this.options = {
-      floor: sorted[0].price,
-      ceil: sorted[sorted.length - 1].price,
-    };
-    this.value = this.options.floor!;
-    this.highValue = this.options.ceil!;
+  onFilterChanged() {
+    this.filterChanged = true;
+    this.setQueryFilter();
+    this.queryFilterChanged.emit(this.queryFilter);
   }
 
-  private findSelectedCategoryTree(
-    currCats: Category[],
-    result: Category[],
-    found: boolean = false
-  ) {
-    currCats.forEach((c) => {
-      if (found) {
-        return;
-      }
-      result.push(c);
+  priceSliderEvent(changeContext: ChangeContext) {
+    if (
+      !this.queryFilter.minPrice ||
+      changeContext.value !== this.queryFilter.minPrice
+    ) {
+      this.queryFilter.minPrice = changeContext.value;
+    }
+    if (
+      !this.queryFilter.maxPrice ||
+      changeContext.highValue !== this.queryFilter.maxPrice
+    ) {
+      this.queryFilter.maxPrice = changeContext.highValue;
+    }
 
-      if (c.name.toLowerCase() === this.selectedCategoryName) {
-        this.selectedCategoryTree = [...result];
-        found = true;
-        return;
-      }
-      this.findSelectedCategoryTree(c.subCategories, result, found);
+    this.queryFilterChanged.emit(this.queryFilter);
+  }
 
-      if (found) {
+  private setManufacturersArray(): Manufacturer[] {
+    return this.productPage!.products.reduce<Manufacturer[]>((acc, curr) => {
+      if (acc.find((m) => m.name === curr.make!.name) === undefined) {
+        acc.push(curr.make!);
+      }
+      return acc;
+    }, []);
+  }
+
+  private setPriceFilter(): void {
+    const sorted = [...this.productPage!.products].sort(
+      (a, b) => a.newPrice - b.newPrice
+    );
+
+    this.priceBarOptions = {
+      floor: Math.floor(sorted[0].newPrice),
+      ceil: Math.ceil(sorted[sorted.length - 1].newPrice),
+      translate: (value: number): string => {
+        return value + 'лв';
+      },
+    };
+    this.minPrice = this.priceBarOptions.floor!;
+    this.maxPrice = this.priceBarOptions.ceil!;
+  }
+
+  private setQueryFilter() {
+    this.queryFilter.makes = Object.entries(this.filter.makeIds).reduce<
+      string[]
+    >((acc, [k, v]) => {
+      if (v === true) {
+        acc.push(k);
+      }
+      return acc;
+    }, []);
+
+    if (this.queryFilter.makes.length === 0) {
+      this.queryFilter.makes = undefined;
+    }
+
+    this.queryFilter.additionalFilters = new Map<number, string[]>();
+
+    for (const [attrId, valuesMap] of this.filter.additionalFilters) {
+      let selectedValues: string[] = [];
+      Object.entries(valuesMap).forEach(([attrValue, isSelected]) => {
+        if (isSelected) {
+          selectedValues.push(attrValue);
+        }
+      });
+      if (selectedValues.length > 0) {
+        this.queryFilter.additionalFilters.set(attrId, selectedValues);
+      }
+    }
+
+    if (this.queryFilter.additionalFilters.size === 0) {
+      this.queryFilter.additionalFilters = undefined;
+    }
+
+    if (this.filter.inStock && !this.filter.outOfStock) {
+      this.queryFilter.inStock = true;
+    } else if (!this.filter.inStock && this.filter.outOfStock) {
+      this.queryFilter.inStock = false;
+    } else {
+      this.queryFilter.inStock = undefined;
+    }
+  }
+
+  private findSelectedTypeAndCategories(): void {
+    this.selectedType = this.productTypes?.find(
+      (t) => t.name.toLowerCase() === this.selectedTypeName.toLowerCase()
+    );
+
+    if (!this.selectedType || !this.selectedCategoryName) {
+      return;
+    }
+
+    this.selectedType.categories.forEach((category) => {
+      if (category.name.toLowerCase() === this.selectedCategoryName) {
+        this.selectedCategories.push(category.name);
         return;
       }
-      result.pop();
+
+      category.subCategories.forEach((subCategory) => {
+        if (subCategory.name.toLowerCase() === this.selectedCategoryName) {
+          this.selectedCategories.push(category.name);
+          this.selectedCategories.push(subCategory.name);
+          return;
+        }
+      });
     });
+  }
+
+  private setProductFilterProps() {
+    this.productPage?.attributes.forEach((attr) => {
+      const attrValuesObj: { [key: string]: boolean } = {};
+      attr.values.forEach((val) => {
+        attrValuesObj[val] = false;
+      });
+      this.filter.additionalFilters.set(attr.id, attrValuesObj);
+    });
+
+    this.manufacturers?.forEach((m) => {
+      this.filter.makeIds[m.id] = false;
+    });
+
+    console.log(this.filter);
   }
 }

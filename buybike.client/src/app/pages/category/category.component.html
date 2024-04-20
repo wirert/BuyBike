@@ -6,7 +6,8 @@
     *ngIf="productsPage"
     [selectedTypeName]="productsType"
     [selectedCategoryName]="category ? category : ''"
-    [products]="productsPage.products"
+    [productPage]="productsPage"
+    (queryFilterChanged)="onFilterChange($event)"
   ></category-sidebar>
 
   <div class="category-content">
@@ -19,7 +20,7 @@
       [totalItems]="productsPage?.totalProducts ?? 0"
     ></app-paginator>
 
-    <div class="products-wrapper">
+    <div class="products-wrapper" *ngIf="productsPage?.products">
       <ng-container *ngFor="let product of productsPage?.products">
         <product-card
           [product]="product"

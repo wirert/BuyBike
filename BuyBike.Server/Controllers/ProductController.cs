@@ -3,41 +3,44 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    using BuyBike.Core.Models.Bicycle;
     using BuyBike.Core.Models;
     using BuyBike.Core.Services.Contracts;
-    using BuyBike.Core.Constants;
+    using Newtonsoft.Json;
 
+    /// <summary>
+    /// API product controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class PartController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly IProductService productService;
 
-        public PartController(IProductService _productService)
+        public ProductController(IProductService _productService)
         {
             productService = _productService;
         }
 
         /// <summary>
-        /// Get Parts 
+        /// Get products 
         /// </summary>
+        /// <param name="productType">Product type</param>
         /// <param name="query">Query params model</param>
         /// <returns></returns>
         [HttpGet]
         [Route("")]
         [Produces("application/json")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductDto<ProductDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PagedProductDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll([FromQuery] GetAllQueryModel query)
+        public async Task<IActionResult> GetAll([FromQuery] AllProductQueryModel query)
         {
             try
             {
-                var pagedParts = await productService.GetAllAsync(query, AppConstants.ProductTypes.Parts);
+                var productPage = await productService.GetAllAsync(query);
 
-                return Ok(pagedParts);
+                return Ok(productPage);
             }
             catch (FileNotFoundException fnfe)
             {
@@ -45,7 +48,7 @@
             }
             catch (ArgumentException ae)
             {
-                return StatusCode(StatusCodes.Status400BadRequest,ae.Message);
+                return StatusCode(StatusCodes.Status400BadRequest, ae.Message);
             }
             catch (Exception e)
             {
@@ -54,9 +57,9 @@
         }
 
         /// <summary>
-        /// Get Part details by Id
+        /// Get Product by Id
         /// </summary>
-        /// <param name="id">Bicycle identifier</param>
+        /// <param name="id">Product identifier</param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces("application/json")]
@@ -67,9 +70,9 @@
         {
             try
             {
-                var part = await productService.GetById(id);
+                var bicycle = await productService.GetById(id);
 
-                return Ok(part);
+                return Ok(bicycle);
             }
             catch (ArgumentException ae)
             {
@@ -80,5 +83,6 @@
                 return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
             }
         }
+
     }
 }

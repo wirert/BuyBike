@@ -4,7 +4,7 @@
     <ul class="type-cat">
       <li
         [ngClass]="{ hide: type.name.toLowerCase() !== selectedTypeName }"
-        *ngFor="let type of categories; index as i"
+        *ngFor="let type of productTypes; index as i"
         id="type{{ i }}"
       >
         <div class="category-name-group">
@@ -19,7 +19,7 @@
           >
           <button
             class="category-toggle-btn toggle-btn"
-            *ngIf="type.subCategories.length > 0"
+            *ngIf="type.categories.length > 0"
             (click)="toggle('type' + i)"
           >
             <i
@@ -34,8 +34,8 @@
 
         <ul>
           <li
-            [ngClass]="{ hide: !selectedCategoryTree.includes(category) }"
-            *ngFor="let category of type.subCategories; index as j"
+            [ngClass]="{ hide: !selectedCategories.includes(category.name) }"
+            *ngFor="let category of type.categories; index as j"
             id="cat{{ j }}"
           >
             <div class="category-name-group">
@@ -62,8 +62,8 @@
               >
                 <i
                   [ngClass]="{
-                    'fa-plus': !selectedCategoryTree.includes(category),
-                    'fa-minus': selectedCategoryTree.includes(category)
+                    'fa-plus': !selectedCategories.includes(category.name),
+                    'fa-minus': selectedCategories.includes(category.name)
                   }"
                   class="fa-solid"
                 ></i>
@@ -102,18 +102,14 @@
       </button>
       <ul>
         <ngx-slider
-          [(value)]="value"
-          [(highValue)]="highValue"
-          [options]="options"
-          (userChangeStart)="onUserChangeStart($event)"
-          (userChange)="onUserChange($event)"
-          (userChangeEnd)="onUserChangeEnd($event)"
-          (valueChange)="onValueChange($event)"
-          (highValueChange)="onHighValueChange($event)"
+          [(value)]="minPrice"
+          [(highValue)]="maxPrice"
+          [options]="priceBarOptions"
+          (userChangeEnd)="priceSliderEvent($event)"
         >
           >
-          <div>от: {{ value }}</div>
-          <div>до: {{ highValue }}</div>
+          <div>от: {{ minPrice }}</div>
+          <div>до: {{ maxPrice }}</div>
         </ngx-slider>
       </ul>
     </div>
@@ -128,7 +124,13 @@
       </button>
       <ul>
         <li class="make" *ngFor="let make of manufacturers; index as i">
-          <input type="checkbox" [name]="i" />
+          <input
+            type="checkbox"
+            [name]="i.toString()"
+            value="true"
+            [(ngModel)]="filter.makeIds[make.id]"
+            (ngModelChange)="onFilterChanged()"
+          />
 
           <label for="{{ i }}">{{ make.name }}</label>
         </li>
@@ -145,14 +147,55 @@
       </button>
       <ul>
         <li>
-          <input type="checkbox" name="inStock" id="" />
+          <input
+            type="checkbox"
+            name="inStock"
+            value="true"
+            [(ngModel)]="filter.inStock"
+            (ngModelChange)="onFilterChanged()"
+          />
           <label for="inStock">Налични</label>
         </li>
         <li>
-          <input type="checkbox" name="outOfStock" id="" />
+          <input
+            type="checkbox"
+            name="outOfStock"
+            value="true"
+            [(ngModel)]="filter.outOfStock"
+            (ngModelChange)="onFilterChanged()"
+          />
           <label for="outOfStock">Неналични</label>
         </li>
       </ul>
+    </div>
+
+    <div class="additional-filters" *ngIf="selectedType">
+      <div
+        *ngFor="let prop of productPage?.attributes; index as i"
+        [id]="'additional-filter' + i"
+      >
+        <ng-container ng *ngIf="prop.values.length > 0">
+          <button
+            class="filter-toggle-btn toggle-btn"
+            (click)="toggle('additional-filter' + i)"
+          >
+            <span class="filter-title">{{ prop.name }}</span>
+            <i class="fa-solid fa-minus"></i>
+          </button>
+          <ul>
+            <li *ngFor="let val of prop.values">
+              <input
+                type="checkbox"
+                name="prop"
+                value="true"
+                [(ngModel)]="filter.additionalFilters.get(prop.id)![val]"
+                (ngModelChange)="onFilterChanged()"
+              />
+              <label for="prop">{{ val }}</label>
+            </li>
+          </ul>
+        </ng-container>
+      </div>
     </div>
   </div>
 </div>

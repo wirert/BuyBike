@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnDestroy,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { PaginatorComponent } from '../../shared/paginator/paginator.component';
@@ -15,14 +8,14 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { ProductPage } from '../../core/models/product/products-page';
 import { ProductService } from '../../core/services/product.service';
-import { Observable, Subscription, of, scheduled } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { LoaderComponent } from '../../shared/loader/loader.component';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackbarComponent } from '../../shared/snackbar/snackbar.component';
 import { MessageConstants } from '../../core/constants/message-constants';
 import { PaginatorState } from '../../core/models/paginator-state';
 import { Title } from '@angular/platform-browser';
-import { Product } from '../../core/models/product/product';
+import { ProductQueryFilter } from '../../core/models/product-query-filter';
 
 @Component({
   selector: 'app-category',
@@ -50,6 +43,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   category: string | null = '';
   productsPage: ProductPage | undefined;
   paginatorState: PaginatorState = new PaginatorState();
+  filter?: ProductQueryFilter;
 
   isloading = true;
   errorMessage: string | null = null;
@@ -70,6 +64,12 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.productsSubscription?.unsubscribe();
   }
 
+  onFilterChange(filter: ProductQueryFilter) {
+    this.filter = filter;
+    console.log('filter in category component:', this.filter);
+    this.fetchData();
+  }
+
   onPaginatorStateChange(paginatorState: PaginatorState) {
     this.paginatorState = paginatorState;
     this.fetchData();
@@ -78,10 +78,21 @@ export class CategoryComponent implements OnInit, OnDestroy {
   private fetchData(): void {
     this.isloading = true;
     this.productsSubscription = this.productService
-      .getPagedProducts(this.paginatorState, this.category, this.productsType)
+      .getPagedProducts(
+        this.paginatorState,
+        this.category,
+        this.productsType,
+        this.filter
+      )
       .subscribe({
         next: (data) => {
+          if (data.products.length === 0) {
+            this.setErrorMessage(
+              new HttpErrorResponse({ error: 'Няма намерени продукти' })
+            );
+          }
           this.isloading = false;
+
           this.productsPage = data;
           console.log(data);
         },

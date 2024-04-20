@@ -15,6 +15,8 @@
 
         public decimal Price { get; set; }
 
+        public decimal NewPrice { get; set; }
+
         public string? Color { get; set; }
 
         public string Category { get; set; } = null!;
@@ -22,5 +24,7 @@
         public int? DiscountPercent { get; set; }
 
         public bool IsInStock { get; set; }
+
+        public IEnumerable<ProductAttributeDto> Properties { get; set; } = new List<ProductAttributeDto>();
     }
 }

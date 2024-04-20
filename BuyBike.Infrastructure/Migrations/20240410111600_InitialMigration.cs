@@ -233,6 +233,28 @@ namespace BuyBike.Infrastructure.Migrations
                 comment: "User products order");
 
             migrationBuilder.CreateTable(
+                name: "attributes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "integer", nullable: false, comment: "Attribute id")
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    name = table.Column<string>(type: "character varying(60)", maxLength: 60, nullable: false, comment: "Attribute name"),
+                    data_type = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false, comment: "Attribute real data type"),
+                    product_type_id = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_attributes", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_attributes_product_types_product_type_id",
+                        column: x => x.product_type_id,
+                        principalTable: "product_types",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                },
+                comment: "Properties for different types of products");
+
+            migrationBuilder.CreateTable(
                 name: "categories",
                 columns: table => new
                 {
@@ -281,7 +303,7 @@ namespace BuyBike.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_products", x => x.id);
+                    table.PrimaryKey("pk_products", x => x.id);
                     table.ForeignKey(
                         name: "fk_products_categories_category_id",
                         column: x => x.category_id,
@@ -309,27 +331,32 @@ namespace BuyBike.Infrastructure.Migrations
                 comment: "Shop product model");
 
             migrationBuilder.CreateTable(
-                name: "bicycles",
+                name: "attribute_values",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product primary key"),
-                    tyre_size = table.Column<double>(type: "double precision", nullable: false, comment: "Tyre size"),
-                    material = table.Column<int>(type: "integer", nullable: false, comment: "Frame's material"),
-                    brakes = table.Column<int>(type: "integer", nullable: false, comment: "Brakes type"),
-                    suspention = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false, comment: "Suspention type"),
-                    style = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: true, comment: "Bicycle riding style")
+                    id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    value = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
+                    attribute_id = table.Column<int>(type: "integer", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_bicycles", x => x.id);
+                    table.PrimaryKey("pk_attribute_values", x => x.id);
                     table.ForeignKey(
-                        name: "fk_bicycles_products_id",
-                        column: x => x.id,
+                        name: "fk_attribute_values_attributes_attribute_id",
+                        column: x => x.attribute_id,
+                        principalTable: "attributes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "fk_attribute_values_products_product_id",
+                        column: x => x.product_id,
                         principalTable: "products",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 },
-                comment: "Bicycle");
+                comment: "Product property value table");
 
             migrationBuilder.CreateTable(
                 name: "items",
@@ -353,24 +380,6 @@ namespace BuyBike.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 },
                 comment: "Product item for sale");
-
-            migrationBuilder.CreateTable(
-                name: "parts",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false, comment: "Product primary key")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_parts", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_parts_products_id",
-                        column: x => x.id,
-                        principalTable: "products",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                },
-                comment: "Bicycle parts");
 
             migrationBuilder.CreateTable(
                 name: "order_items",
@@ -434,6 +443,18 @@ namespace BuyBike.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "attributes",
+                columns: new[] { "id", "data_type", "name", "product_type_id" },
+                values: new object[,]
+                {
+                    { 1, "double", "TyreSize", 1 },
+                    { 2, "string", "Material", 1 },
+                    { 3, "string", "Brakes", 1 },
+                    { 4, "string", "Suspention", 1 },
+                    { 5, "string", "Style", 1 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "categories",
                 columns: new[] { "id", "description", "image_url", "name", "parent_category_id", "type_id" },
                 values: new object[,]
@@ -467,19 +488,53 @@ namespace BuyBike.Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "bicycles",
-                columns: new[] { "id", "brakes", "material", "style", "suspention", "tyre_size" },
+                table: "attribute_values",
+                columns: new[] { "id", "attribute_id", "product_id", "value" },
                 values: new object[,]
                 {
-                    { new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), 0, 1, "Шосе", "Амортисьорна вилка", 28.0 },
-                    { new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), 1, 0, "Treking", "Твърда вилка", 28.0 },
-                    { new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), 0, 1, "DOWNHILL", "Пълно окачване", 29.0 },
-                    { new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), 0, 0, "Крос кънтри / XC", "Амортисьорна вилка", 29.0 },
-                    { new Guid("78804049-030f-4373-be3c-dfb4df261846"), 0, 0, "Крос кънтри / XC", "Амортисьорна вилка", 29.0 },
-                    { new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), 1, 2, null, "Твърда вилка", 12.0 },
-                    { new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), 1, 0, "City / Градски", "Твърда вилка", 28.0 },
-                    { new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), 0, 0, null, "Амортисьорна вилка", 12.0 },
-                    { new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), 1, 0, "Gravel Bike", "Амортисьорна вилка", 28.0 }
+                    { 1, 1, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "29" },
+                    { 2, 1, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "29" },
+                    { 3, 1, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "29" },
+                    { 4, 1, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "28" },
+                    { 5, 1, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "28" },
+                    { 6, 1, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "28" },
+                    { 7, 1, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "28" },
+                    { 8, 1, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "12" },
+                    { 9, 1, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "12" },
+                    { 10, 2, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "Aлуминий" },
+                    { 11, 2, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "Aлуминий" },
+                    { 12, 2, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "Kарбон" },
+                    { 13, 2, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "Aлуминий" },
+                    { 14, 2, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "Aлуминий" },
+                    { 15, 2, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "Aлуминий" },
+                    { 16, 2, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "Kарбон" },
+                    { 17, 2, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "Aлуминий" },
+                    { 18, 2, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "Стомана" },
+                    { 19, 3, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "Дискови" },
+                    { 20, 3, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "Дискови" },
+                    { 21, 3, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "Дискови" },
+                    { 22, 3, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "V-Brake" },
+                    { 23, 3, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "V-Brake" },
+                    { 24, 3, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "V-Brake" },
+                    { 25, 3, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "Дискови" },
+                    { 26, 3, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "Дискови" },
+                    { 27, 3, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "V-Brake" },
+                    { 28, 4, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "Амортисьорна вилка" },
+                    { 29, 4, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "Амортисьорна вилка" },
+                    { 30, 4, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "Пълно окачване" },
+                    { 31, 4, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "Твърда вилка" },
+                    { 32, 4, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "Твърда вилка" },
+                    { 33, 4, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "Амортисьорна вилка" },
+                    { 34, 4, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "Амортисьорна вилка" },
+                    { 35, 4, new Guid("c8a565f6-eb03-44b1-bed9-68dcdbff914e"), "Амортисьорна вилка" },
+                    { 36, 4, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), "Твърда вилка" },
+                    { 37, 5, new Guid("78804049-030f-4373-be3c-dfb4df261846"), "Крос кънтри / XC" },
+                    { 38, 5, new Guid("751f85bf-9f3a-443d-a66f-1ad719e50b4e"), "Крос кънтри / XC" },
+                    { 39, 5, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), "DOWNHILL" },
+                    { 40, 5, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), "City / Градски" },
+                    { 41, 5, new Guid("4f195fb8-03d7-42c0-bbe6-3edc190ce51e"), "Treking" },
+                    { 42, 5, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), "Gravel Bike" },
+                    { 43, 5, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), "Шосе" }
                 });
 
             migrationBuilder.InsertData(
@@ -497,19 +552,11 @@ namespace BuyBike.Infrastructure.Migrations
                     { new Guid("8e6b5a05-304d-4d4d-a1f9-bbd2e5d92809"), 20, true, new Guid("78804049-030f-4373-be3c-dfb4df261846"), 3, "ITM0000001" },
                     { new Guid("9a3c3435-f141-44d2-a7b5-2d408edb5b17"), 7, true, new Guid("0c3f8754-5dce-4fd5-bdb6-79fc79b07e75"), 3, "ITM0000011" },
                     { new Guid("a1b1b140-9a70-4bb9-8286-b46f8bdc41f3"), 17, true, new Guid("b46a5b25-1e35-4006-b862-71b8b0f7e816"), 5, "ITM0000013" },
+                    { new Guid("d8035895-c7e3-468f-ae2c-cb080c4b5a08"), 9, true, new Guid("bae19e01-9923-4de7-bee3-38b713ea68f9"), null, "ITM0000015" },
                     { new Guid("d99f6519-e62d-4653-a950-2ef8f896608d"), 12, true, new Guid("6f88c752-2b55-4380-8287-0e85a569abd5"), 3, "ITM0000006" },
                     { new Guid("e3ff3a7f-96ac-487c-888d-311bf73018e2"), 14, true, new Guid("dd32437b-1dfb-4a4d-bca4-43b1294a925e"), 3, "ITM0000010" },
                     { new Guid("f1c54893-bdc1-4b37-baad-db033b2d359b"), 0, true, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), 4, "ITM0000008" },
                     { new Guid("ff30f42a-ec1d-42cd-a3b4-7b5658221d01"), 18, true, new Guid("c77e1e5a-86eb-4356-86c1-c6868494df85"), 3, "ITM0000007" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "parts",
-                column: "id",
-                values: new object[]
-                {
-                    new Guid("7494afe6-c436-4d4b-b6c4-68ea4ac3c633"),
-                    new Guid("bae19e01-9923-4de7-bee3-38b713ea68f9")
                 });
 
             migrationBuilder.CreateIndex(
@@ -548,6 +595,21 @@ namespace BuyBike.Infrastructure.Migrations
                 table: "AspNetUsers",
                 column: "normalized_user_name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_attribute_values_attribute_id",
+                table: "attribute_values",
+                column: "attribute_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_attribute_values_product_id",
+                table: "attribute_values",
+                column: "product_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_attributes_product_type_id",
+                table: "attributes",
+                column: "product_type_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_categories_parent_category_id",
@@ -614,16 +676,16 @@ namespace BuyBike.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "bicycles");
+                name: "attribute_values");
 
             migrationBuilder.DropTable(
                 name: "order_items");
 
             migrationBuilder.DropTable(
-                name: "parts");
+                name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "attributes");
 
             migrationBuilder.DropTable(
                 name: "items");
