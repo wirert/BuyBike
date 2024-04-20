@@ -34,11 +34,11 @@
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<IActionResult> GetAll(string productType, [FromQuery] GetAllQueryModel query, [FromQuery] QueryFilterModel? filter = null)
+        public async Task<IActionResult> GetAll([FromQuery] AllProductQueryModel query)
         {
             try
             {
-                var productPage = await productService.GetAllAsync(query, productType, filter);
+                var productPage = await productService.GetAllAsync(query);
 
                 return Ok(productPage);
             }

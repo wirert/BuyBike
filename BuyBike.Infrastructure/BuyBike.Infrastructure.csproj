@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Extentions\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

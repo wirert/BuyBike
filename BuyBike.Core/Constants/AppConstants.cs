@@ -1,9 +1,15 @@
 ﻿namespace BuyBike.Core.Constants
 {
+    using System.Text.RegularExpressions;
+
     public static class AppConstants
     {
-        public static readonly string[] QuerySortingValues = ["Price", "Name", "Discount", "Make"];
+        public const string QuerySortingValuesPattern = @"^(Price|Name|Discount|Make)$";
+
+        public const string ProductTypesPattern = "^(Велосипеди|Части|Аксесоари|Екипировка)$";
+
         public const string QuerySortingDefaultValue = "Price";
+
         public const string MinIo_EndPoint = @"http://localhost:9000/buy-bike/";
 
         public static class ProductTypes

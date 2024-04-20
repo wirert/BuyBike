@@ -8,9 +8,10 @@
 
     using BuyBike.Infrastructure.Constants;
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
+    using System.Linq.Expressions;
 
     [Comment("Shop product model")]
-    public class Product
+    public partial class Product
     {    
         public Product()
         {
@@ -84,29 +85,6 @@
 
         public virtual IEnumerable<Item> Items { get; set; }
 
-        public virtual IEnumerable<ProductAttributeValue> AttributeValues { get; set; }
-
-        public decimal DiscountedPrice
-        {
-            get
-            {
-                if (Discount != null)
-                {
-                    return Price * (1 - Discount.DiscountPercent / 100);
-                }
-                else
-                {
-                    return Price;
-                }
-            }
-        }
-
-        public bool IsInStock
-        {
-            get
-            {
-                return Items.Any(i => i.InStock > 0);
-            }
-        }
+        public virtual IEnumerable<ProductAttributeValue> AttributeValues { get; set; }       
     }
 }

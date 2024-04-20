@@ -39,7 +39,10 @@
             /// <summary>
             /// Item SCU lenght
             /// </summary>
-            public const int ScuLenght = 10;            
+            public const int ScuLenght = 10;
+
+            public const string MinPrice = "0";
+            public const string MaxPrice = "500000";
         }
 
         /// <summary>
