@@ -10,8 +10,8 @@
 
         public string CategoryImageUrl { get; set; } = string.Empty;
 
-        public ICollection<AttributeValuesDto> Attributes { get; set; } = new List<AttributeValuesDto>();
+        public IEnumerable<AttributeValuesDto> Attributes { get; set; } = new List<AttributeValuesDto>();
 
-        public ICollection<ProductDto> Products { get; set; } = new List<ProductDto>();
+        public IEnumerable<ProductDto> Products { get; set; } = new List<ProductDto>();
     }
 }

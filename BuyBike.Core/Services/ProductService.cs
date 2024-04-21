@@ -72,83 +72,80 @@
 
         private Expression<Func<Product, bool>> BuildFilterExpr(AllProductQueryModel queryArgs)
         {     
-            Expression<Func<Product, bool>> exprBody = PredicateBuilder.True<Product>();
+            Expression<Func<Product, bool>> expression = PredicateBuilder.True<Product>();
 
-            exprBody = exprBody.And(p => (p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100)) >= queryArgs.MinPrice);
-            exprBody = exprBody.And(p => (p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100)) <= queryArgs.MaxPrice);
+            expression = expression.And(p => (p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100)) >= queryArgs.MinPrice);
+            expression = expression.And(p => (p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100)) <= queryArgs.MaxPrice);
 
             if(queryArgs.OrderBy == "Discount")
             {
-                exprBody = string.IsNullOrEmpty(queryArgs.Category)
-                    ? exprBody.And(p => p.DiscountId != null)
-                    : exprBody.And(p => p.Category.Name.ToLower() == queryArgs.Category && p.DiscountId != null);
+                expression = string.IsNullOrEmpty(queryArgs.Category)
+                    ? expression.And(p => p.DiscountId != null)
+                    : expression.And(p => p.Category.Name.ToLower() == queryArgs.Category && p.DiscountId != null);
             }
             else
             {
                 if(string.IsNullOrEmpty(queryArgs.Category) == false)
                 {
-                    exprBody = exprBody.And(p => p.Category.Name.ToLower() == queryArgs.Category);
+                    expression = expression.And(p => p.Category.Name.ToLower() == queryArgs.Category);
                 }
             }
 
             if(queryArgs.InStock != null)
             {
-                exprBody = exprBody.And(p => p.Items.Any(i => i.InStock > 0));
+                expression = expression.And(p => p.Items.Any(i => i.InStock > 0));
             }
 
             if (string.IsNullOrWhiteSpace( queryArgs.Makes) == false)
             {
                 var splitMakes = queryArgs.Makes.Split(", ");
 
-                exprBody = exprBody.And(p => splitMakes.Contains(p.MakeId.ToString()));
+                expression = expression.And(p => splitMakes.Contains(p.MakeId.ToString()));
             }
 
             if(string.IsNullOrWhiteSpace(queryArgs.Attributes) == false)
             {
                 var attrValuesArr = queryArgs.Attributes.Split(", ");
 
-                exprBody = exprBody.And(p => p.AttributeValues.Any(av => attrValuesArr.Contains(av.Value)));
+                expression = expression.And(p => p.AttributeValues.Any(av => attrValuesArr.Contains(av.Value)));
             }
 
-            return exprBody;
+            return expression;
         }
 
         private async Task<PagedProductDto> CreateAndValidateProductPage(AllProductQueryModel query, Expression<Func<Product, bool>> filterExpr)
         {
             var productPage = await repo
-                 .AllReadonly<ProductType>(p => p.Name.ToLower() == query.ProductType.ToLower())
+                 .AllReadonly<ProductType>(pt => pt.Name == query.ProductType)
                  .Select(t => new PagedProductDto()
                  {
                      ProductTypeId = t.Id,
                      CategoryImageUrl = t.ImageUrl == null ? "" : AppConstants.MinIo_EndPoint + t.ImageUrl,
+                     TotalProducts = t.Products.AsQueryable().Count(filterExpr),
                      Attributes = t.Properties.Select(p => new AttributeValuesDto()
                      {
                          Id = p.Id,
                          Name = p.Name,
                          Values = new HashSet<string>()
                      }).ToList()
-                 }).FirstOrDefaultAsync();
-
-            var productCount = await repo.AllReadonly<Product>(p => p.TypeId == productPage!.ProductTypeId).CountAsync(filterExpr);
-
+                 }).SingleOrDefaultAsync();
+            
             int skipCount = (query.Page - 1) * query.ItemsPerPage;
 
-            if (productPage == null || productCount == 0)
+            if (productPage == null || productPage.TotalProducts == 0)
             {
                 throw new FileNotFoundException("Няма намерени продукти.");
             }
 
-            if (productCount <= skipCount)
+            if (productPage.TotalProducts <= skipCount)
             {
                 throw new ArgumentException("Невалиден номер на страница.");
             }
 
-            if (query.ItemsPerPage > productCount)
+            if (query.ItemsPerPage > productPage.TotalProducts)
             {
-                query.ItemsPerPage = productCount;
+                query.ItemsPerPage = productPage.TotalProducts;
             }
-
-            productPage!.TotalProducts = productCount;
 
             return productPage;
         }
