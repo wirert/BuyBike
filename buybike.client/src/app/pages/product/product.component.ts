@@ -116,6 +116,8 @@ export class ProductComponent implements OnInit {
         this.product.items[+this.selectedItemIndex].sku,
         this.product.imageUrl,
         this.product.price,
+        this.product.discountPrice,
+        this.product.items[+this.selectedItemIndex].size,
         this.product.discountPercent,
         this.product.make,
         this.product.items[+this.selectedItemIndex].id

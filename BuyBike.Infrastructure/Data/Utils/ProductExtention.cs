@@ -16,5 +16,10 @@
         {
             return p => p.DiscountId == null ? p.Price : (p.Price * (100 - p.Discount!.DiscountPercent) / 100);
         }
+
+        public static string GetRepresentativeName(this Product p)
+        {
+            return $"{p.Category.Name} {p.Make.Name} {p.Name} {p.Color ?? string.Empty}";
+        }
     }
 }

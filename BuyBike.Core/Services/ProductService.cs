@@ -9,10 +9,10 @@
 
     using BuyBike.Core.Constants;
     using BuyBike.Core.Models;
+    using BuyBike.Core.Models.Manufacturer;
     using BuyBike.Core.Services.Contracts;
     using BuyBike.Infrastructure.Contracts;
     using BuyBike.Infrastructure.Data.Entities;
-    using BuyBike.Core.Models.Manufacturer;
     using BuyBike.Infrastructure.Data.Utils;
 
     public class ProductService : IProductService
@@ -26,28 +26,30 @@
 
         public async Task<ProductDetailsDto> GetById(Guid id)
         {
-            var result = await repo.AllReadonly<Product>(b => b.IsActive && b.Id == id)
-                .Select(b => new ProductDetailsDto
+            var result = await repo.AllReadonly<Product>(p => p.Id == id)
+                .Include(p => p.Discount)
+                .Select(p => new ProductDetailsDto
                 {
-                    Name = b.Name,
-                    Make = b.Make.Name,
-                    MakeLogoUrl = AppConstants.MinIo_EndPoint + b.Make.LogoUrl,
-                    ImageUrl = AppConstants.MinIo_EndPoint + b.ImageUrl,
-                    Price = b.Price,
-                    DiscountPercent = b.Discount != null ? b.Discount.DiscountPercent : null,
-                    Color = b.Color,
-                    Category = b.Category.Name,
-                    Gender = b.Gender,
-                    Description = b.Description,
-                    Items = b.Items.Select(i => new ItemDto
+                    Name = $"{p.Category.Name} {p.Make.Name} {p.Name} {p.Color ?? string.Empty}",
+                    Make = p.Make.Name,
+                    MakeLogoUrl = AppConstants.MinIo_EndPoint + p.Make.LogoUrl,
+                    ImageUrl = AppConstants.MinIo_EndPoint + p.ImageUrl,
+                    Price = p.Price,
+                    DiscountPrice = p.GetDiscountedPrice(),
+                    DiscountPercent = p.Discount != null ? p.Discount.DiscountPercent : null,
+                    Color = p.Color,
+                    Category = p.Category.Name,
+                    Gender = p.Gender,
+                    Description = p.Description,
+                    Items = p.Items.Select(i => new ItemDto
                     {
                         Id = i.Id,
                         Size = i.Size.ToString()!,
                         Sku = i.Sku,
                         IsInStock = i.InStock > 0
                     }),
-                    Specification = b.Specification,
-                    Attributes = b.AttributeValues.Select(av => new ProductAttributeDto()
+                    Specification = p.Specification,
+                    Attributes = p.AttributeValues.Select(av => new ProductAttributeDto()
                     {
                         Name = av.Attribute.Name,
                         Value = av.Value,
@@ -189,7 +191,7 @@
                  .Select(p => new ProductDto
                  {
                      Id = p.Id,
-                     Name = $"{p.Category.Name} {p.Make.Name} {p.Name} {p.Color ?? string.Empty}",
+                     Name = p.GetRepresentativeName(),
                      Make = new ManufacutrerDto()
                      {
                          Id = p.Make.Id,

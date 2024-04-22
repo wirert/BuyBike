@@ -5,6 +5,7 @@ export interface ProductDetails {
   make: string;
   makeLogoUrl: string;
   price: number;
+  discountPrice: number;
   discountPercent: number | null;
   imageUrl: string;
   color: string | null;
