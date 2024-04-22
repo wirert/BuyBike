@@ -44,9 +44,8 @@
   font-size: 0.6em;
 }
 
-.upper-menu i {
-  width: 1rem;
-  height: 1rem;
+.upper-menu div {
+  font-size: 2.2em;
 }
 
 .site-nav {
@@ -82,4 +81,21 @@ input {
   border: none;
   border-radius: 0.4em 0 0 0.4em;
   padding: 0.2em 0.4em;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-items-counter {
+  position: absolute;
+  right: -1px;
+  top: -5px;
+  background-color: red;
+  border: solid 3px #515151;
+  height: 1.8em;
+  width: 1.8em;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
 }

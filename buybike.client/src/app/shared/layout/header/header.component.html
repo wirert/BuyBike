@@ -15,19 +15,26 @@
       <ul class="upper-menu">
         <li>
           <a href="#">
-            <i class="fa-regular fa-circle-user"></i>
+            <div>
+              <i class="fa-regular fa-circle-user"></i>
+            </div>
             <span>Вход/Регистрация</span></a
           >
         </li>
         <li *ngIf="isLogged">
           <a href="#">
-            <i class="fa-solid fa-user-check"></i>
+            <div>
+              <i class="fa-solid fa-user-check"></i>
+            </div>
             <span>Профил</span></a
           >
         </li>
         <li>
-          <a href="#">
-            <i class="fa fa-cart-shopping"></i>
+          <a class="cart-link" href="#">
+            <div>
+              <i class="fa fa-cart-shopping"></i>
+            </div>
+            <span class="cart-items-counter">{{ cartItemsCount }}</span>
             <span>Количка</span></a
           >
         </li>

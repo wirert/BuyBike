@@ -66,7 +66,6 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   onFilterChange(filter: ProductQueryFilter) {
     this.filter = filter;
-    console.log('filter in category component:', this.filter);
     this.fetchData();
   }
 
