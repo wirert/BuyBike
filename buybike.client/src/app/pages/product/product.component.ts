@@ -12,11 +12,12 @@ import { ProductService } from '../../core/services/product.service';
 import { ProductDetails } from '../../core/models/product/product-details';
 import { CartProduct } from '../../core/models/product/cart-product';
 import { LoaderComponent } from '../../shared/loader/loader.component';
+import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
 
 @Component({
   selector: 'product-details',
   standalone: true,
-  imports: [CommonModule, FormsModule, LoaderComponent],
+  imports: [CommonModule, FormsModule, LoaderComponent, AddToCartComponent],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css',
 })
@@ -38,6 +39,7 @@ export class ProductComponent implements OnInit {
   };
 
   isLoading = true;
+  showAddToCart = false;
 
   @ViewChild('imageDiv') imageDiv!: ElementRef;
   selectedItemIndex: string = '';
@@ -90,6 +92,7 @@ export class ProductComponent implements OnInit {
 
   onBuyButtonClick() {
     this.addItemToCart();
+    this.showAddToCart = true;
   }
 
   private addItemToCart() {

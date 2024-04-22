@@ -1,4 +1,6 @@
 <div class="product-wrapper">
+  <add-to-cart *ngIf="showAddToCart"></add-to-cart>
+
   <app-loader *ngIf="isLoading"></app-loader>
   <div class="product-left">
     <div
