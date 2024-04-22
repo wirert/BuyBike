@@ -191,7 +191,7 @@
                  .Select(p => new ProductDto
                  {
                      Id = p.Id,
-                     Name = p.GetRepresentativeName(),
+                     Name = $"{p.Category.Name} {p.Make.Name} {p.Name} {p.Color ?? string.Empty}",
                      Make = new ManufacutrerDto()
                      {
                          Id = p.Make.Id,

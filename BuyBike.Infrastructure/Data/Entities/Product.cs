@@ -8,7 +8,6 @@
 
     using BuyBike.Infrastructure.Constants;
     using BuyBike.Infrastructure.Data.Entities.Enumerations;
-    using System.Linq.Expressions;
 
     [Comment("Shop product model")]
     public partial class Product
