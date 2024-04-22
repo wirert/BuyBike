@@ -11,9 +11,26 @@
   border-top: solid 1px grey;
 }
 
+.filters-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 h2 {
   margin-top: 0.5em;
   text-transform: capitalize;
+}
+
+.clr-filter-btn {
+  padding: 0.1em 0.4em;
+  color: red;
+  border: none;
+  box-shadow: 0 0 5px 1px rgb(173, 172, 172);
+}
+
+.clr-filter-btn:hover {
+  background-color: rgb(185, 184, 184);
 }
 
 .category-name-group,

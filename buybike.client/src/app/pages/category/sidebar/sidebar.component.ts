@@ -95,21 +95,35 @@ export class SidebarComponent implements OnInit, OnChanges {
     this.queryFilterChanged.emit(this.queryFilter);
   }
 
+  resetFilter() {
+    this.setProductFilterProps();
+    this.filterChanged = true;
+    this.queryFilter = new ProductQueryFilter();
+    this.queryFilterChanged.emit(this.queryFilter);
+  }
+
   priceSliderEvent(changeContext: ChangeContext) {
-    if (
-      !this.queryFilter.minPrice ||
-      changeContext.value !== this.queryFilter.minPrice
-    ) {
-      this.queryFilter.minPrice = changeContext.value;
+    if (changeContext.value !== this.minPrice) {
+      this.minPrice = changeContext.value;
+      this.queryFilter.minPrice =
+        this.minPrice === this.priceBarOptions.floor
+          ? undefined
+          : this.minPrice;
     }
-    if (
-      !this.queryFilter.maxPrice ||
-      changeContext.highValue !== this.queryFilter.maxPrice
-    ) {
-      this.queryFilter.maxPrice = changeContext.highValue;
+    if (changeContext.highValue !== this.maxPrice) {
+      this.maxPrice = changeContext.highValue!;
+      this.queryFilter.maxPrice =
+        this.maxPrice === this.priceBarOptions.ceil ? undefined : this.maxPrice;
     }
 
     this.queryFilterChanged.emit(this.queryFilter);
+  }
+
+  isAnyFilterSet(): boolean {
+    return (
+      Object.values(this.queryFilter).find((v) => v !== undefined) ||
+      this.filter.outOfStock
+    );
   }
 
   private setManufacturersArray(): Manufacturer[] {
@@ -176,6 +190,14 @@ export class SidebarComponent implements OnInit, OnChanges {
     } else {
       this.queryFilter.inStock = undefined;
     }
+
+    if (this.minPrice === this.priceBarOptions.floor!) {
+      this.queryFilter.minPrice = undefined;
+    }
+
+    if (this.maxPrice === this.priceBarOptions.ceil!) {
+      this.queryFilter.maxPrice = undefined;
+    }
   }
 
   private findSelectedTypeAndCategories(): void {
@@ -216,6 +238,7 @@ export class SidebarComponent implements OnInit, OnChanges {
       this.filter.makeIds[m.id] = false;
     });
 
-    console.log(this.filter);
+    this.filter.inStock = false;
+    this.filter.outOfStock = false;
   }
 }

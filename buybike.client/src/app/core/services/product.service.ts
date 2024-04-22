@@ -64,8 +64,6 @@ export class ProductService {
       });
     }
 
-    console.log(params);
-
     return this.http.get<ProductPage>(`${this.url}/Product`, {
       params: params,
       responseType: 'json',

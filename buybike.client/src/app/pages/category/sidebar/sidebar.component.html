@@ -90,7 +90,16 @@
   </div>
 
   <div class="filter">
-    <h2>Филтър</h2>
+    <div class="filters-title">
+      <h2>Филтър</h2>
+      <button
+        class="clr-filter-btn"
+        *ngIf="isAnyFilterSet()"
+        (click)="resetFilter()"
+      >
+        Изчисти
+      </button>
+    </div>
 
     <div id="filter-price">
       <button
@@ -102,8 +111,8 @@
       </button>
       <ul>
         <ngx-slider
-          [(value)]="minPrice"
-          [(highValue)]="maxPrice"
+          [value]="minPrice"
+          [highValue]="maxPrice"
           [options]="priceBarOptions"
           (userChangeEnd)="priceSliderEvent($event)"
         >
