@@ -113,6 +113,7 @@ export class ProductComponent implements OnInit {
       item = new CartProduct(
         this.productId,
         this.productName,
+        this.productType,
         this.product.items[+this.selectedItemIndex].sku,
         this.product.imageUrl,
         this.product.price,

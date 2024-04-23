@@ -1,0 +1,52 @@
+.content {
+  display: flex;
+  gap: 2em;
+  flex-wrap: wrap;
+}
+
+table {
+  flex: 0 1 75%;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.8em;
+}
+
+.checkout {
+  flex: 1 1 20%;
+}
+
+th {
+  background-color: rgb(77, 77, 77);
+  color: whitesmoke;
+}
+
+td {
+  vertical-align: middle;
+}
+
+.new-price,
+.brand {
+  color: red;
+  font-size: 1em;
+}
+
+.size,
+.close {
+  color: gray;
+}
+
+.icon-btn {
+  border: none;
+  background-color: transparent;
+  font-size: 1.2em;
+  padding: 0 0.5em;
+}
+
+.icon-btn:hover {
+  color: red;
+}
+
+.name {
+  text-align: left;
+}

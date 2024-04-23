@@ -11,7 +11,7 @@
 
         public string Size { get; set; } = null!;
 
-        public bool IsInStock { get; set; }
+        public int InStock { get; set; }
 
         public string Sku { get; set; } = null!;
     }

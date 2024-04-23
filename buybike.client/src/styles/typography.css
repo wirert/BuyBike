@@ -6,6 +6,7 @@
 
 html {
   font: 12px/1.5 Inter, sans-serif;
+  font-family: Inter, sans-serif;
 }
 
 @media (min-width: 500px) {

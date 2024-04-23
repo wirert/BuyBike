@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent, title: 'BUY BIKE' },
   { path: 'кошница', component: ShoppingCartComponent },
   {
-    path: 'p/:name',
+    path: 'продукт/:name',
     component: ProductDetailsComponent,
     title: 'Детайли',
   },

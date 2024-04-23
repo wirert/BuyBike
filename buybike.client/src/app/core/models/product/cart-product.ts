@@ -2,6 +2,7 @@ export class CartProduct {
   constructor(
     public id: string,
     public name: string,
+    public productType: string,
     public scu: string,
     public imageUrl: string,
     public price: number,

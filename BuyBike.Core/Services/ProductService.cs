@@ -46,7 +46,7 @@
                         Id = i.Id,
                         Size = i.Size.ToString()!,
                         Sku = i.Sku,
-                        IsInStock = i.InStock > 0
+                        InStock = i.InStock
                     }),
                     Specification = p.Specification,
                     Attributes = p.AttributeValues.Select(av => new ProductAttributeDto()

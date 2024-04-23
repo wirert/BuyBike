@@ -1,4 +1,123 @@
-<div>
-  <p>Вашата количка е празна</p>
+<div *ngIf="products.length === 0">
+  <h2>Вашата количка е празна</h2>
   <a routerLink="" class="btn btn-danger">Продължи с пазаруванете</a>
+</div>
+
+<div class="content-container" *ngIf="products.length > 0">
+  <h1>Кошница</h1>
+  <div class="content">
+    <table class="table table-sm table-responsive table-striped table-light">
+      <thead>
+        <tr>
+          <th scope="col">Снимка</th>
+          <th scope="col">Продукт</th>
+          <th scope="col">Ед. цена</th>
+          <th scope="col">Спестявате</th>
+          <th scope="col">Количество</th>
+          <th scope="col">Общо</th>
+          <th scope="col" title="Изтриване от количката"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of products">
+          <td>
+            <a
+              routerLink="/продукт/{{
+                product.name.split(' ').join('-').toLowerCase()
+              }}"
+              [state]="{
+                id: product.id,
+                type: product.productType,
+                name: product.name
+              }"
+              class="img-wrapper"
+            >
+              <img [src]="product.imageUrl" alt="Снимка на продукта" />
+            </a>
+          </td>
+          <td>
+            <div class="name">
+              <div class="brand">{{ product.make }}</div>
+              <a
+                routerLink="/продукт/{{
+                  product.name.split(' ').join('-').toLowerCase()
+                }}"
+                [state]="{
+                  id: product.id,
+                  type: product.productType,
+                  name: product.name
+                }"
+              >
+                {{ product.name }}</a
+              >
+              <div class="size" *ngIf="product.size">
+                Размер: {{ product.size }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div
+              [ngStyle]="{
+                'text-decoration': product.discount ? 'line-through' : null,
+                'font-size': product.discount ? '0.9em' : '1em'
+              }"
+            >
+              {{ product.price.toFixed(2) }} лв.
+            </div>
+            <div *ngIf="product.discount" class="new-price">
+              {{ product.discountPrice.toFixed(2) }} лв.
+            </div>
+          </td>
+          <td>
+            <span *ngIf="product.discount"
+              >-{{
+                (product.price - product.discountPrice).toFixed(2)
+              }}
+              лв.</span
+            >
+          </td>
+          <td class="quantity">
+            <button
+              class="icon-btn"
+              (click)="(product.quantity - 1)"
+              title="Намали"
+            >
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <span>{{ product.quantity }}</span>
+            <button
+              class="icon-btn"
+              (click)="(product.quantity + 1)"
+              title="Увеличи"
+            >
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </td>
+          <td>
+            {{ (product.quantity * product.discountPrice).toFixed(2) }} лв.
+          </td>
+          <td>
+            <button class="icon-btn close" title="Изтрий">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <section class="checkout">
+      <div class="promo input-group mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Въведи промо код"
+          aria-label="Добави промо код"
+          aria-describedby="basic-addon2"
+        />
+        <div class="input-group-append">
+          <button class="btn btn-danger" type="button">Добави</button>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>

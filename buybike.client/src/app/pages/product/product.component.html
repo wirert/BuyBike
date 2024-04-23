@@ -60,13 +60,13 @@
               *ngFor="let item of product?.items; index as i"
               value="{{ i }}"
             >
-              {{ item.size }}{{ item.isInStock ? "" : " (няма налични)" }}
+              {{ item.size }}{{ item.inStock > 0 ? "" : " (няма налични)" }}
             </option>
           </select>
         </div>
         <button
           class="btn btn-success"
-          [disabled]="(product?.items)![+selectedItemIndex].isInStock === false"
+          [disabled]="(product?.items)![+selectedItemIndex].inStock === 0"
           (click)="onBuyButtonClick()"
         >
           Купи
@@ -76,7 +76,7 @@
           class="ask-about"
           *ngIf="
             selectedItemIndex &&
-            (product?.items)![+selectedItemIndex].isInStock === false
+            (product?.items)![+selectedItemIndex].inStock === 0
           "
         >
           <button class="btn btn-danger">Запитване</button>

@@ -3,6 +3,6 @@ export class Item {
     public id: string,
     public size: string,
     public sku: string,
-    public isInStock: boolean
+    public inStock: number
   ) {}
 }
